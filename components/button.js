@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 
-export default class CustomButton extends Component {
+class CustomButton extends Component {
 
   render() {
       return(
@@ -12,3 +12,4 @@ export default class CustomButton extends Component {
       );
     }
 }
+export default CustomButton;
