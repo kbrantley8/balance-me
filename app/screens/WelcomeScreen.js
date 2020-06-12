@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginBottom: 24
     }, 
     text: {
-        marginTop: 48
+        marginTop: 56
     },
     welcome: {
         fontSize: 30,
