@@ -10,10 +10,14 @@ class WelcomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-              <Text style={styles.welcome}>Welcome</Text>
-              <Text style={styles.user}>{this.props.name}!</Text>
-              <PrimaryButton text='Create A Task' />
-              <PrimaryButton text='My Tasks' />
+              <View style={styles.text}>
+                <Text style={styles.welcome}>Welcome</Text>
+                <Text style={styles.user}>{this.props.name}!</Text>
+              </View>
+              <View style={styles.buttons}>
+                <PrimaryButton text='Create A Task' />
+                <PrimaryButton text='My Tasks' />
+              </View>
             </View>
         );
     }
@@ -23,22 +27,25 @@ class WelcomeScreen extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
       backgroundColor: '#FCFCFC',
     },
+    buttons: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        marginBottom: 24
+    }, 
+    text: {
+        marginTop: 48
+    },
     welcome: {
-        fontSize: 24,
-        padding: 6
+        fontSize: 30,
+        paddingBottom: 6,
+        fontWeight: '200'
     },
     user: {
-        fontSize: 36,
+        fontSize: 42,
         fontWeight: '700'
-    },
-    buttons: {
-
     }
-
   });
   
 
