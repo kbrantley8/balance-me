@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import PrimaryButton from './../components/button.js'
+import PrimaryButton from './../components/button.js';
 
 class WelcomeScreen extends Component {
     constructor(props) {
@@ -15,9 +15,7 @@ class WelcomeScreen extends Component {
                 <Text style={styles.user}>{this.props.name}!</Text>
               </View>
               <View style={styles.buttons}>
-                <PrimaryButton 
-                    text='Create A Task'
-                 />
+                <PrimaryButton text='Create A Task' />
                 <PrimaryButton text='My Tasks' />
               </View>
             </View>
@@ -50,6 +48,8 @@ const styles = StyleSheet.create({
     }
   });
   
-
+WelcomeScreen.defaultProps = {
+    name: 'User'
+}
 
 export default WelcomeScreen;

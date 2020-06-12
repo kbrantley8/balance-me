@@ -6,7 +6,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen'
 export default function App() {
   return (
     <View style={styles.container}>
-      <WelcomeScreen name="Morgan"/>
+      <WelcomeScreen name='Morgan'/>
     </View>
   );
 }
