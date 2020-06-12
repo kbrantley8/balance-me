@@ -19,3 +19,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+
+    // <NavigationContainer>
+    //     <Stack.Navigator>
+    //     <Stack.Screen
+    //       name="WelcomeScreen"
+    //       component={WelcomeScreen}
+    //     />
+    //     <Stack.Screen name="CreateTask" component={CreateTask} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>

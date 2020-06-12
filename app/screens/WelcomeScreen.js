@@ -15,7 +15,9 @@ class WelcomeScreen extends Component {
                 <Text style={styles.user}>{this.props.name}!</Text>
               </View>
               <View style={styles.buttons}>
-                <PrimaryButton text='Create A Task' />
+                <PrimaryButton 
+                    text='Create A Task'
+                 />
                 <PrimaryButton text='My Tasks' />
               </View>
             </View>
