@@ -28,12 +28,12 @@ export default class PrimaryButton extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 6,
   },
   button: {
     alignItems: "center",
     backgroundColor: '#F2CD5C',
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
     width: 300,
   },
