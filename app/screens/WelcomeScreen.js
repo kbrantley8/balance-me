@@ -14,13 +14,12 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.text}>
           <Text style={styles.welcome}>Welcome</Text>
-          <Text style={styles.user}>{this.props.name}!</Text>
+          <Text style={styles.user}>{this.props.route.params["name"]}!</Text>
         </View>
         <View style={styles.buttons}>
           <PrimaryButton
             text="Create A Task"
             onPress={() => {
-              this.props.navigation.navigate();
               this.props.navigation.navigate("CreateTask");
             }}
           />
@@ -29,11 +28,6 @@ class WelcomeScreen extends Component {
       </View>
     );
   }
-
-  // function goToCreateTask() {
-  //   console.log("Create Task");
-  //   // useNavigation().navigate("CreateTask");
-  // }
 }
 
 const styles = StyleSheet.create({

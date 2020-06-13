@@ -9,18 +9,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 export default function App() {
+  const headerOption = { headerShown: false };
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen
+          name="WelcomeScreen"
+          component={WelcomeScreen}
+          options={headerOption}
+          initialParams={{ name: "Morgan" }}
+        />
         {/* {(props) => <WelcomeScreen {...props} name="Morgan" />}
         </Stack.Screen> */}
-        <Stack.Screen name="CreateTask" component={CreateTask} />
+        <Stack.Screen
+          name="CreateTask"
+          component={CreateTask}
+          options={headerOption}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    // <View style={styles.container}>
-    //   <WelcomeScreen name="Morgan" />
-    // </View>
   );
 }
 
@@ -32,12 +39,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5FCFF",
   },
 });
-
-{
-  /* <NavigationContainer>
-  <Stack.Navigator>
-    <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-    <Stack.Screen name="CreateTask" component={CreateTask} />
-  </Stack.Navigator>
-</NavigationContainer>; */
-}
