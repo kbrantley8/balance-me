@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   text: { 
     color: '#FFFFFF',
     fontSize: 24,
-    paddingBottom: 12
+    paddingBottom: 12,
+    textAlign: "center"
   },
   subtext: {
     fontSize: 14,

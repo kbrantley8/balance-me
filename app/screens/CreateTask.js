@@ -10,7 +10,7 @@ class CreateTask extends Component {
         return (
             <View style={styles.container}>
                 <Button title="back"/>
-                <Text style={styles.text}>Select the type of task:</Text>
+                <Text style={styles.text}>Let's create a task:</Text>
                 <View style={styles.cards}>
                     <Card 
                         text="Individual" 
@@ -39,7 +39,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 400,
         justifyContent: 'center',
-        padding: 12
+        padding: 12,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+
     },
     text: {
         fontSize: 18,
