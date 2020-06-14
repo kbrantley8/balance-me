@@ -20,7 +20,7 @@ export default class Card extends Component {
           style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
         { this.props.imageUri ? 
-            <Image source={this.props.imageUri} style={[{height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
+            <Image source={this.props.imageUri} style={[styles.image, {height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
              : null
         }
         <Text style={styles.text}>{this.props.text}</Text>
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: "center"
   },
+  image: {
+      marginBottom: 6
+  }
 });
 
 //puts restrictions on what type each prop can be
@@ -72,7 +75,7 @@ Card.defaultProps = {
   text: 'hello',
   subtext: '',
   color: '#55A61C',
-  height: 150,
+  height: 160,
   width: 150,
   imageUri: null,
   imgWidth: 40,
