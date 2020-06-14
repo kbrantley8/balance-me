@@ -9,7 +9,12 @@ class CreateTask extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="back"/>
+                <Button 
+                    title="back"
+                    onPress={() => {
+                        this.props.navigation.navigate("WelcomeScreen");
+                    }}
+                    />
                 <Text style={styles.mainText}>Let's create a task:</Text>
                 <Stepper step={1}/>
                 <View style={styles.selection}>
