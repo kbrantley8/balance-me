@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
-export default class PrimaryButton extends Component {
+export default class Card extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,9 +17,11 @@ export default class PrimaryButton extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={[styles.button, {backgroundColor:this.props.color}]}
+          style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
+        {/* TODO: add icon */}
         <Text style={styles.text}>{this.props.text}</Text>
+        <Text style={styles.subtext}>{this.props.subtext}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -34,24 +36,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     borderRadius: 5,
-    width: 300,
   },
   text: { 
     color: '#FFFFFF',
-    fontSize: 16
+    fontSize: 24,
+    paddingBottom: 12,
+    textAlign: "center",
+    fontWeight: "500"
+  },
+  subtext: {
+    fontSize: 14,
+    color: '#FFFFFF',
+    textAlign: "center"
   }
 });
 
 //puts restrictions on what type each prop can be
-PrimaryButton.propTypes = {
+Card.propTypes = {
   text: PropTypes.string,
+  subtext: PropTypes.string,
   color: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  imgSrc: PropTypes.string,
   onPress: PropTypes.func,
 };
 
 // what will the default be if none is specified
-PrimaryButton.defaultProps = {
+Card.defaultProps = {
   text: 'hello',
-  color: '#F2CD5C',
+  subtext: '',
+  color: '#55A61C',
+  height: 150,
+  width: 150,
   onPress: () => {}
 }

@@ -4,8 +4,6 @@ import Card from './../components/card.js';
 import Stepper from './../components/stepper.js'
 import 'react-native-gesture-handler';
 
-
-//TODO: send "individual" as group preference to chooseTask
 class CreateTask extends Component {
     state = {  }
     render() {
@@ -14,25 +12,41 @@ class CreateTask extends Component {
                 <Button 
                     title="back"
                     onPress={() => {
-                        this.props.navigation.navigate("WelcomeScreen");
+                        this.props.navigation.navigate("CreateTask");
                     }}
                     />
                 <Text style={styles.mainText}>Let's create a task:</Text>
-                <Stepper step={1}/>
+                <Stepper step={2}/>
                 <View style={styles.selection}>
-                    <Text style={styles.selectText}>Select the type of task you would like to complete:</Text>
+                    <Text style={styles.selectText}>Select from the following, or create a custom task:</Text>
                     <View style={styles.cards}>
                         <Card 
-                            onPress={() => {
-                                this.props.navigation.navigate("ChooseTask");
-                            }}
-                            text="Individual" 
-                            subtext="I'd like to complete a task by myself">
+                            text="Health" 
+                            height={140}
+                            width={140}
+                            color="#7FD7FF"
+                            >
                         </Card>
                         <Card 
-                            text="Group"
-                            subtext="I'd like to complete a task with others"
-                            color="#A1D991">    
+                            text="Activity"
+                            height={140}
+                            width={140}
+                            color="#A1D991"
+                            >    
+                        </Card>
+                        <Card 
+                            text="Chore"
+                            height={140}
+                            width={140}
+                            color="#F24822"
+                            >    
+                        </Card>
+                        <Card 
+                            text="Custom"
+                            height={140}
+                            width={140}
+                            color="#F2CD5C"
+                            >    
                         </Card>
                     </View>
                 </View>
@@ -59,7 +73,8 @@ const styles = StyleSheet.create({
     },
     cards: {
         flexDirection: 'row',
-        marginTop: 24
+        flexWrap: "wrap",
+        justifyContent: 'center'
     },
     mainText: {
         fontSize: 32,
