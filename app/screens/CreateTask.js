@@ -4,6 +4,8 @@ import Card from './../components/card.js';
 import Stepper from './../components/stepper.js'
 import 'react-native-gesture-handler';
 
+
+//TODO: send "individual" as group preference to chooseTask
 class CreateTask extends Component {
     state = {  }
     render() {
