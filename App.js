@@ -19,8 +19,6 @@ export default function App() {
           options={headerOption}
           initialParams={{ name: "Morgan" }}
         />
-        {/* {(props) => <WelcomeScreen {...props} name="Morgan" />}
-        </Stack.Screen> */}
         <Stack.Screen
           name="CreateTask"
           component={CreateTask}
