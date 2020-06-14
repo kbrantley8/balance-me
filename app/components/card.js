@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 
 
 export default class Card extends Component {
@@ -19,7 +19,10 @@ export default class Card extends Component {
           onPress={this.onPress}
           style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
-        {/* TODO: add icon */}
+        { this.props.imageUri ? 
+            <Image source={this.props.imageUri} style={[{height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
+             : null
+        }
         <Text style={styles.text}>{this.props.text}</Text>
         <Text style={styles.subtext}>{this.props.subtext}</Text>
         </TouchableOpacity>
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
   text: { 
     color: '#FFFFFF',
     fontSize: 24,
-    paddingBottom: 12,
+    paddingBottom: 6,
     textAlign: "center",
     fontWeight: "500"
   },
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFFFFF',
     textAlign: "center"
-  }
+  },
 });
 
 //puts restrictions on what type each prop can be
@@ -58,7 +61,9 @@ Card.propTypes = {
   color: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,
-  imgSrc: PropTypes.string,
+  imgSrc: PropTypes.object,
+  imgHeight: PropTypes.number,
+  imgWidth: PropTypes.number,
   onPress: PropTypes.func,
 };
 
@@ -69,5 +74,8 @@ Card.defaultProps = {
   color: '#55A61C',
   height: 150,
   width: 150,
+  imageUri: null,
+  imgWidth: 40,
+  imgHeight: 40,
   onPress: () => {}
 }
