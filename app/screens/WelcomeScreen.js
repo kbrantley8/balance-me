@@ -23,7 +23,10 @@ class WelcomeScreen extends Component {
               this.props.navigation.navigate("CreateTask");
             }}
           />
-          <PrimaryButton text="My Tasks" />
+          <PrimaryButton 
+            text="My Tasks"
+            color="#A1D991"
+          />
         </View>
       </View>
     );

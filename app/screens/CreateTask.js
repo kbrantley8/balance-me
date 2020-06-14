@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import PrimaryButton from './../components/button.js';
 import Card from './../components/card.js';
+import Stepper from './../components/stepper.js'
 import 'react-native-gesture-handler';
 
 class CreateTask extends Component {
@@ -10,16 +10,21 @@ class CreateTask extends Component {
         return (
             <View style={styles.container}>
                 <Button title="back"/>
-                <Text style={styles.text}>Let's create a task:</Text>
-                <View style={styles.cards}>
-                    <Card 
-                        text="Individual" 
-                        subtext="I'd like to complete a task by myself">
-                    </Card>
-                    <Card 
-                        text="Group"
-                        subtext="I'd like to complete a task with others">    
-                    </Card>
+                <Text style={styles.mainText}>Let's create a task:</Text>
+                <Stepper step={1}/>
+                <View style={styles.selection}>
+                    <Text style={styles.selectText}>Select the type of task you would like to complete:</Text>
+                    <View style={styles.cards}>
+                        <Card 
+                            text="Individual" 
+                            subtext="I'd like to complete a task by myself">
+                        </Card>
+                        <Card 
+                            text="Group"
+                            subtext="I'd like to complete a task with others"
+                            color="#A1D991">    
+                        </Card>
+                    </View>
                 </View>
             </View>
         );
@@ -30,23 +35,31 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#FCFCFC",
-      justifyContent: "center",
+      justifyContent: "flex-end",
       alignItems: "center",
+    },
+    selection: {
+        backgroundColor: '#FBF5E4',
+        alignItems: 'center',
+        width: '100%',
+        height: 400,
+        marginTop: 40,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
     },
     cards: {
         flexDirection: 'row',
-        backgroundColor: '#FBF5E4',
-        width: '100%',
-        height: 400,
-        justifyContent: 'center',
-        padding: 12,
-        borderTopRightRadius: 30,
-        borderTopLeftRadius: 30,
-
+        marginTop: 24
     },
-    text: {
+    mainText: {
+        fontSize: 32,
+        paddingBottom: 50,
+        color: "#F2CD5C",
+        fontWeight: 'bold'
+    },
+    selectText: {
         fontSize: 18,
-        paddingBottom: 12
+        padding: 12
     }
 
 });

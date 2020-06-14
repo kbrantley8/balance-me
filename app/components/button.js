@@ -17,7 +17,7 @@ export default class PrimaryButton extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={styles.button}
+          style={[styles.button, {backgroundColor:this.props.color}]}
         >
         <Text style={styles.text}>{this.props.text}</Text>
         </TouchableOpacity>
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#F2CD5C',
     padding: 15,
     borderRadius: 5,
     width: 300,
@@ -53,6 +52,6 @@ PrimaryButton.propTypes = {
 // what will the default be if none is specified
 PrimaryButton.defaultProps = {
   text: 'hello',
-  color: '#FFFFFF',
+  color: '#F2CD5C',
   onPress: () => {}
 }

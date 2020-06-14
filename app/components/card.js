@@ -17,7 +17,7 @@ export default class Card extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={styles.button}
+          style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
         {/* TODO: add icon */}
         <Text style={styles.text}>{this.props.text}</Text>
@@ -34,17 +34,15 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: '#55A61C',
     padding: 15,
     borderRadius: 5,
-    width: 150,
-    height: 150,
   },
   text: { 
     color: '#FFFFFF',
     fontSize: 24,
     paddingBottom: 12,
-    textAlign: "center"
+    textAlign: "center",
+    fontWeight: "500"
   },
   subtext: {
     fontSize: 14,
@@ -56,13 +54,20 @@ const styles = StyleSheet.create({
 //puts restrictions on what type each prop can be
 Card.propTypes = {
   text: PropTypes.string,
+  subtext: PropTypes.string,
   color: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  imgSrc: PropTypes.string,
   onPress: PropTypes.func,
 };
 
 // what will the default be if none is specified
 Card.defaultProps = {
   text: 'hello',
-  color: '#FFFFFF',
+  subtext: '',
+  color: '#55A61C',
+  height: 150,
+  width: 150,
   onPress: () => {}
 }
