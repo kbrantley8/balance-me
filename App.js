@@ -3,7 +3,8 @@ import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import CreateTask from "./app/screens/CreateTask";
-import ChooseTask from "./app/screens/ChooseTask"
+import ChooseTask from "./app/screens/ChooseTask";
+import TaskDetail from "./app/screens/TaskDetail";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -29,6 +30,12 @@ export default function App() {
           name="ChooseTask"
           component={ChooseTask}
           options={headerOption}
+        />
+        <Stack.Screen
+          name="TaskDetail"
+          component={TaskDetail}
+          options={{ headerTitle: false, headerBackTitleVisible: false }}
+          initialParams={{ title: "Make the Bed", Time: "5:00\nMins" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
