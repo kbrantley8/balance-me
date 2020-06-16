@@ -27,7 +27,9 @@ class CreateTask extends Component {
                                 this.props.navigation.navigate("ChooseTask");
                             }}
                             text="Individual" 
-                            subtext="I'd like to complete a task by myself">
+                            subtext="I'd like to complete a task by myself"
+                            imageUri={require('./../assets/icons8-head-with-brain-100.png')}
+                            >
                         </Card>
                         <Card 
                             text="Group"
