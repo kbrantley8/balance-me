@@ -11,23 +11,39 @@ const User = t.struct({
   name: t.String
 });
 
-var formOptions = {
-  auto: 'placeholders',
-  fields: {
-    name: {
-      error: 'Please enter your name',
-      selectionColor: '#F2CD5C',
-      placeholderTextColor: '#F2CD5C',
-      autoCapitalize: 'words',
-      maxLength: 30,
-      textAlign: 'left'
+const formStyles = {
+    ...Form.stylesheet,
+    textbox: {
+        normal: {
+            height: 36,
+            paddingHorizontal: 115,
+            borderRadius: 7,
+            borderColor: "#000000",
+            borderWidth: 1,
+            marginBottom: 5,
+            marginLeft: -50,
+        }
     }
-  }
+}
+
+var formOptions = {
+    auto: 'placeholders',
+    fields: {
+        name: {
+            error: 'Please enter your name',
+            selectionColor: '#F2CD5C',
+            placeholderTextColor: '#F2CD5C',
+            autoCapitalize: 'words',
+            maxLength: 30,
+            textAlign: 'left'
+        }
+    },
+  stylesheet: formStyles,
 };
 
 
 //TODO: Capture name
-//TODO: Extend width of name box (and left justify?)
+//TODO: Left justify text inside form
 class FirstTimeUser extends Component {
     handleSubmit = () => {
         const value = this._form.getValue(); // use ref to get the form value
