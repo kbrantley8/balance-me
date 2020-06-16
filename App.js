@@ -35,7 +35,14 @@ export default function App() {
           name="TaskDetail"
           component={TaskDetail}
           options={{ headerTitle: false, headerBackTitleVisible: false }}
-          initialParams={{ title: "Make the Bed", Time: "5:00\nMins" }}
+          initialParams={{
+            title: "Make the Bed",
+            Time: "5:00\nMins",
+            Timestamp: "October 13, 2020 11:13:00",
+            Description:
+              "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
+            points: 5,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
