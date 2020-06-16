@@ -29,13 +29,13 @@ class CreateTask extends Component {
                             text="Individual" 
                             subtext="I'd like to complete a task by myself"
                             imageUri={require('./../assets/icons8-head-with-brain-100.png')}
-                            >
-                        </Card>
+                        />
                         <Card 
                             text="Group"
                             subtext="I'd like to complete a task with others"
-                            color="#A1D991">    
-                        </Card>
+                            color="#A1D991" 
+                            imageUri={require('./../assets/icons8-user-groups-100.png')}
+                         />
                     </View>
                 </View>
             </View>
