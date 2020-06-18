@@ -25,7 +25,14 @@ class WelcomeScreen extends Component {
             text="My Tasks"
             color="#A1D991"
             onPress={() => {
-              this.props.navigation.navigate("TaskDetail");
+              this.props.navigation.navigate("TaskDetail", {
+                taskTitle: "Make the Bed",
+                taskTimer: "5:00\nMins",
+                taskTimestamp: "October 20, 2020 11:13:00",
+                taskDescription:
+                  "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
+                taskPoints: 2,
+              });
             }}
           />
         </View>

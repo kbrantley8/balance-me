@@ -17,11 +17,11 @@ class TaskDetail extends Component {
     });
 
     this.state = {
-      taskTitle: this.props.route.params["title"],
-      taskTimer: this.props.route.params["Time"],
-      taskDescription: this.props.route.params["Description"],
-      taskTimeStamp: new Date(this.props.route.params["Timestamp"]),
-      points: this.props.route.params["points"],
+      taskTitle: this.props.route.params["taskTitle"],
+      taskTimer: this.props.route.params["taskTimer"],
+      taskDescription: this.props.route.params["taskDescription"],
+      taskTimeStamp: new Date(this.props.route.params["taskTimestamp"]),
+      points: this.props.route.params["taskPoints"],
     };
 
     this.editTask = this.editTask.bind(this);
@@ -51,7 +51,15 @@ class TaskDetail extends Component {
             }}
           >
             <Text style={styles.TimeTitle}>Time</Text>
-            <Text style={styles.Time}>{this.state.taskTimer}</Text>
+            <View
+              style={{
+                flex: 2,
+                justifyContent: "center",
+                alignSelf: "center",
+              }}
+            >
+              <Text style={styles.Time}>{this.state.taskTimer}</Text>
+            </View>
           </View>
         </View>
 
@@ -82,7 +90,7 @@ class TaskDetail extends Component {
                   alignSelf: "center",
                 }}
               >
-                <Text style={styles.ValueBox}>
+                <Text style={styles.CenterTimeStamp}>
                   {this.state.taskTimeStamp.toString()}
                 </Text>
               </View>
@@ -91,7 +99,13 @@ class TaskDetail extends Component {
               <Text style={[styles.SubHeading, { textAlign: "center" }]}>
                 Points
               </Text>
-              <View style={{ flex: 1, justifyContent: "center" }}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignSelf: "center",
+                }}
+              >
                 <Text style={styles.Points}>{this.state.points}</Text>
               </View>
             </View>
@@ -151,7 +165,7 @@ const styles = StyleSheet.create({
     padding: 5,
     flex: 1,
   },
-  ValueBox: {
+  CenterTimeStamp: {
     fontSize: 15,
     letterSpacing: 1,
     textAlign: "justify",
@@ -174,10 +188,6 @@ const styles = StyleSheet.create({
   Time: {
     fontSize: 30,
     fontWeight: "700",
-    color: "black",
-    padding: 5,
-    textAlign: "center",
-    flex: 2,
   },
   TimeTitle: {
     flex: 1,
