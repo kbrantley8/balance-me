@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
+import Task from './../components/task';
 import PropTypes from 'prop-types';
 
 
@@ -16,7 +17,8 @@ class MyTasks extends Component {
             <Text style={styles.myTask}>Today's Tasks</Text>
             <Text style={styles.date}>{getDayOfWeek() + ', ' + getMonthofYear() + ' ' + getDay()}</Text>
             <Text style={styles.progress}>Your Progress</Text>
-
+            <Text style={styles.progress}>Overdue</Text>
+            <Task/>
         </View>
   );
   }
