@@ -17,32 +17,40 @@ class MyTasks extends Component {
             <Text style={styles.myTask}>Today's Tasks</Text>
             <Text style={styles.date}>{getDayOfWeek() + ', ' + getMonthofYear() + ' ' + getDay()}</Text>
             <Text style={styles.progress}>Your Progress</Text>
-            <Text style={styles.progress}>Overdue</Text>
-            <Task/>
+            {/* progress bar */}
+            { this.props.tasks ?
+             <Text style={styles.progress}>Overdue</Text> :
+             <Text style={styles.progress}>It looks like you don't have any tasks for today!</Text>
+            }
+            <Task />
         </View>
   );
   }
 }
 
+
+
+// functions about getting the date
 const getDay = () => {
     return new Date().getDate(); 
 }
-
 const getDayOfWeek=() => {
     const dayOfWeek = new Date().getDay();    
     return isNaN(dayOfWeek) ? null : 
       ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
   }
-
   const getMonthofYear=() => {
     const month = new Date().getMonth();  
-    console.log(month);
     return isNaN(month) ? null : 
       ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November','December'][month];
   }
 
+// functions for returning a list of tasks
+const taskCreation = (tasks) => {
+    
+}
 
-
+// style sheet
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -74,12 +82,12 @@ const styles = StyleSheet.create({
   
   //puts restrictions on what type each prop can be
 MyTasks.propTypes = {
-    date: PropTypes.number
+    tasks: PropTypes.array
   };
   
   // what will the default be if none is specified
 MyTasks.defaultProps = {
-
+    tasks: null
   }
 
 export default MyTasks;
