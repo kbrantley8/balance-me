@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Task from './../components/task';
+import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
 
 
@@ -9,6 +10,7 @@ import PropTypes from 'prop-types';
 class MyTasks extends Component {
   constructor(props) {
     super(props);
+    
   }
 
   render() {
@@ -18,13 +20,7 @@ class MyTasks extends Component {
             <Text style={styles.date}>{getDayOfWeek() + ', ' + getMonthofYear() + ' ' + getDay()}</Text>
             <Text style={styles.progress}>Your Progress</Text>
             {/* progress bar */}
-            { this.props.tasks ?
-             <Text style={styles.progress}>Overdue</Text> :
-             <Text style={styles.progress}>It looks like you don't have any tasks for today!</Text>
-            }
-            <Task type='upcoming'/>
-            <Task type='completed'/>
-            <Task type='overdue'/>
+            { this.props.tasks ? addTasks() : noTasks()  }
         </View>
   );
   }
@@ -47,9 +43,26 @@ const getDayOfWeek=() => {
       ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November','December'][month];
   }
 
+
 // functions for returning a list of tasks
-const taskCreation = (tasks) => {
-    
+const addTasks = (tasks) => {
+    return  (
+        <View>
+            <Task />
+            <Task completed />
+            <Task type='overdue'/>
+        </View>
+    )
+}
+
+//if there are no tasks
+noTasks = () => {
+    return (
+        <View style={styles.noTasks}>
+            <Text style={styles.progress}>It looks like you don't have any tasks for today!</Text>
+            <PrimaryButton text='Add a Task' color='#55A61C'/>
+        </View>
+    )
 }
 
 // style sheet
@@ -79,13 +92,22 @@ const styles = StyleSheet.create({
     },
     tasks: {
 
+    },
+    noTasks: {
+        justifyContent: 'center',
+        alignContent: 'center'
     }
   });
   
-  //puts restrictions on what type each prop can be
+/*
+ Props:
+    tasks: An array of tasks. Need to extract task[i].time to figure out if the task is
+         upcoming, overdue, or completed
+            -bool for completed?
+*/
 MyTasks.propTypes = {
-    tasks: PropTypes.array
-  };
+    tasks: PropTypes.arrayOf(<Task/>)
+};
   
   // what will the default be if none is specified
 MyTasks.defaultProps = {
