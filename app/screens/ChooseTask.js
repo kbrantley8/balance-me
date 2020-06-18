@@ -25,29 +25,37 @@ class CreateTask extends Component {
                             height={140}
                             width={140}
                             color="#7FD7FF"
-                            >
-                        </Card>
+                            imageUri={require('./../assets/icons8-healthy-eating-100.png')}
+                            imgHeight={70}
+                            imgWidth={70}
+                        />
                         <Card 
                             text="Activity"
                             height={140}
                             width={140}
                             color="#A1D991"
-                            >    
-                        </Card>
+                            imageUri={require('./../assets/icons8-running-100.png')}
+                            imgHeight={70}
+                            imgWidth={70}
+                        />
                         <Card 
                             text="Chore"
                             height={140}
                             width={140}
                             color="#F24822"
-                            >    
-                        </Card>
+                            imageUri={require('./../assets/icons8-yard-work-100.png')}
+                            imgHeight={70}
+                            imgWidth={70}
+                        />
                         <Card 
                             text="Custom"
                             height={140}
                             width={140}
                             color="#F2CD5C"
-                            >    
-                        </Card>
+                            imageUri={require('./../assets/icons8-add-new-100.png')}
+                            imgHeight={70}
+                            imgWidth={70}
+                        />
                     </View>
                 </View>
             </View>

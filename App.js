@@ -1,6 +1,7 @@
 import * as React from "react";
 import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
+import FirstTimeUser from "./app/screens/FirstTimeUser";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import CreateTask from "./app/screens/CreateTask";
 import ChooseTask from "./app/screens/ChooseTask";
@@ -8,18 +9,26 @@ import TaskDetail from "./app/screens/TaskDetail";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+
 const Stack = createStackNavigator();
 
+
+//TODO: Display screen only if name prop not set (should probably be done from App.js using AsyncStorage)
 export default function App() {
   const headerOption = { headerShown: false };
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="FirstTimeUser"
+          component={FirstTimeUser}
+          options={headerOption}
+        />
+        <Stack.Screen
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={headerOption}
-          initialParams={{ name: "Morgan" }}
+          initialParams={{ name: global.username }}
         />
         <Stack.Screen
           name="CreateTask"
