@@ -4,20 +4,13 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 
 
 /*
-Task needs:
--type
--image
--title
--pt value
--time
-
-for description page
--about 
--est time
--category
+Props: 
+    type: 'overdue', 'upcoming', 'completed'
+    imageUri: require('string-to-asset-image')
+    text: the title of the task
+    time: time of the task (currently a string, will need to change)
+    pointValue: number, point value
 */
-
-
 export default class Task extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +25,11 @@ export default class Task extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={[styles.button, {backgroundColor: 'pink'}]}
+          style={[styles.button, taskType(this.props.type)]}
         >
         { this.props.imageUri ? 
-            <Image source={this.props.imageUri} style={styles.image}/>
-             : <Image source={require('./../assets/icons8-task-90.png')} style={styles.image}/>
+            <Image source={this.props.imageUri} style={[styles.image, taskType(this.props.type)]}/>
+             : <Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
         }
         <View style={styles.textContainer}>
             <Text numberOfLines={1} style={styles.text}>{this.props.text} </Text>
@@ -49,22 +42,26 @@ export default class Task extends Component {
   }
 }
 
-// defines the colors of the task cards depending on their type:
-// 'overdue', 'upcoming', or 'completed' (orange is given if no match)
+/* defines the colors of the task cards depending on their type:
+    'overdue', 'upcoming', or 'completed' (orange is given if no match)
+ */
 taskType = function(type) {
     if (type === 'overdue') {
         return {
-            backgroundColor: 'red',
-            borderLeftColor: 'black',
-            borderLeft: 2
+            backgroundColor: '#FEEDEA',
+            borderLeftColor: '#F24822',
         }
     } else if (type === 'upcoming'){
         return {
-            backgroundColor: 'pink'
+            backgroundColor: '#FCF5DE',
+            borderLeftColor: '#F2CD5C',
+            // tintColor: '#F2CD5C',
         }
     } else if (type === 'completed'){
         return {
-            backgroundColor: 'pink'
+            backgroundColor: '#DEEDD2',
+            borderLeftColor: '#55A61C',
+            // tintColor: '#55A61C'
         }
     } else {
         return {
@@ -82,7 +79,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 70,
     width: 340,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderLeftWidth: 4,
   },
   image: {
     marginBottom: 6,
@@ -91,7 +89,7 @@ const styles = StyleSheet.create({
     width: 45
   },
   textContainer: {
-    width: 200,
+    width: 196,
     marginRight: 16,
     paddingHorizontal: 6,
     borderRightWidth: 1
@@ -129,8 +127,8 @@ Task.propTypes = {
 Task.defaultProps = {
   imageUri: null,
   text: 'Define Task Here',
-  type: 'overdue',
-  time: '9:00',
+  type: 'upcoming',
+  time: '9:00', //will prob need to change this to make it an actual time
   pointValue: 10,
 
   onPress: () => {}

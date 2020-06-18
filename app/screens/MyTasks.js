@@ -22,7 +22,9 @@ class MyTasks extends Component {
              <Text style={styles.progress}>Overdue</Text> :
              <Text style={styles.progress}>It looks like you don't have any tasks for today!</Text>
             }
-            <Task />
+            <Task type='upcoming'/>
+            <Task type='completed'/>
+            <Task type='overdue'/>
         </View>
   );
   }
