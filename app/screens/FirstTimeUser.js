@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 // import t from 'tcomb-form-native';
 
 const userService = require('../backend/services/userService.js');
+const taskService = require('../backend/services/taskService.js');
 
 // const Form = t.form.Form;
 
@@ -58,16 +59,114 @@ class FirstTimeUser extends Component {
 
     handleBackendTest = async () => {
         //test getUser()
-        var user = await userService.getUser({ email: "john_doe@gmail.com" }).then((a) => {
-            console.log(a)
-            return a
-        })
+        // var user = await userService.getUser({ email: "john_doe@gmail.com" }).then((user) => {
+        //     return user
+        // })
+        // console.log(user)
 
-        // var temp = await userService.createNewUser({first_name: "kory", last_name: "brantley", account_type: 0, password: "apricot", email: "temp1@gmail.com"}).then((a) => {
-        //     return a
-        //   })
-        //   console.log(temp)
-        //   return
+        //test createUser
+        // var user = await userService.createUser({
+        //     first_name: "kory", 
+        //     last_name: "brantley", 
+        //     account_type: 0, 
+        //     password: "apricot", 
+        //     email: "temp1@gmail.com"
+        // }).then((user) => {
+        //     return user
+        // })
+        // console.log(user)
+
+        //test getAllUsers()
+        // var users = await userService.getAllUsers().then((users) => {
+        //     return users
+        // })
+        // console.log(users)
+
+        //test updateEmail()
+        // var user = await userService.updateEmail({
+        //     old_email: "jane_doe1@gmail.com",
+        //     new_email: "jane_doe@gmail.com",
+        //     password: "password"
+        // }).then((user) => {
+        //     return user
+        // })
+        // console.log(user)
+
+        //test getAssignedTasks()
+        // var tasks = await userService.getAssignedTasks({ email: "jane_doe@gmail.com" }).then((tasks) => {
+        //     return tasks
+        // })
+        // for (var ind in tasks) {
+        //     var curr = tasks[ind];
+        //     console.log(curr.name)
+        // }
+
+        //test getAllTasks()
+        // var tasks = await taskService.getAllTasks().then(tasks => {
+        //     return tasks
+        // })
+        // console.log(tasks)
+
+        //test createTask()
+        // var task = await taskService.createTask({
+        //     name: "Test Task 1",
+        //     point_value: 10,
+        //     category_id: 0,
+        //     estimated_time: 300,
+        //     description: "Test Task 1 Description",
+        //     start_time: 1592347976,
+        //     estimated_completion_time: 1592348276,
+        //     status: 3,
+        //     assigned_user_id: "0",
+        //     created_user_id: "1"
+        // }).then(task => {
+        //     return task
+        // })
+        // console.log(task)
+
+        //test getTask()
+        // var task = await taskService.getTask({ task_id: "5eebf44ab4df80535c890f9d" }).then(task => {
+        //     return task
+        // })
+        // console.log(task)
+
+        //test updateTask()
+        // var data = {
+        //     name: "Test Task 1"
+        // }
+        // var task = await taskService.updateTask({ task_id: "5eebf44ab4df80535c890f9d", data }).then(task => {
+        //     return task
+        // })
+        // console.log(task)
+
+        //test assignTask()
+        // var task = await taskService.assignTask({ assigned_email: "jane_doe@gmail.com", task_id: "5eebf44ab4df80535c890f9d" }).then(task => {
+        //     return task
+        // })
+        // console.log(task)
+
+        //test getAssignedUser()
+        // var user = await taskService.getAssignedUser({ task_id: "5eebf44ab4df80535c890f9d" }).then(user => {
+        //     return user
+        // })
+        // console.log(user)
+
+        // test getCreatedUser()
+        // var user = await taskService.getCreatedUser({ task_id: "5eebf44ab4df80535c890f9d" }).then(user => {
+        //     return user
+        // })
+        // console.log(user)
+
+        // test updateTaskHistory()
+        // var history_log = {
+        //     completion_time: 123,
+        //     estimated_completion_time: 123,
+        //     status: 2
+        // }
+        // var user = await taskService.updateTaskHistory({ task_id: "5eebf44ab4df80535c890f9d", history_log }).then(user => {
+        //     return user
+        // })
+        // console.log(user)
       
     }
 

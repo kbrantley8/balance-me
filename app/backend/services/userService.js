@@ -1,8 +1,8 @@
 const axios = require('axios');
-const urlbase = 'http://localhost:3000';
+const urlbase = 'https://balance-me-proj.herokuapp.com';
 
-exports.getListOfUsers = async () => {
-
+exports.getAllUsers = async () => {
+  try {
     var users = await axios.get(urlbase + '/users')
     .then((response) => {
 
@@ -11,9 +11,12 @@ exports.getListOfUsers = async () => {
     });
 
     return users;
+  } catch (e) {
+    console.log(e.message)
+  }
 }
 
-exports.createNewUser = async ({first_name, last_name, account_type, password, email}) => {
+exports.createUser = async ({first_name, last_name, account_type, password, email}) => {
 
   try {
     var user = await axios.post(urlbase + '/createUser', 
@@ -23,8 +26,10 @@ exports.createNewUser = async ({first_name, last_name, account_type, password, e
         password, 
         email
       }).then(user => {
-        return user
+        return user;
       })
+
+      return user;
 
   } catch (e) {
     console.log(e.message)
@@ -41,8 +46,10 @@ exports.getUser = async ({ email }) => {
         }
       }
       ).then(user => {
-        return user
+        return user.data
       })
+
+      return user;
 
   } catch (e) {
     console.log(e)
@@ -58,8 +65,10 @@ exports.updateEmail = async ({ old_email, new_email, password }) => {
         new_email,
         password
       }).then(user => {
-        return user
+        return user.data
       })
+
+      return user;
 
   } catch (e) {
     console.log(e.message)
@@ -75,8 +84,10 @@ exports.getAssignedTasks = async ({ email }) => {
           email
         }
       }).then(tasks => {
-        return tasks
+        return tasks.data
       })
+
+    return tasks;
 
   } catch (e) {
     console.log(e.message)
@@ -92,8 +103,10 @@ exports.getCreatedTasks = async ({ email }) => {
           email
         }
       }).then(tasks => {
-        return tasks
+        return tasks.data
       })
+
+    return tasks;
 
   } catch (e) {
     console.log(e.message)

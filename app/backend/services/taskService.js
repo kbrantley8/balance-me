@@ -1,19 +1,23 @@
 const axios = require('axios');
-const urlbase = 'http://localhost:3000';
+const urlbase = 'https://balance-me-proj.herokuapp.com';
+// const urlbase = 'http://localhost:3000';
 
-exports.getListOfTasks = async () => {
+exports.getAllTasks = async () => {
 
-    var tasks = await axios.get(urlbase + '/tasks')
-    .then((response) => {
+    try {
+        var tasks = await axios.get(urlbase + '/tasks').then((response) => {
 
-      return response.data;
-      
-    });
+            return response.data;
+        
+        });
 
-    return tasks;
+        return tasks;
+    } catch (e) {
+        console.log(e)
+    }
 }
 
-exports.createNewTask = async ({
+exports.createTask = async ({
     name,
     point_value, 
     category_id, 
@@ -27,31 +31,35 @@ exports.createNewTask = async ({
     created_user_id
 }) => {
 
-    if (!{image_path}) {
+    if (!image_path) {
         image_path = "temp_path.jpg"
     }
 
-  try {
-    var task = await axios.post(urlbase + '/createTask', 
-    {
-        name,
-        point_value, 
-        category_id, 
-        estimated_time, 
-        description,
-        start_time,
-        estimated_completion_time,
-        status,
-        image_path,
-        assigned_user_id,
-        created_user_id
-    })
+    try {
+        var task = await axios.post(urlbase + '/createTask', 
+        {
+            data: {
+                name,
+                point_value, 
+                category_id, 
+                estimated_time, 
+                description,
+                start_time,
+                estimated_completion_time,
+                status,
+                image_path,
+                assigned_user_id,
+                created_user_id
+            }
+        }).then(task => {
+            return task.data;
+        })
 
-    return task
+        return task
 
-  } catch (e) {
-    console.log(e.message)
-  }
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 exports.getTask = async ({ task_id }) => {
@@ -62,6 +70,8 @@ exports.getTask = async ({ task_id }) => {
             params: {
                 task_id
             }
+        }).then(task => {
+            return task.data;
         })
   
       return task
@@ -78,6 +88,8 @@ exports.updateTask = async ({ task_id, data }) => {
         { 
             task_id,
             data
+        }).then(task => {
+            return task.data;
         })
 
         return task
@@ -87,13 +99,15 @@ exports.updateTask = async ({ task_id, data }) => {
     }
 }
 
-exports.assignTask = async ({ assigned_to_email, task_id }) => {
+exports.assignTask = async ({ assigned_email, task_id }) => {
 
     try {
         var task = await axios.post(urlbase + '/assignTask', 
         { 
-            assigned_to_email,
+            assigned_email,
             task_id
+        }).then(task => {
+            return task.data
         })
 
         return task
@@ -111,6 +125,8 @@ exports.getAssignedUser = async ({ task_id }) => {
             params: {
                 task_id
             }
+        }).then(user => {
+            return user.data
         })
 
         return user
@@ -128,29 +144,31 @@ exports.getCreatedUser = async ({ task_id }) => {
             params: {
                 task_id
             }
+        }).then(user => {
+            return user.data;
         })
 
         return user
 
     } catch (e) {
-        console.log(e.message)
+        console.log(e)
     }
 }
 
-exports.updateCompletionTime = async ({ completed_time }) => {
-
-    var completed_timestamp = { "completed_time": completed_time };
+exports.updateTaskHistory = async ({ task_id, history_log }) => {
 
     try {
-        var task = await axios.post(urlbase + '/updateTask', 
+        var task = await axios.post(urlbase + '/updateTaskHistory', 
         { 
             task_id,
-            completed_timestamp
+            history_log
+        }).then(task => {
+            return task.data
         })
 
         return task
 
     } catch (e) {
-        console.log(e.message)
+        console.log(e)
     }
 }
