@@ -5,18 +5,63 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 
 /*
 Props: 
+    id: number
     type: 'overdue', 'upcoming', 'completed'
     imageUri: require('string-to-asset-image')
-    text: the title of the task
+    name: the name of the task
     time: time of the task (currently a string, will need to change)
-    pointValue: number, point value
+    point_value: number, point value
+    completed: bool
+
+    TODO
+    history: array 
+    repeated: string?
+    status: will replace type
+    category_id: integer
+    description: string
+    start_time: 
+    assigned_id
+    created_id
 */
+
+//TODO: AM or PM
+// define a date & time
 export default class Task extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    // set default status state to 3 (upcoming)
+    this.state = {
+        status: 0,
+        completionTime: 0
+    };
   }
+
+
+ //compare time right now to the time that is supposed to be completed by
+  componentDidMount() {
+    //current time & time to complete task by
+    let currentTime = Date.now();
+    let completed = Date.parse(this.props.time);
+
+    //checking- can delete later
+    console.log('Current time:', new Date(currentTime).toLocaleTimeString('en-US'));
+    console.log('Completion time:', new Date(completed).toLocaleTimeString('en-US'));
+
+    // time in between current & completed, in minutes
+    let timeBetween = Math.floor((currentTime - completed)/60000);
+    console.log('time between (minutes):', timeBetween);
+
+    //set to overdue if current time is past completion time, otherwise upcoming
+    if (timeBetween < 0) {
+        this.setState({  status: 0 });
+        console.log('hi', this.state.status);
+    } else {
+        this.setState({  status: 3 })
+        console.log('hi2',this.state.status);
+    }
+  }
+
 
   onPress = () => {
     this.props.onPress();
@@ -34,8 +79,8 @@ export default class Task extends Component {
              : <Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
         }
         <View style={styles.textContainer}>
-            <Text numberOfLines={1} style={styles.text}>{this.props.text} </Text>
-            <Text style={styles.pointValue}>{this.props.pointValue} pts</Text>
+            <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
+            <Text style={styles.point_value}>{this.props.point_value} pts</Text>
         </View>
         <Text style={styles.time}>{this.props.time}</Text>
         </TouchableOpacity>
@@ -47,6 +92,7 @@ export default class Task extends Component {
 /* defines the colors of the task cards depending on their type: 'overdue', 'upcoming', or 'completed'
     @params type
             completed: bool, has the task been completed
+    //TODO: change to status
  */
 taskType = function(type, completed) {
     if (completed) { //is it completed
@@ -93,14 +139,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderRightWidth: 1
   },
-  text: { 
+  name: { 
     color: '#000000',
     fontSize: 18,
     paddingBottom: 3,
     fontWeight: "500",
     flexWrap: 'wrap',
   },
-  pointValue: {
+  point_value: {
     fontSize: 14,
     color: '#000000',
   },
@@ -113,11 +159,12 @@ const styles = StyleSheet.create({
 
 //puts restrictions on what type each prop can be
 Task.propTypes = {
+  id: PropTypes.number,
   imgUri: PropTypes.object,
-  text: PropTypes.string,
+  name: PropTypes.string,
   type: PropTypes.string,
-  time: PropTypes.object,
-  pointValue: PropTypes.number,
+  time: PropTypes.any,
+  point_value: PropTypes.number,
   completed: PropTypes.bool,
 
   onPress: PropTypes.func,
@@ -125,11 +172,12 @@ Task.propTypes = {
 
 // what will the default be if none is specified
 Task.defaultProps = {
+  id: 0,
   imageUri: null,
-  text: 'Define Task Here',
+  name: 'Define Task Here',
   type: 'upcoming',
-  time: '9:00', //will prob need to change this to make it an actual time
-  pointValue: 10,
+  time: '18 Jun 2020 21:40:00 GMT-0400', //will prob need to change this to make it an actual time
+  point_value: 10,
   completed: false,
 
   onPress: () => {}
