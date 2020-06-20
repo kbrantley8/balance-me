@@ -17,7 +17,7 @@ export default class Card extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
+          style={[styles.button, {borderRadius: this.props.borderRad}, {borderColor: this.props.bColor}, {borderWidth: this.props.bWidth}, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
         { this.props.imageUri ? 
             <Image source={this.props.imageUri} style={[styles.image, {height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     padding: 15,
-    borderRadius: 5,
   },
   text: { 
     color: '#FFFFFF',
@@ -61,6 +60,9 @@ const styles = StyleSheet.create({
 Card.propTypes = {
   text: PropTypes.string,
   subtext: PropTypes.string,
+  borderRad: PropTypes.number,
+  bColor: PropTypes.string,
+  bWidth: PropTypes.number,
   color: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,
@@ -74,11 +76,14 @@ Card.propTypes = {
 Card.defaultProps = {
   text: 'hello',
   subtext: '',
+  borderRad: 5,
+  bColor: '#FFFFFF',
+  bWidth: 0,
   color: '#55A61C',
   height: 160,
   width: 150,
   imageUri: null,
   imgWidth: 40,
   imgHeight: 40,
-  onPress: () => {}
+  onPress: () => {},
 }
