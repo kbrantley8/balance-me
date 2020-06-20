@@ -17,7 +17,7 @@ export default class Card extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={[styles.button, {borderRadius: this.props.borderRad}, {borderColor: this.props.bColor}, {borderWidth: this.props.bWidth}, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
+          style={[styles.button, {alignItems: this.props.insideAlign}, {borderRadius: this.props.borderRad}, {borderColor: this.props.bColor}, {borderWidth: this.props.bWidth}, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
         { this.props.imageUri ? 
             <Image source={this.props.imageUri} style={[styles.image, {height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   button: {
-    alignItems: "center",
     padding: 15,
   },
   text: { 
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
 
 //puts restrictions on what type each prop can be
 Card.propTypes = {
+  insideAlign: PropTypes.string,
   text: PropTypes.string,
   subtext: PropTypes.string,
   borderRad: PropTypes.number,
@@ -74,6 +74,7 @@ Card.propTypes = {
 
 // what will the default be if none is specified
 Card.defaultProps = {
+  insideAlign: 'center',
   text: 'hello',
   subtext: '',
   borderRad: 5,
