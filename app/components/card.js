@@ -23,7 +23,7 @@ export default class Card extends Component {
             <Image source={this.props.imageUri} style={[styles.image, {height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
              : null
         }
-        <Text style={styles.text}>{this.props.text}</Text>
+        <Text style={[styles.text, {color: this.props.textColor}]}>{this.props.text}</Text>
         <Text style={styles.subtext}>{this.props.subtext}</Text>
         </TouchableOpacity>
       </View>
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   text: { 
-    color: '#FFFFFF',
     fontSize: 24,
     paddingBottom: 6,
     textAlign: "center",
@@ -64,6 +63,7 @@ Card.propTypes = {
   bColor: PropTypes.string,
   bWidth: PropTypes.number,
   color: PropTypes.string,
+  textColor: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,
   imgSrc: PropTypes.object,
@@ -80,6 +80,7 @@ Card.defaultProps = {
   bColor: '#FFFFFF',
   bWidth: 0,
   color: '#55A61C',
+  textColor: '#FFFFFF',
   height: 160,
   width: 150,
   imageUri: null,
