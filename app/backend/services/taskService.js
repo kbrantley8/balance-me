@@ -13,11 +13,11 @@ exports.getAllTasks = async () => {
 
         return tasks;
     } catch (e) {
-        console.log(e)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.createTask = async ({
+exports.createTask = async (
     name,
     point_value, 
     category_id, 
@@ -29,7 +29,7 @@ exports.createTask = async ({
     image_path,
     assigned_user_id,
     created_user_id
-}) => {
+) => {
 
     if (!image_path) {
         image_path = "temp_path.jpg"
@@ -58,11 +58,11 @@ exports.createTask = async ({
         return task
 
     } catch (e) {
-        console.log(e)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.getTask = async ({ task_id }) => {
+exports.getTask = async (task_id) => {
 
     try {
       var task = await axios.get(urlbase + '/getTask', 
@@ -77,11 +77,11 @@ exports.getTask = async ({ task_id }) => {
       return task
   
     } catch (e) {
-      console.log(e.message)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.updateTask = async ({ task_id, data }) => {
+exports.updateTask = async (task_id, data) => {
 
     try {
         var task = await axios.post(urlbase + '/updateTask', 
@@ -95,11 +95,11 @@ exports.updateTask = async ({ task_id, data }) => {
         return task
 
     } catch (e) {
-        console.log(e.message)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.assignTask = async ({ assigned_email, task_id }) => {
+exports.assignTask = async (assigned_email, task_id) => {
 
     try {
         var task = await axios.post(urlbase + '/assignTask', 
@@ -113,11 +113,11 @@ exports.assignTask = async ({ assigned_email, task_id }) => {
         return task
 
     } catch (e) {
-        console.log(e.message)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.getAssignedUser = async ({ task_id }) => {
+exports.getAssignedUser = async (task_id) => {
 
     try {
         var user = await axios.get(urlbase + '/getAssignedUser', 
@@ -132,11 +132,11 @@ exports.getAssignedUser = async ({ task_id }) => {
         return user
 
     } catch (e) {
-        console.log(e.message)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.getCreatedUser = async ({ task_id }) => {
+exports.getCreatedUser = async (task_id) => {
 
     try {
         var user = await axios.get(urlbase + '/getCreatedUser', 
@@ -151,11 +151,11 @@ exports.getCreatedUser = async ({ task_id }) => {
         return user
 
     } catch (e) {
-        console.log(e)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
 
-exports.updateTaskHistory = async ({ task_id, history_log }) => {
+exports.updateTaskHistory = async (task_id, history_log) => {
 
     try {
         var task = await axios.post(urlbase + '/updateTaskHistory', 
@@ -169,6 +169,6 @@ exports.updateTaskHistory = async ({ task_id, history_log }) => {
         return task
 
     } catch (e) {
-        console.log(e)
+        console.log({status: e.response.status, message: e.response.data.error})
     }
 }
