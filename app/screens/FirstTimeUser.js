@@ -44,7 +44,10 @@ var formOptions = {
 };
 
 
-//TODO: Capture name
+//TODO: Store name globally
+//TODO: Shouldn't be able to go 'back' to this page after page is submitted
+//TODO: Typing many characters makes text box expand off page
+//TODO: Error message makes text box border disappear
 //TODO: Left justify text inside form
 class FirstTimeUser extends Component {
     handleSubmit = async  () => {
