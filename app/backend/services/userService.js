@@ -129,3 +129,21 @@ exports.updatePoints = async (email, points) => {
     console.log({status: e.response.status, message: e.response.data.error})
   }
 }
+
+exports.updateFirstName = async (email, first_name) => {
+
+  try {
+    var user = await axios.post(urlbase + '/updateFirstName', 
+      { 
+        email,
+        first_name
+      }).then(user => {
+        return user.data
+      })
+
+    return user;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error})
+  }
+}

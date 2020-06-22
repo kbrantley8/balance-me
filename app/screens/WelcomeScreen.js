@@ -15,14 +15,6 @@ class WelcomeScreen extends Component {
     this.setState({ user: state.user })
   }
 
-  //DOUBLE CHECK THAT IT UPDATED CONTEXt
-
-  handleBackendTest = async () => {
-    var user = this.state.user;
-    var new_user = await user.updatePoints(89);
-    console.log(new_user);
-  }
-
   render() {
     return (
       <View style={styles.container}>

@@ -11,6 +11,20 @@ module.exports = class User {
         this.email = email;
         this.points = points;
     }
+
+    updateFirstName = async function(new_name) {
+        try {
+            var user = await userService.updateFirstName(this.email, new_name)
+            .then(user => { return user });
+            
+            this.first_name = user.first_name;
+
+            return this;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
     
     updateEmail = async function(new_email, input_password) {
         try {
