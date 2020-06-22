@@ -2,9 +2,25 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./../components/button.js";
 
+import {Context as AppContext} from '../context/appContext';
 class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {}
+  }
+
+  componentWillMount() {
+    let { state } = this.context;
+    this.setState({ user: state.user })
+  }
+
+  //DOUBLE CHECK THAT IT UPDATED CONTEXt
+
+  handleBackendTest = async () => {
+    var user = this.state.user;
+    var new_user = await user.updatePoints(89);
+    console.log(new_user);
   }
 
   render() {
@@ -12,7 +28,7 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.text}>
           <Text style={styles.welcome}>Welcome</Text>
-          <Text style={styles.user}>{this.props.route.params["name"]}!</Text>
+          <Text style={styles.user}>{this.state.user.first_name}!</Text>
         </View>
         <View style={styles.buttons}>
           <PrimaryButton
@@ -30,6 +46,7 @@ class WelcomeScreen extends Component {
     );
   }
 }
+WelcomeScreen.contextType = AppContext;
 
 const styles = StyleSheet.create({
   container: {

@@ -8,6 +8,7 @@ import ChooseTask from "./app/screens/ChooseTask"
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import {Provider as AppProvider} from './app/context/appContext'
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const headerOption = { headerShown: false };
   return (
+    <AppProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -27,7 +29,6 @@ export default function App() {
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={headerOption}
-          initialParams={{ name: global.username }}
         />
         <Stack.Screen
           name="CreateTask"
@@ -41,6 +42,7 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 }
 

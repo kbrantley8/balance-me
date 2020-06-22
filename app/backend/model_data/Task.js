@@ -1,5 +1,5 @@
 const taskService = require("../services/taskService");
-const User = require("../model_data/User")
+// const User = require("../model_data/User")
 
 module.exports = class Task {
     constructor(
@@ -39,51 +39,51 @@ module.exports = class Task {
         this.completed = completed;
         this.active = active;
     };
-    getAssignedUser = async function() {
-        try {
-            var user = await taskService.getAssignedUser(this.id)
-            .then(user => { return user });
+    // getAssignedUser = async function() {
+    //     try {
+    //         var user = await taskService.getAssignedUser(this.id)
+    //         .then(user => { return user });
 
-            var return_user = new User(
-                user.user_id,
-                user.first_name,
-                user.last_name,
-                user.account_type,
-                user.password,
-                user.email,
-                user.points
-            )
+    //         var return_user = new User(
+    //             user.user_id,
+    //             user.first_name,
+    //             user.last_name,
+    //             user.account_type,
+    //             user.password,
+    //             user.email,
+    //             user.points
+    //         )
 
-            return return_user;
+    //         return return_user;
 
-        } catch (e) {
-            console.log(e);
-            return false;
-        }
-    };
+    //     } catch (e) {
+    //         console.log(e);
+    //         return false;
+    //     }
+    // };
 
-    getCreatedUser = async function() {
-        try {
-            var user = await taskService.getCreatedUser(this.id)
-            .then(user => { return user });
+    // getCreatedUser = async function() {
+    //     try {
+    //         var user = await taskService.getCreatedUser(this.id)
+    //         .then(user => { return user });
 
-            var return_user = new User(
-                user.user_id,
-                user.first_name,
-                user.last_name,
-                user.account_type,
-                user.password,
-                user.email,
-                user.points
-            )
+    //         var return_user = new User(
+    //             user.user_id,
+    //             user.first_name,
+    //             user.last_name,
+    //             user.account_type,
+    //             user.password,
+    //             user.email,
+    //             user.points
+    //         )
 
-            return return_user;
+    //         return return_user;
             
-        } catch (e) {
-            console.log(e);
-            return false;
-        }
-    }
+    //     } catch (e) {
+    //         console.log(e);
+    //         return false;
+    //     }
+    // }
 
     update = async function(
         name,
