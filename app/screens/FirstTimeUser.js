@@ -61,7 +61,7 @@ class FirstTimeUser extends Component {
         }
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         await this.context.fetchData("jane_doe@gmail.com");
     }
 

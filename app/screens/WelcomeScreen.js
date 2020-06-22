@@ -10,7 +10,7 @@ class WelcomeScreen extends Component {
     this.state = {}
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let { state } = this.context;
     this.setState({ user: state.user })
   }
