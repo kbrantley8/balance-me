@@ -61,7 +61,8 @@ const addTasks = (tasks) => {
     const TaskList = sorted.map(task => {
         return (
             <View>
-                {task.completed ? <Text>Completed</Text> : <Text>Incomplete</Text>}
+                {/* TODO: find first of each time so I can put <Text>Completed</Text>, 
+                or whatever status it is*/}
                 <Task
                         id={task.id}
                         completed={task.completed}
