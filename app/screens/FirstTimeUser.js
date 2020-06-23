@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import PrimaryButton from "./../components/button.js";
 
+import {Context as AppContext} from '../context/appContext';
+
 import 'react-native-gesture-handler';
 import t from 'tcomb-form-native';
 
@@ -42,17 +44,34 @@ var formOptions = {
 };
 
 
-//TODO: Capture name
+//TODO: Store name globally
+//TODO: Shouldn't be able to go 'back' to this page after page is submitted
+//TODO: Typing many characters makes text box expand off page
+//TODO: Error message makes text box border disappear
 //TODO: Left justify text inside form
 class FirstTimeUser extends Component {
-    handleSubmit = () => {
+    handleSubmit = async  () => {
         const value = this._form.getValue(); // use ref to get the form value
         console.log('value: ', value);
         if (value != null) {
             global.username = value;
+            // KORY TODO: when we get local storage, add way of pulling local data instead of remote
+            await this.context.state.user.updateFirstName(value.name);
             this.props.navigation.navigate("WelcomeScreen");
         }
     }
+
+    async UNSAFE_componentWillMount() {
+        await this.context.fetchData("kbrantley@gmail.com");
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            name: ""
+        }
+    }  
 
     render() {
         return (
@@ -79,6 +98,7 @@ class FirstTimeUser extends Component {
         );
     }
 }
+FirstTimeUser.contextType = AppContext;
 
 const styles = StyleSheet.create({
     container: {

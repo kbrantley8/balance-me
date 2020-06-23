@@ -17,14 +17,14 @@ export default class Card extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           onPress={this.onPress}
-          style={[styles.button, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
+          style={[styles.button, {alignItems: this.props.insideAlign}, {borderRadius: this.props.borderRad}, {borderColor: this.props.bColor}, {borderWidth: this.props.bWidth}, {backgroundColor: this.props.color}, {height: this.props.height}, {width: this.props.width}]}
         >
         { this.props.imageUri ? 
             <Image source={this.props.imageUri} style={[styles.image, {height:this.props.imgHeight},{width: this.props.imgWidth}]}/>
              : null
         }
-        <Text style={styles.text}>{this.props.text}</Text>
-        <Text style={styles.subtext}>{this.props.subtext}</Text>
+        <Text style={[styles.text, {fontSize: this.props.textSize}, {color: this.props.textColor}]}>{this.props.text}</Text>
+        <Text style={[styles.subtext, {fontSize: this.props.subtextSize}, {color: this.props.subtextColor}]}>{this.props.subtext}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -36,20 +36,14 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   button: {
-    alignItems: "center",
     padding: 15,
-    borderRadius: 5,
   },
   text: { 
-    color: '#FFFFFF',
-    fontSize: 24,
     paddingBottom: 6,
     textAlign: "center",
     fontWeight: "500"
   },
   subtext: {
-    fontSize: 14,
-    color: '#FFFFFF',
     textAlign: "center"
   },
   image: {
@@ -59,9 +53,17 @@ const styles = StyleSheet.create({
 
 //puts restrictions on what type each prop can be
 Card.propTypes = {
+  insideAlign: PropTypes.string,
   text: PropTypes.string,
   subtext: PropTypes.string,
+  textSize: PropTypes.number,
+  subtextSize: PropTypes.number,
+  borderRad: PropTypes.number,
+  bColor: PropTypes.string,
+  bWidth: PropTypes.number,
   color: PropTypes.string,
+  textColor: PropTypes.string,
+  subtextColor: PropTypes.string,
   height: PropTypes.number,
   width: PropTypes.number,
   imgSrc: PropTypes.object,
@@ -72,13 +74,21 @@ Card.propTypes = {
 
 // what will the default be if none is specified
 Card.defaultProps = {
+  insideAlign: 'center',
   text: 'hello',
   subtext: '',
+  textSize: 24,
+  subtextSize: 14,
+  borderRad: 5,
+  bColor: '#FFFFFF',
+  bWidth: 0,
   color: '#55A61C',
+  textColor: '#000000',
+  subtextColor: '#000000',
   height: 160,
   width: 150,
   imageUri: null,
   imgWidth: 40,
   imgHeight: 40,
-  onPress: () => {}
+  onPress: () => {},
 }
