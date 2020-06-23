@@ -45,7 +45,6 @@ const getDayOfWeek=() => {
 
 // functions for returning a list of tasks
 const addTasks = (tasks) => {
-   
     //get completed tasks
     const complete = tasks.filter(task => task.completed);
 
@@ -56,19 +55,22 @@ const addTasks = (tasks) => {
     const ordered = incomplete.sort(function(a,b) {  return a.status - b.status;  })
 
     //combine the two arrays by adding the completed to the end of the incomplete list
-     const sorted = ordered.concat(complete);   
+    const sorted = ordered.concat(complete);   
 
     //render the list of tasks
     const TaskList = sorted.map(task => {
         return (
-            <Task
-                    id={task.id}
-                    completed={task.completed}
-                    status={task.status} 
-                    name={task.title}
-                    pointValue={task.point_value}
-                    time={task.date}
-            />
+            <View>
+                {task.completed ? <Text>Completed</Text> : <Text>Incomplete</Text>}
+                <Task
+                        id={task.id}
+                        completed={task.completed}
+                        status={task.status} 
+                        name={task.title}
+                        pointValue={task.point_value}
+                        time={task.date}
+                />
+            </View>
         )
     })
     
