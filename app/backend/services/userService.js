@@ -51,7 +51,7 @@ exports.getUser = async (email) => {
       return user;
 
   } catch (e) {
-    console.log({status: e.response.status, message: e.response.data.error})
+    console.log({status: e.response.status, message: e.response.data.error, location: "userService.getUser()"})
   }
 }
 
@@ -89,7 +89,7 @@ exports.getAssignedTasks = async (email) => {
     return tasks;
 
   } catch (e) {
-    console.log({status: e.response.status, message: e.response.data.error})
+    console.log({status: e.response.status, message: e.response.data.error, location: "userService.getAssignedTasks()"})
   }
 }
 
@@ -108,7 +108,7 @@ exports.getCreatedTasks = async (email) => {
     return tasks;
 
   } catch (e) {
-    console.log({status: e.response.status, message: e.response.data.error})
+    console.log({status: e.response.status, message: e.response.data.error, location: "userService.getCreatedTasks()"})
   }
 }
 

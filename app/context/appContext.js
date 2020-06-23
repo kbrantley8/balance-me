@@ -8,6 +8,8 @@ const authReducer = (state, action) => {
     switch(action.type) {
         case 'fetch_data':
             return {...state, user: action.user, assigned_tasks: action.assigned_tasks, created_tasks: action.created_tasks}
+        case 'add_error':
+            return {...state, error_message: action.error_message}
         default: 
             return state;
     }
@@ -36,6 +38,7 @@ export const {Provider, Context} = createDataContext(
     {
         user: new User(),
         assigned_tasks: new Task(),
-        created_tasks: new Task()
+        created_tasks: new Task(),
+        error_message: ''
     }
 )
