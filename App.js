@@ -5,6 +5,7 @@ import FirstTimeUser from "./app/screens/FirstTimeUser";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import CreateTask from "./app/screens/CreateTask";
 import ChooseTask from "./app/screens/ChooseTask"
+import MyTasks from "./app/screens/MyTasks";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -37,6 +38,11 @@ export default function App() {
         <Stack.Screen
           name="ChooseTask"
           component={ChooseTask}
+          options={headerOption}
+        />
+       <Stack.Screen
+          name="MyTasks"
+          component={MyTasks}
           options={headerOption}
         />
       </Stack.Navigator>

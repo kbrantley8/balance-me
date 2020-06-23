@@ -24,6 +24,9 @@ class WelcomeScreen extends Component {
           <PrimaryButton 
             text="My Tasks"
             color="#A1D991"
+            onPress={() => {
+                this.props.navigation.navigate("MyTasks");
+            }}
           />
         </View>
       </View>
