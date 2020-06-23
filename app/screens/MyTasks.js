@@ -51,6 +51,14 @@ const addTasks = (tasks) => {
     // get incomplete tasks
     const incomplete = tasks.filter(task => !task.completed)
 
+    //get each incomplete task type
+    const overdue = incomplete.filter(task => task.status === 0);
+    const inProgress = incomplete.filter(task => task.status === 1);
+    const upcoming = incomplete.filter(task => task.status === 2);
+    const missed = incomplete.filter(task => task.status === 3);
+
+    
+
     // sort the incomplete tasks
     const ordered = incomplete.sort(function(a,b) {  return a.status - b.status;  })
 
@@ -64,12 +72,12 @@ const addTasks = (tasks) => {
                 {/* TODO: find first of each time so I can put <Text>Completed</Text>, 
                 or whatever status it is*/}
                 <Task
-                        id={task.id}
-                        completed={task.completed}
-                        status={task.status} 
-                        name={task.title}
-                        pointValue={task.point_value}
-                        time={task.date}
+                    id={task.id}
+                    completed={task.completed}
+                    status={task.status} 
+                    name={task.title}
+                    pointValue={task.point_value}
+                    time={task.date}
                 />
             </View>
         )
@@ -173,7 +181,6 @@ MyTasks.defaultProps = {
         date: '06-19-2020 9:00am',
         status: 3
      }
-
     ]
     // tasks: null
   }
