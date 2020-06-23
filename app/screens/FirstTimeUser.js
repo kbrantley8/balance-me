@@ -65,7 +65,7 @@ class FirstTimeUser extends Component {
         if (value != '' || value != null) {
             global.username = value;
             // KORY TODO: when we get local storage, add way of pulling local data instead of remote
-            await this.context.state.user.updateFirstName(value.name);
+            await this.context.state.user.updateFirstName(value);
             this.props.navigation.navigate("WelcomeScreen");
         }
     }
