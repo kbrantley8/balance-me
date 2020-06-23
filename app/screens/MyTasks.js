@@ -42,8 +42,31 @@ const getDayOfWeek=() => {
       ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November','December'][month];
   }
 
+// creates a section of tasks with a title and list of tasks, if the array is not empty
+const createTasks = (taskList, text) => {
+    const TaskList = taskList.map(task => {
+        return (
+        <Task
+            id={task.id}
+            completed={task.completed}
+            status={task.status} 
+            name={task.title}
+            pointValue={task.point_value}
+            time={task.date}
+        />
+        )
+    })  
+    return (
+        (taskList.length != 0) ? 
+            (<View>
+                <Text style={styles.progress}>{text}</Text>
+                {TaskList}
+            </View>)
+             : null 
+    );
+}
 
-// functions for returning a list of tasks
+//breaks down the tasks array into sections
 const addTasks = (tasks) => {
     //get completed tasks
     const complete = tasks.filter(task => task.completed);
@@ -57,33 +80,15 @@ const addTasks = (tasks) => {
     const upcoming = incomplete.filter(task => task.status === 2);
     const missed = incomplete.filter(task => task.status === 3);
 
-    
-
-    // sort the incomplete tasks
-    const ordered = incomplete.sort(function(a,b) {  return a.status - b.status;  })
-
-    //combine the two arrays by adding the completed to the end of the incomplete list
-    const sorted = ordered.concat(complete);   
-
-    //render the list of tasks
-    const TaskList = sorted.map(task => {
-        return (
-            <View>
-                {/* TODO: find first of each time so I can put <Text>Completed</Text>, 
-                or whatever status it is*/}
-                <Task
-                    id={task.id}
-                    completed={task.completed}
-                    status={task.status} 
-                    name={task.title}
-                    pointValue={task.point_value}
-                    time={task.date}
-                />
-            </View>
-        )
-    })
-    
-    return TaskList;
+    return (
+        <View>
+            {createTasks(overdue, "Overdue")}
+            {createTasks(inProgress, "In Progress")}
+            {createTasks(upcoming, "Upcoming")}
+            {createTasks(complete, "Completed")}
+            {createTasks(missed, "Missed")}
+        </View>
+    )
 }
 
 //if there are no tasks
@@ -180,7 +185,29 @@ MyTasks.defaultProps = {
         img: './../assets/url',
         date: '06-19-2020 9:00am',
         status: 3
-     }
+     },
+     {
+        id: 4,
+        title: 'In progress',
+        description: 'description here',
+        completed: false,
+        estimatedTime: 4,
+        point_value: 10,
+        img: './../assets/url',
+        date: '06-19-2020 9:00am',
+        status: 1
+     },
+     {
+        id: 5,
+        title: 'Status 0',
+        description: 'description here',
+        completed: false,
+        estimatedTime: 4,
+        point_value: 10,
+        img: './../assets/url',
+        date: '06-19-2020 9:00am',
+        status: 0
+     },
     ]
     // tasks: null
   }
