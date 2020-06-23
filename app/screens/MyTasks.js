@@ -5,7 +5,6 @@ import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
 
 
-// need to import tasks
 //create task components out of tasks, render a form page out of that info
 class MyTasks extends Component {
   constructor(props) {
@@ -46,20 +45,34 @@ const getDayOfWeek=() => {
 
 // functions for returning a list of tasks
 const addTasks = (tasks) => {
-    // get current date
-    const date = new Date();
-    console.log(date);
+   
+    //get completed tasks
+    const complete = tasks.filter(task => task.completed);
 
-    //compare to Task Date 
+    // get incomplete tasks
+    const incomplete = tasks.filter(task => !task.completed)
 
-    //organize and render a Task list based on time
-    return  (
-        <View>
-            <Task />
-            <Task completed />
-            <Task type='overdue'/>
-        </View>
-    )
+    // sort the incomplete tasks
+    const ordered = incomplete.sort(function(a,b) {  return a.status - b.status;  })
+
+    //combine the two arrays by adding the completed to the end of the incomplete list
+     const sorted = ordered.concat(complete);   
+
+    //render the list of tasks
+    const TaskList = sorted.map(task => {
+        return (
+            <Task
+                    id={task.id}
+                    completed={task.completed}
+                    status={task.status} 
+                    name={task.title}
+                    pointValue={task.point_value}
+                    time={task.date}
+            />
+        )
+    })
+    
+    return TaskList;
 }
 
 //if there are no tasks
@@ -126,16 +139,38 @@ MyTasks.defaultProps = {
     tasks: [
      {
         id: 1,
-        attributes: {
-            title: 'Make the Bed',
-            description: 'description here',
-            completed: true,
-            estimatedTime: 4,
-            pointValue: 10,
-            img: './../assets/url',
-            date: '06-19-2020 9:00am'
-        }
+        title: 'Status 1',
+        description: 'description here',
+        completed: false,
+        estimatedTime: 4,
+        point_value: 10,
+        img: './../assets/url',
+        date: '06-19-2020 9:00am',
+        status: 1
      },
+     {
+        id: 2,
+        title: 'Status 0',
+        description: 'description here',
+        completed: true,
+        estimatedTime: 4,
+        point_value: 10,
+        img: './../assets/url',
+        date: '06-19-2020 9:00am',
+        status: 0
+     },
+     {
+        id: 3,
+        title: 'Status 3',
+        description: 'description here',
+        completed: false,
+        estimatedTime: 4,
+        point_value: 10,
+        img: './../assets/url',
+        date: '06-19-2020 9:00am',
+        status: 3
+     }
+
     ]
     // tasks: null
   }
