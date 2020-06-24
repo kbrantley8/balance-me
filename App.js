@@ -4,11 +4,17 @@ import { StyleSheet, Text, View } from "react-native";
 import FirstTimeUser from "./app/screens/FirstTimeUser";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import CreateTask from "./app/screens/CreateTask";
+<<<<<<< HEAD
 import ChooseTask from "./app/screens/ChooseTask";
 import TaskDetail from "./app/screens/TaskDetail";
+=======
+import ChooseTask from "./app/screens/ChooseTask"
+import MyTasks from "./app/screens/MyTasks";
+>>>>>>> master
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import {Provider as AppProvider} from './app/context/appContext'
 
 const Stack = createStackNavigator();
 
@@ -17,6 +23,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const headerOption = { headerShown: false };
   return (
+    <AppProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -28,7 +35,6 @@ export default function App() {
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={headerOption}
-          initialParams={{ name: global.username }}
         />
         <Stack.Screen
           name="CreateTask"
@@ -51,10 +57,15 @@ export default function App() {
             taskDescription:
               "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
             taskPoints: 5,
-          }}
+          }}/>
+       <Stack.Screen
+          name="MyTasks"
+          component={MyTasks}
+          options={headerOption}
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 }
 

@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./../components/button.js";
 
+import { Context as AppContext } from "../context/appContext";
 class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
+  }
+
+  UNSAFE_componentWillMount() {
+    let { state } = this.context;
+    this.setState({ user: state.user });
   }
 
   render() {
@@ -12,7 +20,7 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.text}>
           <Text style={styles.welcome}>Welcome</Text>
-          <Text style={styles.user}>{this.props.route.params["name"]}!</Text>
+          <Text style={styles.user}>{this.state.user.first_name}!</Text>
         </View>
         <View style={styles.buttons}>
           <PrimaryButton
@@ -25,14 +33,7 @@ class WelcomeScreen extends Component {
             text="My Tasks"
             color="#A1D991"
             onPress={() => {
-              this.props.navigation.navigate("TaskDetail", {
-                taskTitle: "Make the Bed",
-                taskTimer: "5:00\nMins",
-                taskTimestamp: "October 20, 2020 11:13:00",
-                taskDescription:
-                  "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
-                taskPoints: 2,
-              });
+              this.props.navigation.navigate("MyTasks");
             }}
           />
         </View>
@@ -40,6 +41,7 @@ class WelcomeScreen extends Component {
     );
   }
 }
+WelcomeScreen.contextType = AppContext;
 
 const styles = StyleSheet.create({
   container: {
