@@ -20,7 +20,7 @@ class TaskDetail extends Component {
       taskTitle: this.props.route.params["taskTitle"],
       taskTimer: this.props.route.params["taskTimer"],
       taskDescription: this.props.route.params["taskDescription"],
-      taskTimeStamp: new Date(this.props.route.params["taskTimestamp"]),
+      taskTimeStamp: this.props.route.params["taskTimestamp"],
       points: this.props.route.params["taskPoints"],
     };
 
