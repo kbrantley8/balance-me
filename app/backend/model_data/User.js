@@ -97,7 +97,70 @@ module.exports = class User {
             var tasks = await userService.getCreatedTasks(this.email)
             .then(tasks => { return tasks });
             
-            return tasks;
+            var all_tasks = [];
+            for (var curr_task in tasks) {
+                var task = tasks[curr_task];
+                var new_task = new Task(
+                    task.task_id,
+                    task.name,
+                    task.point_value,
+                    task.category_id, 
+                    task.estimated_time,
+                    task.description,
+                    task.start_time,
+                    task.estimated_completion_time,
+                    task.status,
+                    task.completion_time,
+                    task.image_path,
+                    task.assigned_user_id,
+                    task.created_user_id,
+                    task.history,
+                    task.repeat,
+                    task.completed,
+                    task.active,
+                );
+                all_tasks.push(new_task)
+            }
+
+            return all_tasks;
+            
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+    getDailyTasks = async function() {
+        try {
+            var tasks = await userService.getDailyTasks(this.email)
+            .then(tasks => { return tasks });
+            
+            var all_tasks = [];
+            for (var curr_task in tasks) {
+                var task = tasks[curr_task];
+                var new_task = new Task(
+                    task._id,
+                    task.name,
+                    task.point_value,
+                    task.category_id, 
+                    task.estimated_time,
+                    task.description,
+                    task.start_time,
+                    task.estimated_completion_time,
+                    task.status,
+                    task.completion_time,
+                    task.image_path,
+                    task.assigned_user_id,
+                    task.created_user_id,
+                    task.history,
+                    task.repeat,
+                    task.completed,
+                    task.active,
+                );
+                all_tasks.push(new_task)
+            }
+
+            return all_tasks;
             
         } catch (e) {
             console.log(e);

@@ -4,12 +4,19 @@ import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
 
+import {Context as AppContext} from '../context/appContext';
 
 //create task components out of tasks, render a form page out of that info
 class MyTasks extends Component {
   constructor(props) {
     super(props);
     
+    var state = {};
+  }
+
+  UNSAFE_componentWillMount() {
+    let { state } = this.context;
+    this.setState({ daily_tasks: state.daily_tasks })
   }
 
   render() {
@@ -19,11 +26,13 @@ class MyTasks extends Component {
             <Text style={styles.date}>{getDayOfWeek() + ', ' + getMonthofYear() + ' ' + getDay()}</Text>
             <Text style={styles.progress}>Your Progress</Text>
             {/* progress bar */}
-            { this.props.tasks ? addTasks(this.props.tasks) : noTasks() }
+            {/* { this.props.tasks ? addTasks(this.props.tasks) : noTasks() } */}
+            { this.state.daily_tasks ? addTasks(this.state.daily_tasks) : noTasks() } 
         </View>
   );
   }
 }
+MyTasks.contextType = AppContext;
 
 
 
@@ -79,7 +88,7 @@ const addTasks = (tasks) => {
 }
 
 //if there are no tasks
-noTasks = () => {
+const noTasks = () => {
     return (
         <View style={styles.noTasks}>
             <Text style={styles.noTaskText}>It looks like you don't have any tasks for today!</Text>
