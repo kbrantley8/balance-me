@@ -46,7 +46,7 @@ export default class Task extends Component {
     @params type: 0-3. 0=overdue, 1=IP, 2=upcoming, 3=missed
             completed: bool, has the task been completed
  */
-const taskType = function(status, completed) {
+taskType = function(status, completed) {
     if (completed) { //is it completed
         return {
             backgroundColor: '#DEEDD2',
