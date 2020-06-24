@@ -88,7 +88,7 @@ const addTasks = (tasks) => {
 }
 
 //if there are no tasks
-noTasks = () => {
+const noTasks = () => {
     return (
         <View style={styles.noTasks}>
             <Text style={styles.noTaskText}>It looks like you don't have any tasks for today!</Text>
