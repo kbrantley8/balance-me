@@ -131,8 +131,16 @@ module.exports = class User {
     }
 
     getDailyTasks = async function() {
+        var start = new Date();
+        start.setHours(0,0,0,0);
+        start = (start.getTime() / 1000);
+
+        var end = new Date();
+        end.setHours(23,59,59,0);
+        end = (end.getTime() / 1000);
+
         try {
-            var tasks = await userService.getDailyTasks(this.email)
+            var tasks = await userService.getDailyTasks(this.email, start, end)
             .then(tasks => { return tasks });
             
             var all_tasks = [];

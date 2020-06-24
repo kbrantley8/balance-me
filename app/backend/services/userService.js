@@ -148,13 +148,15 @@ exports.updateFirstName = async (email, first_name) => {
   }
 }
 
-exports.getDailyTasks = async (email) => {
+exports.getDailyTasks = async (email, start_time, end_time) => {
 
   try {
     var tasks = await axios.get(urlbase + '/getDailyTasks', 
       { 
         params: {
-          email
+          email,
+          start_time,
+          end_time
         }
       }).then(tasks => {
         return tasks.data
