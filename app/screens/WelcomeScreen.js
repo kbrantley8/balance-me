@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./../components/button.js";
 
-import {Context as AppContext} from '../context/appContext';
+import { Context as AppContext } from "../context/appContext";
 class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
   UNSAFE_componentWillMount() {
     let { state } = this.context;
-    this.setState({ user: state.user })
+    this.setState({ user: state.user });
   }
 
   render() {
@@ -29,11 +29,11 @@ class WelcomeScreen extends Component {
               this.props.navigation.navigate("CreateTask");
             }}
           />
-          <PrimaryButton 
+          <PrimaryButton
             text="My Tasks"
             color="#A1D991"
             onPress={() => {
-                this.props.navigation.navigate("MyTasks");
+              this.props.navigation.navigate("MyTasks");
             }}
           />
         </View>
