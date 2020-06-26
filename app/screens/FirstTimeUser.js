@@ -1,62 +1,30 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { Input } from 'react-native-elements';
 import PrimaryButton from "./../components/button.js";
 
 import {Context as AppContext} from '../context/appContext';
 
 import 'react-native-gesture-handler';
-import t from 'tcomb-form-native';
-
-const Form = t.form.Form;
-
-const User = t.struct({
-  name: t.String
-});
-
-const formStyles = {
-    ...Form.stylesheet,
-    textbox: {
-        normal: {
-            height: 36,
-            paddingHorizontal: 115,
-            borderRadius: 7,
-            borderColor: "#000000",
-            borderWidth: 1,
-            marginBottom: 5,
-            marginLeft: -50,
-        }
-    }
-}
-
-var formOptions = {
-    auto: 'placeholders',
-    fields: {
-        name: {
-            error: 'Please enter your name',
-            selectionColor: '#F2CD5C',
-            placeholderTextColor: '#F2CD5C',
-            autoCapitalize: 'words',
-            maxLength: 30,
-            textAlign: 'left'
-        }
-    },
-  stylesheet: formStyles,
-};
 
 
-//TODO: Store name globally
 //TODO: Shouldn't be able to go 'back' to this page after page is submitted
-//TODO: Typing many characters makes text box expand off page
-//TODO: Error message makes text box border disappear
-//TODO: Left justify text inside form
 class FirstTimeUser extends Component {
+    state = {
+        namevalue: ''
+    }
+
+    handleName = (text) => {
+        this.setState({ namevalue: text })
+    }
+
     handleSubmit = async  () => {
-        const value = this._form.getValue(); // use ref to get the form value
+        const value = this.state.namevalue;
         console.log('value: ', value);
-        if (value != null) {
+        if (typeof value != 'undefined' && value != '' && value != null) {
             global.username = value;
             // KORY TODO: when we get local storage, add way of pulling local data instead of remote
-            await this.context.state.user.updateFirstName(value.name);
+            await this.context.state.user.updateFirstName(value);
             this.props.navigation.navigate("WelcomeScreen");
         }
     }
@@ -83,10 +51,17 @@ class FirstTimeUser extends Component {
                 <View style={styles.formText}>
                     <Text style={styles.welcome}>What's your name?</Text>
                 </View>
-                <Form
-                    ref={c => this._form = c} // assign a ref
-                    type={User}
-                    options={formOptions}
+                <Input
+                    placeholder='Name'
+                    maxLength={30}
+                    onChangeText={this.handleName}
+                    paddingHorizontal={20}
+                    borderRadius={10}
+                    borderColor="#000000"
+                    borderWidth={1}
+                    marginLeft={35}
+                    marginRight={50}
+                    inputContainerStyle={{borderBottomWidth:0}}
                 />
                 <View style={styles.buttons}>
                     <PrimaryButton
