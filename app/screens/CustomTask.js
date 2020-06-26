@@ -25,6 +25,10 @@ class CustomTask extends Component {
     this.categoryButtons = ["Chore", "Health", "Activity", "Other"];
     this.weekDaysButtons = ["S", "M", "T", "W", "T", "F", "S"];
     this.updateCategoryIndex = this.updateCategoryIndex.bind(this);
+    this.checkInputs = this.checkInputs.bind(this);
+    this.nameRef = React.createRef();
+    this.descriptionRef = React.createRef();
+    this.estimateRef = React.createRef();
     this.state = {
       selectedCategoryIndex: 3,
       selectedDaysIndex: -1,
@@ -36,6 +40,40 @@ class CustomTask extends Component {
       time: null,
     };
   }
+
+  checkInputs() {
+    let ref = null;
+    if (this.state.name == null || this.state.name.length == 0) {
+      ref = this.nameRef;
+    }
+    if (this.state.description == null || this.state.description.length == 0) {
+      if (ref == null) {
+        ref = this.descriptionRef;
+      } else {
+        this.descriptionRef.current.shake();
+      }
+    }
+    if (this.state.time == null || this.state.time == "0") {
+      if (ref == null) {
+        ref = this.estimateRef;
+      } else {
+        this.estimateRef.current.shake();
+      }
+    }
+
+    if (ref != null) {
+      ref.current.shake();
+      ref.current.focus();
+    } else {
+      alert(
+        `Name:${this.state.name}
+        Description:${this.state.description}
+        Time Estimate:${this.state.time}
+        Category:${this.state.category}`
+      );
+    }
+  }
+
   updateCategoryIndex(selectedCategoryIndex) {
     this.setState({
       selectedCategoryIndex,
@@ -53,37 +91,41 @@ class CustomTask extends Component {
 
   render() {
     const { selectedCategoryIndex } = this.state;
-    const input = React.createRef();
     return (
       <View style={styles.Background}>
         <View style={styles.FormBackground}>
           {/* <View style={{ flex: 2, width: "100%" }}> */}
           <Input
-            ref={input}
+            ref={this.nameRef}
             placeholder="Enter a name for the task"
             label="Name"
             onChangeText={(value) => this.setState({ name: value })}
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
+            maxLength={15}
           />
           <Input
+            ref={this.descriptionRef}
             placeholder="Enter a description of the task"
             label="Description"
             onChangeText={(value) => this.setState({ description: value })}
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
+            maxLength={100}
           />
 
           <Input
+            ref={this.estimateRef}
             placeholder="Enter the time in mins"
             label="Time Estimate (Mins)"
-            onChangeText={(value) => this.setState({ name: value })}
+            onChangeText={(value) => this.setState({ time: value })}
             containerStyle={styles.InputContainer}
             keyboardType="number-pad"
             returnKeyLabel="Done"
             returnKeyType="done"
             onSubmitEditing={Keyboard.dismiss}
             labelStyle={styles.labelText}
+            maxLength={3}
           />
           <View style={[styles.InputContainer, { flex: 2 }]}>
             <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
@@ -102,15 +144,7 @@ class CustomTask extends Component {
           <View style={{ flex: 2 }}></View>
         </View>
         <View style={styles.ControlContainer}>
-          <BTN
-            raised={true}
-            title="Create Task"
-            onPress={() => {
-              alert(this.state.category);
-              // Todo: setup a check method
-              input.current.shake();
-            }}
-          />
+          <BTN raised={true} title="Create Task" onPress={this.checkInputs} />
         </View>
       </View>
     );

@@ -20,7 +20,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="CustomTask">
+        <Stack.Navigator>
           <Stack.Screen
             name="FirstTimeUser"
             component={FirstTimeUser}
