@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Keyboard } from "react-native";
-import { Input, Button as BTN, Icon, ButtonGroup } from "react-native-elements";
+import {
+  Input,
+  Button as BTN,
+  Icon,
+  ButtonGroup,
+  Slider,
+} from "react-native-elements";
 
 class CustomTask extends Component {
   constructor(props) {
@@ -31,13 +37,11 @@ class CustomTask extends Component {
     this.estimateRef = React.createRef();
     this.state = {
       selectedCategoryIndex: 3,
-      selectedDaysIndex: -1,
       name: null,
       description: null,
       category: "Other",
-      days: [0, 0, 0, 0, 0, 0, 0],
-      date: null,
       time: null,
+      value: 5,
     };
   }
 
@@ -63,13 +67,15 @@ class CustomTask extends Component {
 
     if (ref != null) {
       ref.current.shake();
+      ref.current.clear();
       ref.current.focus();
     } else {
       alert(
         `Name:${this.state.name}
         Description:${this.state.description}
         Time Estimate:${this.state.time}
-        Category:${this.state.category}`
+        Category:${this.state.category}
+        Point Value:${this.state.value}`
       );
     }
   }
@@ -79,14 +85,6 @@ class CustomTask extends Component {
       selectedCategoryIndex,
       category: this.categoryButtons[selectedCategoryIndex],
     });
-  }
-
-  updateDaysIndex(selectedDaysIndex) {
-    alert(selectedDaysIndex);
-    // this.setState({
-    //   selectedDaysIndex,
-    // });
-    // this.state.days[selectedDaysIndex]
   }
 
   render() {
@@ -99,7 +97,7 @@ class CustomTask extends Component {
             ref={this.nameRef}
             placeholder="Enter a name for the task"
             label="Name"
-            onChangeText={(value) => this.setState({ name: value })}
+            onChangeText={(value) => this.setState({ name: value.trim() })}
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
             maxLength={15}
@@ -108,7 +106,9 @@ class CustomTask extends Component {
             ref={this.descriptionRef}
             placeholder="Enter a description of the task"
             label="Description"
-            onChangeText={(value) => this.setState({ description: value })}
+            onChangeText={(value) =>
+              this.setState({ description: value.trim() })
+            }
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
             maxLength={100}
@@ -138,10 +138,41 @@ class CustomTask extends Component {
               containerStyle={{ flex: 1 }}
             />
           </View>
-          {/* </View> */}
 
-          {/* Time picker will go here */}
-          <View style={{ flex: 2 }}></View>
+          <View style={styles.PointContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={[styles.labelText, { marginBottom: "5%" }]}>
+                Point Value
+              </Text>
+              <View style={styles.ValueCountContainer}>
+                <Icon
+                  name="stars"
+                  size={50}
+                  // style={{ marginRight:  }}
+                  color="gold"
+                  underlayColor="black"
+                  iconStyle={styles.GoldIconStyle}
+                />
+                <Text style={styles.PointValue}>{this.state.value}</Text>
+              </View>
+            </View>
+            <Slider
+              value={this.state.value}
+              onValueChange={(value) => this.setState({ value })}
+              maximumValue={50}
+              minimumValue={1}
+              step={1}
+            />
+          </View>
+
+          {/* Time picker will go here
+          <View style={{ flex: 2 }}></View> */}
         </View>
         <View style={styles.ControlContainer}>
           <BTN raised={true} title="Create Task" onPress={this.checkInputs} />
@@ -155,6 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     flex: 1,
+    minHeight: 550,
   },
   HeaderStyle: {
     backgroundColor: "#F2CD5C",
@@ -163,6 +195,33 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     width: "95%",
+  },
+  PointContainer: {
+    flex: 2,
+    margin: 10,
+    width: "95%",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#fcfbe8",
+    borderRadius: 10,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.5,
+
+    elevation: 5,
+  },
+  ValueCountContainer: {
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: "#F2CD5C",
   },
   FormBackground: {
     flex: 13,
@@ -189,6 +248,24 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "black",
+  },
+  PointValue: {
+    fontWeight: "500",
+    fontSize: 25,
+    textAlign: "center",
+    textDecorationStyle: "solid",
+    textDecorationColor: "black",
+    color: "#b89d0b",
+  },
+  GoldIconStyle: {
+    marginHorizontal: 5,
+    shadowColor: "black",
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
 });
 export default CustomTask;
