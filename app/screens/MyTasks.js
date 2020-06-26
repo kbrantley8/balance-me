@@ -184,7 +184,7 @@ MyTasks.propTypes = {
   tasks: PropTypes.array,
 };
   
-  // what will the default be if none is specified
+// what will the default be if none is specified
 MyTasks.defaultProps = {
     tasks: [
      {
@@ -243,7 +243,7 @@ MyTasks.defaultProps = {
         status: 0
      },
     ]
-    // tasks: null
+    // tasks: null (uncomment to see noTasks() method run)
   }
 
 export default MyTasks;
