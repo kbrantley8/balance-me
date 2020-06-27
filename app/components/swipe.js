@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Animated, StyleSheet, Text } from 'react-native'
-import { RectButton } from 'react-native-gesture-handler'
-import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { RectButton, Swipeable } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon)
@@ -53,7 +52,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: '#55A61C',
     borderRadius: 5,
-    flex: 1,
     justifyContent: 'center',
   }
 })

@@ -18,8 +18,9 @@ export default class Task extends Component {
   };
 
   render() {
-    return (
-      <Swipe>
+    // only render swipeable if overdue, upcoming, or in-progress
+    if (this.props.status === 3 || this.props.completed) {
+      return (
         <View style={styles.container}>
             <TouchableOpacity
               onPress={this.onPress}
@@ -36,8 +37,30 @@ export default class Task extends Component {
             <Text style={styles.time}>{this.props.time}</Text>
             </TouchableOpacity>
         </View>
-      </Swipe>
-    );
+      );
+    } 
+    else {
+      return (
+        <Swipe>
+          <View style={styles.container}>
+              <TouchableOpacity
+                onPress={this.onPress}
+                style={[styles.button, taskType(this.props.status, this.props.completed)]}
+              >
+              { this.props.imageUri ? 
+                  <Image source={this.props.imageUri} style={[styles.image]}/>
+                  :<Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
+              }
+              <View style={styles.textContainer}>
+                  <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
+                  <Text style={styles.point_value}>{this.props.point_value} pts</Text>
+              </View>
+              <Text style={styles.time}>{this.props.time}</Text>
+              </TouchableOpacity>
+          </View>
+        </Swipe>
+      );
+    }
   }
 }
 
