@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
+import TabBar from './../components/tabbar';
 import PropTypes from 'prop-types';
 
 
@@ -17,18 +18,30 @@ class MyTasks extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.myTask}>Today's Tasks</Text>
-        <Text style={styles.date}>
-          {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
-        </Text>
-        <Text style={styles.progress}>Your Progress</Text>
-        <Progress/>
-        {this.props.tasks ? addTasks(this.props.tasks) : noTasks()}
+        <ScrollView style={{flex: 1, padding: 12,}}>
+          <Text style={styles.myTask}>Today's Tasks</Text>
+          <Text style={styles.date}>
+            {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
+          </Text>
+          <Text style={styles.progress}>Your Progress</Text>
+          <Progress/>
+          {this.props.tasks ? addTasks(this.props.tasks) : noTasks()}
+        </ScrollView>
+       
+        <View style={styles.TabBar}>
+         <TabBar/>
+        </View>
       </View>
     );
   }
 }
 
+const getTime = (time) => {
+  let d = new Date(time.toString());
+  console.log(d);
+  console.log(time);
+  return d.getHours();
+}
 // functions about getting the date
 const getDay = () => {
     return new Date().getDate(); 
@@ -69,25 +82,28 @@ const getMonthofYear = () => {
 
 // creates a section of tasks with a title and list of tasks, if the array is not empty
 const createTasks = (taskList, text) => {
-    const TaskList = taskList.map(task => {
+    const TaskList = taskList.map((task, index) => {
         return (
-        <Task
-          id={task.id}
-          completed={task.completed}
-          status={task.status}
-          name={task.title}
-          pointValue={task.point_value}
-          time={task.date}
-          onPress={() => {
-            navigation.navigate("TaskDetail", {
-              taskTitle: `${task.title}`,
-              taskTimer: `${task.estimatedTime}:00\nMins`,
-              taskTimestamp: `${task.date}`, //"October 20, 2020 11:13:00"
-              taskDescription: `${task.description}`,
-              taskPoints: `${task.point_value}`,
-            });
-            }}
-        />
+          <View style={{paddingVertical: 3}}>
+            <Task
+              key={index}
+              id={task.id}
+              completed={task.completed}
+              status={task.status}
+              name={task.title}
+              pointValue={task.point_value}
+              time={getTime(task.date)}
+              onPress={() => {
+                navigation.navigate("TaskDetail", {
+                  taskTitle: `${task.title}`,
+                  taskTimer: `${task.estimatedTime}:00\nMins`,
+                  taskTimestamp: `${task.date}`, //"October 20, 2020 11:13:00"
+                  taskDescription: `${task.description}`,
+                  taskPoints: `${task.point_value}`,
+                });
+                }}
+            />
+          </View>
         )
     })  
     return (
@@ -142,8 +158,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FCFCFC",
-    padding: 12,
-    paddingTop: 24,
   },
   myTask: {
     fontSize: 36,
@@ -174,6 +188,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 6,
   },
+  TabBar: {
+    flex: .1,
+  }
 });
 
 /*
@@ -184,7 +201,7 @@ MyTasks.propTypes = {
   tasks: PropTypes.array,
 };
   
-  // what will the default be if none is specified
+// what will the default be if none is specified
 MyTasks.defaultProps = {
     tasks: [
      {
@@ -243,7 +260,7 @@ MyTasks.defaultProps = {
         status: 0
      },
     ]
-    // tasks: null
+    // tasks: null (uncomment to see noTasks() method run)
   }
 
 export default MyTasks;

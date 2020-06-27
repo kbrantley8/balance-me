@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FCFCFC",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   cards: {

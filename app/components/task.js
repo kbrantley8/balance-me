@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import Swipe from './swipe';
 
 /*
 Props: 
@@ -12,32 +13,30 @@ Props:
     completed: bool
 */
 export default class Task extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   onPress = () => {
     this.props.onPress();
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={this.onPress}
-          style={[styles.button, taskType(this.props.status, this.props.completed)]}
-        >
-        { this.props.imageUri ? 
-             <Image source={this.props.imageUri} style={[styles.image]}/>
-            :<Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
-        }
-        <View style={styles.textContainer}>
-            <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
-            <Text style={styles.point_value}>{this.props.point_value} pts</Text>
+      <Swipe>
+        <View style={styles.container}>
+            <TouchableOpacity
+              onPress={this.onPress}
+              style={[styles.button, taskType(this.props.status, this.props.completed)]}
+            >
+            { this.props.imageUri ? 
+                <Image source={this.props.imageUri} style={[styles.image]}/>
+                :<Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
+            }
+            <View style={styles.textContainer}>
+                <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
+                <Text style={styles.point_value}>{this.props.point_value} pts</Text>
+            </View>
+            <Text style={styles.time}>{this.props.time}</Text>
+            </TouchableOpacity>
         </View>
-        <Text style={styles.time}>{this.props.time}</Text>
-        </TouchableOpacity>
-      </View>
+      </Swipe>
     );
   }
 }
@@ -79,13 +78,12 @@ const taskType = function(status, completed) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 6,
+    flex: 0.8,
   },
   button: {
     padding: 12,
     borderRadius: 5,
     height: 70,
-    width: 340,
     flexDirection: 'row',
     borderLeftWidth: 4,
   },
