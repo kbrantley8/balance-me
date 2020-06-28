@@ -8,6 +8,10 @@ import {
   Slider,
 } from "react-native-elements";
 
+import {Context as AppContext} from '../context/appContext';
+
+const taskService = require("../backend/services/taskService");
+
 class CustomTask extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +49,7 @@ class CustomTask extends Component {
     };
   }
 
-  checkInputs() {
+  async checkInputs() {
     let ref = null;
     if (this.state.name == null || this.state.name.length == 0) {
       ref = this.nameRef;
@@ -70,6 +74,24 @@ class CustomTask extends Component {
       ref.current.clear();
       ref.current.focus();
     } else {
+
+      let { state } = this.context;
+      var current_time = Math.round(Date.now() / 1000);
+      console.log(this.state)
+      var task = await taskService.createTask(
+        this.state.name,
+        this.state.value,
+        this.state.selectedCategoryIndex,
+        this.state.time * 60,
+        this.state.description,
+        current_time + 300,
+        (current_time + 300) + (this.state.time * 60),
+        2,
+        "none",
+        state.user.id,
+        state.user.id
+      )
+
       alert(
         `Name:${this.state.name}
         Description:${this.state.description}
@@ -181,6 +203,7 @@ class CustomTask extends Component {
     );
   }
 }
+CustomTask.contextType = AppContext;
 const styles = StyleSheet.create({
   Background: {
     backgroundColor: "white",
