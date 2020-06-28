@@ -35,20 +35,6 @@ exports.createTask = async (
     if (!image_path) {
         image_path = "temp_path.jpg"
     }
-    var data = {
-        name,
-        point_value, 
-        category_id, 
-        estimated_time, 
-        description,
-        start_time,
-        estimated_completion_time,
-        status,
-        image_path,
-        assigned_user_id,
-        created_user_id
-    }
-    console.log(data)
     try {
         var task = await axios.post(urlbase + '/createTask', 
         {

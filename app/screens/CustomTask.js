@@ -77,7 +77,6 @@ class CustomTask extends Component {
 
       let { state } = this.context;
       var current_time = Math.round(Date.now() / 1000);
-      console.log(this.state)
       var task = await taskService.createTask(
         this.state.name,
         this.state.value,
