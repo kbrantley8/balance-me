@@ -95,7 +95,6 @@ const getMonthofYear = () => {
 // creates a section of tasks with a title and list of tasks, if the array is not empty
 const createTasks = (taskList, text) => {
     const TaskList = taskList.map(task => {
-      console.log(task)
         return (
         <Task
           id={task._id}
