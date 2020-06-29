@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 
 //puts restrictions on what type each prop can be
 Task.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   imgUri: PropTypes.object,
   name: PropTypes.string,
   status: PropTypes.number,
