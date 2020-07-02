@@ -8,6 +8,7 @@ import ChooseTask from "./app/screens/ChooseTask";
 import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
 import CustomTask from "./app/screens/CustomTask";
+import TaskPrompt from "./app/screens/TaskPrompt";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -21,7 +22,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="TaskPrompt">
           <Stack.Screen
             name="FirstTimeUser"
             component={FirstTimeUser}
@@ -61,6 +62,20 @@ export default function App() {
             options={headerOption}
           />
           <Stack.Screen name="CustomTask" component={CustomTask} />
+          <Stack.Screen
+            name="TaskPrompt"
+            component={TaskPrompt}
+            initialParams={{
+              name: "Name of Task",
+              timer: "0:00\nMins",
+              timeStamp: "October 13, 2020 11:13:00",
+              description:
+                "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
+              points: 5,
+              category: "other",
+              type: "Custom",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>

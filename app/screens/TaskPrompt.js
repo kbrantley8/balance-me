@@ -26,8 +26,6 @@ class TaskPrompt extends Component {
       headerStyle: styles.HeaderStyle,
     });
 
-    // this.checkInputs = this.checkInputs.bind(this);
-
     this.state = {
       name: this.props.route.params["name"],
       description: this.props.route.params["description"],
@@ -38,32 +36,6 @@ class TaskPrompt extends Component {
       modalDescriptionVisible: false,
     };
   }
-
-  //   async checkInputs() {
-  //     let { state } = this.context;
-  //     var current_time = Math.round(Date.now() / 1000);
-  //     var task = await taskService.createTask(
-  //       this.state.name,
-  //       this.state.value,
-  //       this.state.selectedCategoryIndex,
-  //       this.state.time * 60,
-  //       this.state.description,
-  //       current_time + 300,
-  //       current_time + 300 + this.state.time * 60,
-  //       2,
-  //       "none",
-  //       state.user.id,
-  //       state.user.id
-  //     );
-
-  //     alert(
-  //       `Name:${this.state.name}
-  //         Description:${this.state.description}
-  //         Time Estimate:${this.state.time}
-  //         Category:${this.state.category}
-  //         Point Value:${this.state.value}`
-  //     );
-  //   }
 
   render() {
     return (
@@ -124,10 +96,13 @@ class TaskPrompt extends Component {
               modalDescriptionVisible: !this.state.modalDescriptionVisible,
             });
           }}
-          overlayStyle={{ margin: 15, maxWidth: "80%", maxHeight: "80%" }}
+          animationType="fade"
+          overlayStyle={styles.modalView}
         >
-          <Text style={styles.SubHeading}>Description</Text>
-          <Text style={styles.modalText}>{this.state.description}</Text>
+          <View>
+            <Text style={styles.SubHeading}>Description</Text>
+            <Text style={styles.modalText}>{this.state.description}</Text>
+          </View>
         </Overlay>
 
         <View style={styles.OptionalInformationContainer}>
