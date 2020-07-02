@@ -114,14 +114,14 @@ const createTasks = (taskList, text) => {
               id={task.id}
               completed={task.completed}
               status={task.status}
-              name={task.title}
-              pointValue={task.point_value}
-              time={(task.date) ? getTime(task.date) : 'null'}
+              name={task.name}
+              point_value={task.point_value}
+              time={(task.start_time) ? getTime(task.start_time) : 'null'}
               onPress={() => {
                 navigation.navigate("TaskDetail", {
-                  taskTitle: `${task.title}`,
-                  taskTimer: `${task.estimatedTime}:00\nMins`,
-                  taskTimestamp: `${task.date}`, //"October 20, 2020 11:13:00"
+                  taskTitle: `${task.name}`,
+                  taskTimer: `${task.estimated_time}:00\nMins`,
+                  taskTimestamp: `${task.start_time}`, //"October 20, 2020 11:13:00"
                   taskDescription: `${task.description}`,
                   taskPoints: `${task.point_value}`,
                 });
@@ -317,19 +317,19 @@ MyTasks.defaultProps = {
         start_time: four_am,
         estimated_completion_time: (four_am + 300)
     }
-    var task_missed = await taskService.updateTask("5ef3a9f5f7c61b0004258670", missed_data).then(task => { return task; }); //updates missed task
+    var task_missed = await taskService.updateTask("5ef3aa85f7c61b0004258671", missed_data).then(task => { return task; }); //updates missed task
 
     var overdue_data = {
         start_time: four_am,
         estimated_completion_time: (four_am + 300)
     }
-    var task_overdue = await taskService.updateTask("5ef3a9f5f7c61b0004258670", overdue_data).then(task => { return task; }); //updates overdue task
+    var task_overdue = await taskService.updateTask("5ef3aeaec70210000476190d", overdue_data).then(task => { return task; }); //updates overdue task
 
     var in_progress_data = {
         start_time: noon,
         estimated_completion_time: (noon + 300)
     }
-    var task_in_progress = await taskService.updateTask("5ef3a9f5f7c61b0004258670", in_progress_data).then(task => { return task; }); //updates in_progress task
+    var task_in_progress = await taskService.updateTask("5ef3afffc70210000476190e", in_progress_data).then(task => { return task; }); //updates in_progress task
   }
 
 export default MyTasks;
