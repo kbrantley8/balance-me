@@ -37,7 +37,7 @@ class MyTasks extends Component {
           </Text>
           <Text style={styles.progress}>Your Progress</Text>
           <Progress/>
-          { this.state.daily_tasks ? addTasks(this.state.daily_tasks) : noTasks() } 
+          { this.state.daily_tasks ? addTasks(this.props.tasks) : noTasks() } 
             {/* <PrimaryButton
                 text="Update Daily Tasks"
                 onPress={() => {
