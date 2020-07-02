@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Image } from "react-native";
 import PrimaryButton from "./../components/button.js";
 import Card from './../components/card.js';
+import Modal from "react-native-modal";
 
 import { Context as AppContext } from "../context/appContext";
 
@@ -10,6 +11,13 @@ import 'react-native-gesture-handler';
 //TODO: Remove all info placeholders + replace with data from backend
 
 class ProfileScreen extends Component {
+    state = {
+        isModalVisible: false
+    };
+
+    _toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+
     render() {
         return (
             <View style={styles.container}>
@@ -121,7 +129,8 @@ class ProfileScreen extends Component {
 
                     <View style={styles.deleteAccount}>
                         <Card
-                            text="Delete Account"  //TODO: Navigate to "delete account" screen/modal
+                            onPress={this._toggleModal}
+                            text="Delete Account"
                             textColor="#FFFFFF"
                             textSize={20}
                             height={60}
@@ -131,6 +140,43 @@ class ProfileScreen extends Component {
                             insideAlign="center"
                         />
                     </View>
+                    <Modal 
+                    isVisible={this.state.isModalVisible}
+                    backdropColor="#F2CD5C"
+                    backdropOpacity={0.9}
+                    animationIn="zoomInDown"
+                    animationOut="zoomOutUp"
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    backdropTransitionInTiming={600}
+                    backdropTransitionOutTiming={600}
+                    >
+                        <View style={styles.deleteAccountModal}>
+                            <Text style={styles.deleteAccountModalText}>Are you sure?</Text>
+                            <Text style={styles.deleteAccountModalText}>This cannot be undone!</Text>
+                            <Card
+                                onPress={this._toggleModal}
+                                text="No, go back"
+                                textColor="#000000"
+                                textSize={20}
+                                height={60}
+                                width={360}
+                                color="#FFFFFF"
+                                borderRad={5}
+                                insideAlign="center"
+                            />
+                            <Card
+                                text="YES, DELETE MY ACCOUNT" //TODO: Actually delete the account
+                                textColor="#FFFFFF"
+                                textSize={20}
+                                height={60}
+                                width={360}
+                                color="#F24822"
+                                borderRad={5}
+                                insideAlign="center"
+                            />
+                        </View>
+                    </Modal>
                 </ScrollView>
             </View>
         );
@@ -193,6 +239,18 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   deleteAccount: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  deleteAccountModal: {
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  deleteAccountModalText: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: '#000000',
     alignSelf: 'center',
     justifyContent: 'center',
   },
