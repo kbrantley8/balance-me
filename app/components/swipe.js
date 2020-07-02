@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon)
 
+/*
+ * This class is the swipable tasks. If you click the swipable, a modal pops up.
+ */
 export default class Swipe extends Component {
   constructor(props) {
     super(props)
@@ -38,7 +41,10 @@ export default class Swipe extends Component {
   close = () => {
     this._swipeableRow.close()
     this.setState({modal: true})
-    this.props.onPress();
+  }
+  completeTask = () => {
+    this.setState({modal: false});
+    this.props.onPress(); // to do: pass in function to complete the task
   }
   render() {
     const { children } = this.props
@@ -62,8 +68,8 @@ export default class Swipe extends Component {
           <View style={styles.modal}>
             <Text style={styles.contentTitle}>Complete Task?</Text>
             <View style={{flexDirection:'row'}}>
-              <Button title="Cancel" onPress={()=> {this.setState({modal: !this.state.modal})}} />
-              <Button title="Complete" onPress={()=> {this.setState({modal: !this.state.modal})}} />
+              <Button title="Cancel" onPress={()=> {this.setState({modal: false})}} />
+              <Button title="Complete" onPress={ this.completeTask() } />
             </View>
           </View>
         </Modal>

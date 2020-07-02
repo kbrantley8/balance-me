@@ -17,9 +17,10 @@ export default class Task extends Component {
     this.props.onPress();
   };
 
+  // sets the status of the task to completed
   swipefunc = () => {
     console.log('swipe function');
-    //to do: set status to completed, or show modal
+    //to do: set status to completed
   }
 
   render() {
@@ -27,20 +28,20 @@ export default class Task extends Component {
     if (this.props.status === 3 || this.props.completed) {
       return (
         <View style={styles.container}>
-            <TouchableOpacity
-              onPress={this.onPress}
-              style={[styles.button, taskType(this.props.status, this.props.completed)]}
-            >
-            { this.props.imageUri ? 
-                <Image source={this.props.imageUri} style={[styles.image]}/>
-                :<Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
-            }
-            <View style={styles.textContainer}>
-                <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
-                <Text style={styles.point_value}>{this.props.point_value} pts</Text>
-            </View>
-            <Text style={styles.time}>{this.props.time}</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.onPress}
+            style={[styles.button, taskType(this.props.status, this.props.completed)]}
+          >
+          { this.props.imageUri ? 
+              <Image source={this.props.imageUri} style={[styles.image]}/>
+              :<Image source={require('./../assets/icons8-task-90.png')} style={[styles.image]}/>
+          }
+          <View style={styles.textContainer}>
+              <Text numberOfLines={1} style={styles.name}>{this.props.name} </Text>
+              <Text style={styles.point_value}>{this.props.point_value} pts</Text>
+          </View>
+          <Text style={styles.time}>{this.props.time}</Text>
+          </TouchableOpacity>
         </View>
       );
     } 
@@ -75,31 +76,31 @@ export default class Task extends Component {
  */
 const taskType = function(status, completed) {
     if (completed) { //is it completed
-        return {
-            backgroundColor: '#DEEDD2',
-            borderLeftColor: '#55A61C',
-        }
+      return {
+        backgroundColor: '#DEEDD2',
+        borderLeftColor: '#55A61C',
+      }
     } else { 
         if (status === 0) { //overdue
-            return {
-                backgroundColor: '#FEEDEA',
-                borderLeftColor: '#F24822',
-            }
+          return {
+            backgroundColor: '#FEEDEA',
+            borderLeftColor: '#F24822',
+          }
         } else if (status == 1) { // in progress
             return {
-                backgroundColor: '#ECF9FF',
-                borderLeftColor: '#1D76AA',
+              backgroundColor: '#ECF9FF',
+              borderLeftColor: '#1D76AA',
             }
         } else if (status == 2) { //upcoming
-            return {
-                backgroundColor: '#FCF5DE',
-                borderLeftColor: '#F2CD5C',
-            }
+          return {
+            backgroundColor: '#FCF5DE',
+            borderLeftColor: '#F2CD5C',
+          }
         }else { //missed, status = 3
-            return {
-                backgroundColor: '#F2F2F2',
-                borderLeftColor: '#4F4F4F',
-            }
+          return {
+            backgroundColor: '#F2F2F2',
+            borderLeftColor: '#4F4F4F',
+          }
         }
     }   
 }

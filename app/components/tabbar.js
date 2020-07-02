@@ -1,19 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from "react-native";
-import Profile from './../assets/icons8-customer-50.png';
-import Game from './../assets/icons8-game-controller-100.png';
-import Stats from './../assets/icons8-game-controller-100.png';
-import Tasks from './../assets/icons8-today-100.png'; 
-import Add from './../assets/icons8-add-100.png';
-
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const tabs = [
-    { icon: <Tasks /> },
-    { icon: <Game /> },
-    { icon: <Add /> },
-    { icon: <Stats /> },
-    { icon: <Profile /> },
+    { icon: <Icon name="event" size={26}/> },
+    { icon: <Icon name="videogame-asset" size={26}/> },
+    { icon: <Icon name="add" size={36} /> },
+    { icon: <Icon name="equalizer" size={26}/> },
+    { icon: <Icon name="person" size={26}/> },
   ];
 
 export default class TabBar extends Component {
@@ -22,24 +17,18 @@ export default class TabBar extends Component {
   }
 
   onPress = () => {
-    this.props.onPress();
+  //  console.log('test')
   };
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.tabs}>
-            {tabs.map(({ icon }, index) => (
+          {tabs.map(({ icon }, index) => (
             <View key={index} style={styles.tab}>
-                {/* <Weave {...{ active, transition, index }} />
-                <Tab
-                onPress={() => active.setValue(index)}
-                {...{ active, transition, index }}
-                >
-                {icon}
-                </Tab> */}
+              {icon}
             </View>
-            ))}
+          ))}
         </View>
       </SafeAreaView>
     );
@@ -73,6 +62,7 @@ const styles = StyleSheet.create({
   tab: {
     width: 40,
     height: 40,
+    marginHorizontal: 15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
