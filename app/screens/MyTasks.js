@@ -6,13 +6,25 @@ import Progress from './../components/progress';
 import TabBar from './../components/tabbar';
 import PropTypes from 'prop-types';
 
-
+import {Context as AppContext} from '../context/appContext';
+const taskService = require("../backend/services/taskService");
 //create task components out of tasks, render a form page out of that info
 let navigation;
 class MyTasks extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
+    var state = {};
+  }
+
+  UNSAFE_componentWillMount() {
+    let { state } = this.context;
+    this.setState({ daily_tasks: state.daily_tasks })
+  }
+
+  async componentDidMount() {
+    await this.context.fetchDailyTasks(this.context.state.user.email);
+    this.setState({ daily_tasks: this.context.state.daily_tasks })
   }
 
   render() {
@@ -25,7 +37,13 @@ class MyTasks extends Component {
           </Text>
           <Text style={styles.progress}>Your Progress</Text>
           <Progress/>
-          {this.props.tasks ? addTasks(this.props.tasks) : noTasks()}
+          { this.state.daily_tasks ? addTasks(this.state.daily_tasks) : noTasks() } 
+            {/* <PrimaryButton
+                text="Update Daily Tasks"
+                onPress={() => {
+                    this.updateAllTasksToToday()
+                }}
+            /> */}
         </ScrollView>   
         <View style={styles.TabBar}>
          <TabBar/>
@@ -33,7 +51,15 @@ class MyTasks extends Component {
       </SafeAreaView>
     );
   }
+
+    // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
+    updateAllTasksToToday = async () => {
+        updateAllTasksToToday();
+        await this.context.fetchDailyTasks(this.context.state.user.email);
+        this.setState({ daily_tasks: this.context.state.daily_tasks })
+    }
 }
+MyTasks.contextType = AppContext;
 
 const getTime = (time) => {
   let d = new Date(time.toString());
@@ -90,7 +116,7 @@ const createTasks = (taskList, text) => {
               status={task.status}
               name={task.title}
               pointValue={task.point_value}
-              time={getTime(task.date)}
+              time={(task.date) ? getTime(task.date) : 'null'}
               onPress={() => {
                 navigation.navigate("TaskDetail", {
                   taskTitle: `${task.title}`,
@@ -259,6 +285,51 @@ MyTasks.defaultProps = {
      },
     ]
     // tasks: null (uncomment to see noTasks() method run)
+  }
+
+  const updateAllTasksToToday = async () => {
+    //4:00 AM
+    var today = new Date();
+    today.setHours(4,0,0,0);
+    var four_am = (today.getTime() / 1000);
+    //Noon
+    today = new Date();
+    today.setHours(12,0,0,0);
+    var noon = (today.getTime() / 1000);
+    //11:00 PM
+    var today = new Date();
+    today.setHours(23,0,0,0);
+    var eleven_pm = (today.getTime() / 1000);
+
+    var completed_data = {
+        start_time: four_am,
+        estimated_completion_time: (four_am + 300)
+    }
+    var task_completed = await taskService.updateTask("5ef3a995f7c61b000425866f", completed_data).then(task => { return task; }); //updates completed task
+    
+    var upcoming_data = {
+        start_time: eleven_pm,
+        estimated_completion_time: (eleven_pm + 300)
+    }
+    var task_upcoming = await taskService.updateTask("5ef3a9f5f7c61b0004258670", upcoming_data).then(task => { return task; }); //updates upcoming task
+
+    var missed_data = {
+        start_time: four_am,
+        estimated_completion_time: (four_am + 300)
+    }
+    var task_missed = await taskService.updateTask("5ef3a9f5f7c61b0004258670", missed_data).then(task => { return task; }); //updates missed task
+
+    var overdue_data = {
+        start_time: four_am,
+        estimated_completion_time: (four_am + 300)
+    }
+    var task_overdue = await taskService.updateTask("5ef3a9f5f7c61b0004258670", overdue_data).then(task => { return task; }); //updates overdue task
+
+    var in_progress_data = {
+        start_time: noon,
+        estimated_completion_time: (noon + 300)
+    }
+    var task_in_progress = await taskService.updateTask("5ef3a9f5f7c61b0004258670", in_progress_data).then(task => { return task; }); //updates in_progress task
   }
 
 export default MyTasks;

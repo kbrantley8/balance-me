@@ -7,6 +7,7 @@ import CreateTask from "./app/screens/CreateTask";
 import ChooseTask from "./app/screens/ChooseTask";
 import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
+import CustomTask from "./app/screens/CustomTask";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -59,6 +60,7 @@ export default function App() {
             component={MyTasks}
             options={headerOption}
           />
+          <Stack.Screen name="CustomTask" component={CustomTask} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>

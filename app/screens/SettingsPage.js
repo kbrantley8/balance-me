@@ -3,13 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./../components/button.js";
 import Card from './../components/card.js';
 
-
-//TODO: Link Profile page to onPress
-//TODO: Add user's name and number of points from backend
+import { Context as AppContext } from "../context/appContext";
 
 class SettingsPage extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
+  }
+
+  UNSAFE_componentWillMount() {
+    let { state } = this.context;
+    this.setState({ user: state.user });
   }
 
   render() {
@@ -20,10 +25,11 @@ class SettingsPage extends Component {
         </View>
         <View style={styles.cards}>
           <Card 
+            onPress={() => {this.props.navigation.navigate("ProfileScreen");}}
             insideAlign="flex-start"
-            text="Thisisalongname McName" 
+            text={this.state.user.first_name + " " + this.state.user.last_name}
             textSize={28}
-            subtext={"Points: " + "number of points here"}
+            subtext={"Points: " + this.state.user.points}
             subtextSize={22}
             subtextColor="#F2CD5C"
             height={110}

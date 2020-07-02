@@ -147,3 +147,24 @@ exports.updateFirstName = async (email, first_name) => {
     console.log({status: e.response.status, message: e.response.data.error})
   }
 }
+
+exports.getDailyTasks = async (email, start_time, end_time) => {
+
+  try {
+    var tasks = await axios.get(urlbase + '/getDailyTasks', 
+      { 
+        params: {
+          email,
+          start_time,
+          end_time
+        }
+      }).then(tasks => {
+        return tasks.data
+      })
+
+    return tasks;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error, location: "userService.getDailyTasks()"})
+  }
+}

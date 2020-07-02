@@ -31,10 +31,10 @@ exports.createTask = async (
     created_user_id
 ) => {
 
+
     if (!image_path) {
         image_path = "temp_path.jpg"
     }
-
     try {
         var task = await axios.post(urlbase + '/createTask', 
         {

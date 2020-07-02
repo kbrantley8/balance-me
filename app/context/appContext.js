@@ -7,7 +7,10 @@ import userService from '../backend/services/userService';
 const authReducer = (state, action) => {
     switch(action.type) {
         case 'fetch_data':
-            return {...state, user: action.user, assigned_tasks: action.assigned_tasks, created_tasks: action.created_tasks}
+            // return {...state, user: action.user, assigned_tasks: action.assigned_tasks, created_tasks: action.created_tasks, daily_tasks: action.daily_tasks}
+            return {...state, user: action.user, daily_tasks: action.daily_tasks}
+        case 'fetch_daily_tasks':
+            return {...state, daily_tasks: action.daily_tasks}
         case 'add_error':
             return {...state, error_message: action.error_message}
         default: 
@@ -24,21 +27,46 @@ const fetchData = (dispatch) => {
         var user = new User(userData.user_id, userData.first_name, userData.last_name, userData.account_type,
             userData.password, userData.email, userData.points);
         
-        var assigned_tasks = await user.getAssignedTasks().then(tasks => { return tasks; });
+        // var assigned_tasks = await user.getAssignedTasks().then(tasks => { return tasks; });
 
-        var created_tasks = await user.getCreatedTasks().then(tasks => { return tasks; });
+        // var created_tasks = await user.getCreatedTasks().then(tasks => { return tasks; });
 
-        dispatch({type: 'fetch_data', user: user, assigned_tasks: assigned_tasks, created_tasks: created_tasks})
+        var daily_tasks = await user.getDailyTasks().then(tasks => { return tasks; });
+
+        // dispatch({type: 'fetch_data', user: user, assigned_tasks: assigned_tasks, created_tasks: created_tasks, daily_tasks: daily_tasks})
+        dispatch({type: 'fetch_data', user: user, daily_tasks: daily_tasks})
+    }
+}
+
+const fetchDailyTasks = (dispatch) => {
+    return async(email) => {
+        var start = new Date();
+        start.setHours(0,0,0,0);
+        start = (start.getTime() / 1000);
+
+        var end = new Date();
+        end.setHours(23,59,59,0);
+        end = (end.getTime() / 1000);
+
+        var daily_tasks = await userService.getDailyTasks(
+            email, start, end
+        ).then(tasks => { return tasks; });
+
+        dispatch({type: 'fetch_daily_tasks', daily_tasks: daily_tasks})
     }
 }
 
 export const {Provider, Context} = createDataContext(
     authReducer,
-    {fetchData},
+    {
+        fetchData,
+        fetchDailyTasks
+    },
     {
         user: new User(),
-        assigned_tasks: new Task(),
-        created_tasks: new Task(),
+        // assigned_tasks: new Task(),
+        // created_tasks: new Task(),
+        daily_tasks: new Task(),
         error_message: ''
     }
 )
