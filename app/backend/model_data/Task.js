@@ -84,6 +84,73 @@ module.exports = class Task {
     //         return false;
     //     }
     // }
+    
+    setComplete = async function(complete) {
+        var data = {
+            completed: complete
+        }
+        try {
+            var task = await taskService.updateTask(this.id, data)
+            .then(task => { return task });
+
+            this.id = task.task_id;
+            this.name = task.name;
+            this.point_value = task.point_value;
+            this.category_id = task.category_id; 
+            this.estimated_time = task.estimated_time;
+            this.description = task.description;
+            this.start_time = task.start_time;
+            this.estimated_completion_time = task.estimated_completion_time;
+            this.status = task.status;
+            this.completion_time = task.completion_time;
+            this.image_path = task.image_path;
+            this.assigned_user_id = task.assigned_user_id;
+            this.created_user_id = task.created_user_id;
+            this.history = task.history;
+            this.repeat = task.repeat;
+            this.completed = task.completed;
+            this.active = task.active;
+
+            return this;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+
+    setStatus = async function(status) {
+        var data = {
+            status: status
+        }
+        try {
+            var task = await taskService.updateTask(this.id, data)
+            .then(task => { return task });
+
+            this.id = task.task_id;
+            this.name = task.name;
+            this.point_value = task.point_value;
+            this.category_id = task.category_id; 
+            this.estimated_time = task.estimated_time;
+            this.description = task.description;
+            this.start_time = task.start_time;
+            this.estimated_completion_time = task.estimated_completion_time;
+            this.status = task.status;
+            this.completion_time = task.completion_time;
+            this.image_path = task.image_path;
+            this.assigned_user_id = task.assigned_user_id;
+            this.created_user_id = task.created_user_id;
+            this.history = task.history;
+            this.repeat = task.repeat;
+            this.completed = task.completed;
+            this.active = task.active;
+
+            return this;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
 
     update = async function(
         name,
