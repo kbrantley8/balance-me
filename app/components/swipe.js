@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { Animated, StyleSheet, Text } from 'react-native'
 import { RectButton, Swipeable } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import PropTypes from 'prop-types';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon)
 
-export default class GmailStyleSwipeableRow extends Component {
+export default class Swipe extends Component {
   renderRightActions = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-80, 0],
@@ -13,7 +14,7 @@ export default class GmailStyleSwipeableRow extends Component {
       extrapolate: 'clamp'
     })
     return (
-      <RectButton style={styles.rightAction} onPress={this.close}>
+      <RectButton style={styles.rightAction} onPress={this.close }>
         <AnimatedIcon
           name="done"
           size={30}
@@ -28,6 +29,7 @@ export default class GmailStyleSwipeableRow extends Component {
   }
   close = () => {
     this._swipeableRow.close()
+    this.props.onPress();
   }
   render() {
     const { children } = this.props
@@ -55,3 +57,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 })
+
+
+Swipe.propTypes = {
+  onPress: PropTypes.func
+}
+Swipe.defaultProps = {
+  onPress: () => {}
+}

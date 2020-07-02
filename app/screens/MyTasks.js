@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
@@ -17,7 +17,7 @@ class MyTasks extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView style={{flex: 1, padding: 12,}}>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
@@ -26,12 +26,11 @@ class MyTasks extends Component {
           <Text style={styles.progress}>Your Progress</Text>
           <Progress/>
           {this.props.tasks ? addTasks(this.props.tasks) : noTasks()}
-        </ScrollView>
-       
+        </ScrollView>   
         <View style={styles.TabBar}>
          <TabBar/>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -84,9 +83,8 @@ const getMonthofYear = () => {
 const createTasks = (taskList, text) => {
     const TaskList = taskList.map((task, index) => {
         return (
-          <View style={{paddingVertical: 3}}>
+          <View key={index} style={{paddingVertical: 3}}>
             <Task
-              key={index}
               id={task.id}
               completed={task.completed}
               status={task.status}

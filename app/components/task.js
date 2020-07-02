@@ -17,6 +17,11 @@ export default class Task extends Component {
     this.props.onPress();
   };
 
+  swipefunc = () => {
+    console.log('swipe function');
+    //to do: set status to completed, or show modal
+  }
+
   render() {
     // only render swipeable if overdue, upcoming, or in-progress
     if (this.props.status === 3 || this.props.completed) {
@@ -41,7 +46,7 @@ export default class Task extends Component {
     } 
     else {
       return (
-        <Swipe>
+        <Swipe onPress={this.swipefunc}>
           <View style={styles.container}>
               <TouchableOpacity
                 onPress={this.onPress}
