@@ -36,7 +36,8 @@ class ProfileScreen extends Component {
                         />
                         <Text style={styles.bigText}>Profile</Text>
                         <Card
-                            text=""  //TODO: Navigate to "edit profile" screen
+                            onPress={() => {this.props.navigation.navigate("EditProfileScreen");}}
+                            text=""
                             height={50}
                             width={50}
                             color="#FCFCFC"
@@ -79,7 +80,7 @@ class ProfileScreen extends Component {
                     </View>
                     <View style={styles.deleteAccount} paddingBottom={40} paddingTop={12}>
                         <Card
-                            text="Change Password"  //TODO: Navigate to "change password" screen/modal
+                            text="Change Password"  //TODO: Navigate to "change password" screen
                             textColor="#FFFFFF"
                             textSize={20}
                             height={60}
