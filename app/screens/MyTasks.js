@@ -123,11 +123,7 @@ const createTasks = (taskList, text) => {
                   taskPoints: `${task.point_value}`,
                 });
                 }}
-              quickComplete={() => {
-                task.setComplete(false);
-                task.setStatus(2);
-                console.log('hi');
-              }}
+              quickComplete={ () => {task.setComplete(true)} }
             />
           </View>
         )

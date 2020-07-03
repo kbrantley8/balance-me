@@ -15,9 +15,6 @@ Props:
 const taskupdate = require("./../backend/model_data/Task");
 
 export default class Task extends Component {
-  onPress = () => {
-    this.props.onPress();
-  };
 
   render() {
     // only render swipeable if overdue, upcoming, or in-progress
@@ -43,7 +40,7 @@ export default class Task extends Component {
     } 
     else {
       return (
-        <Swipe onPress={this.props.quickComplete()}>
+        <Swipe onPress={ this.props.quickComplete.bind() }>
           <View style={styles.container}>
               <TouchableOpacity
                 onPress={this.onPress}
@@ -153,7 +150,7 @@ Task.propTypes = {
   completed: PropTypes.bool,
 
   onPress: PropTypes.func,
-  quickComplete: PropTypes.func
+  quickComplete: PropTypes.any
 };
 
 // what will the default be if none is specified
