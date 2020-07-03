@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
-import TabBar from './../components/tabbar';
 import PropTypes from 'prop-types';
 
 import {Context as AppContext} from '../context/appContext';
 const taskService = require("../backend/services/taskService");
+const task = require("./../backend/model_data/Task");
 //create task components out of tasks, render a form page out of that info
 let navigation;
 class MyTasks extends Component {
@@ -30,7 +30,7 @@ class MyTasks extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{flex: 1, padding: 12,}}>
+        <ScrollView style={{flex: 1, padding: 12}}>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
@@ -44,10 +44,7 @@ class MyTasks extends Component {
                     this.updateAllTasksToToday()
                 }}
             />
-        </ScrollView>   
-        <View style={styles.TabBar}>
-         <TabBar/>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -126,6 +123,11 @@ const createTasks = (taskList, text) => {
                   taskPoints: `${task.point_value}`,
                 });
                 }}
+              quickComplete={() => {
+                task.setComplete(false);
+                task.setStatus(2);
+                console.log('hi');
+              }}
             />
           </View>
         )
@@ -172,7 +174,11 @@ const noTasks = () => {
       <Text style={styles.noTaskText}>
         It looks like you don't have any tasks for today!
       </Text>
-      <PrimaryButton text="Add a Task" color="#55A61C" />
+      <PrimaryButton
+        text="Add a Task" 
+        color="#55A61C"
+        onPress={navigation.navigate("CreateTask")}
+       />
     </View>
   );
 };
@@ -211,9 +217,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     padding: 6,
-  },
-  TabBar: {
-    flex: .1,
   }
 });
 
@@ -238,50 +241,6 @@ MyTasks.defaultProps = {
         img: './../assets/url',
         date: '06-19-2020 9:00am',
         status: 1
-     },
-     {
-        id: 2,
-        title: 'Status 0',
-        description: 'description here',
-        completed: true,
-        estimatedTime: 4,
-        point_value: 10,
-        img: './../assets/url',
-        date: '06-19-2020 9:00am',
-        status: 0
-     },
-     {
-        id: 3,
-        title: 'Status 3',
-        description: 'description here',
-        completed: false,
-        estimatedTime: 4,
-        point_value: 10,
-        img: './../assets/url',
-        date: '06-19-2020 9:00am',
-        status: 3
-     },
-     {
-        id: 4,
-        title: 'In progress',
-        description: 'description here',
-        completed: false,
-        estimatedTime: 4,
-        point_value: 10,
-        img: './../assets/url',
-        date: '06-19-2020 9:00am',
-        status: 1
-     },
-     {
-        id: 5,
-        title: 'Status 0',
-        description: 'description here',
-        completed: false,
-        estimatedTime: 4,
-        point_value: 10,
-        img: './../assets/url',
-        date: '06-19-2020 9:00am',
-        status: 0
      },
     ]
     // tasks: null (uncomment to see noTasks() method run)

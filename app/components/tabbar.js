@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from "react-native";
+import { StyleSheet, TouchableOpacity, View, SafeAreaView} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const tabs = [
@@ -14,6 +14,9 @@ const tabs = [
 export default class TabBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      index: null
+    }
   }
 
   onPress = () => {
@@ -25,9 +28,9 @@ export default class TabBar extends Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.tabs}>
           {tabs.map(({ icon }, index) => (
-            <View key={index} style={styles.tab}>
+            <TouchableOpacity key={index} style={styles.tab}>
               {icon}
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </SafeAreaView>

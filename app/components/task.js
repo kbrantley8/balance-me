@@ -12,16 +12,12 @@ Props:
     point_value: number, point value
     completed: bool
 */
+const taskupdate = require("./../backend/model_data/Task");
+
 export default class Task extends Component {
   onPress = () => {
     this.props.onPress();
   };
-
-  // sets the status of the task to completed
-  swipefunc = () => {
-    console.log('swipe function');
-    //to do: set status to completed
-  }
 
   render() {
     // only render swipeable if overdue, upcoming, or in-progress
@@ -47,7 +43,7 @@ export default class Task extends Component {
     } 
     else {
       return (
-        <Swipe onPress={this.swipefunc}>
+        <Swipe onPress={this.props.quickComplete()}>
           <View style={styles.container}>
               <TouchableOpacity
                 onPress={this.onPress}
@@ -157,6 +153,7 @@ Task.propTypes = {
   completed: PropTypes.bool,
 
   onPress: PropTypes.func,
+  quickComplete: PropTypes.func
 };
 
 // what will the default be if none is specified
@@ -169,5 +166,6 @@ Task.defaultProps = {
   point_value: 10,
   completed: false,
 
-  onPress: () => {}
+  onPress: () => {},
+  quickComplete: () => {}
 }

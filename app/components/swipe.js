@@ -42,10 +42,6 @@ export default class Swipe extends Component {
     this._swipeableRow.close()
     this.setState({modal: true})
   }
-  completeTask = () => {
-    this.setState({modal: false});
-    this.props.onPress(); // to do: pass in function to complete the task
-  }
   render() {
     const { children } = this.props
     return (
@@ -68,8 +64,8 @@ export default class Swipe extends Component {
           <View style={styles.modal}>
             <Text style={styles.contentTitle}>Complete Task?</Text>
             <View style={{flexDirection:'row'}}>
-              <Button title="Cancel" onPress={()=> {this.setState({modal: false})}} />
-              <Button title="Complete" onPress={ this.completeTask() } />
+             <Button title="Cancel" onPress={()=> {this.setState({modal: false})}} />
+             <Button title="Complete" onPress={ this.props.onPress() } />
             </View>
           </View>
         </Modal>
