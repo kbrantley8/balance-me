@@ -74,6 +74,11 @@ export default function App() {
               points: 5,
               category: "other",
               type: "Custom",
+              steps: [
+                { description: "pick up brush" },
+                { description: "put toothpaste" },
+                { description: "brush teeth" },
+              ],
             }}
           />
         </Stack.Navigator>
