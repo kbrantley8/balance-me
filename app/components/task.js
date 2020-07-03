@@ -22,7 +22,7 @@ export default class Task extends Component {
       return (
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={this.onPress}
+            onPress={this.props.onPress}
             style={[styles.button, taskType(this.props.status, this.props.completed)]}
           >
           { this.props.imageUri ? 
@@ -43,7 +43,7 @@ export default class Task extends Component {
         <Swipe onPress={ this.props.quickComplete.bind() }>
           <View style={styles.container}>
               <TouchableOpacity
-                onPress={this.onPress}
+                onPress={this.props.onPress}
                 style={[styles.button, taskType(this.props.status, this.props.completed)]}
               >
               { this.props.imageUri ? 
