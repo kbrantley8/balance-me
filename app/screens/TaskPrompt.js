@@ -7,6 +7,8 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
+  TouchableHighlight,
+  Alert,
 } from "react-native";
 import {
   Button as BTN,
@@ -55,6 +57,8 @@ class TaskPrompt extends Component {
     };
     this.stepRef = React.createRef();
     this.Item = this.Item.bind(this);
+    this.StepOverlay = this.StepOverlay.bind(this);
+    this.DescriptionOverlay = this.DescriptionOverlay.bind(this);
   }
 
   render() {
@@ -176,85 +180,113 @@ class TaskPrompt extends Component {
         <View style={styles.ConfirmationContainer}></View>
 
         {/* Modal to show full descrtion */}
-        <Overlay
-          isVisible={this.state.modalDescriptionVisible}
-          onBackdropPress={() => {
-            this.setState({
-              modalDescriptionVisible: !this.state.modalDescriptionVisible,
-            });
-          }}
-          animationType="fade"
-          overlayStyle={styles.modalView}
-        >
-          <View>
-            <Text style={styles.SubHeading}>Description</Text>
-            <Text style={styles.modalText}>{this.state.description}</Text>
-          </View>
-        </Overlay>
+        <this.DescriptionOverlay
+          title="Task Description"
+          subtext={this.state.description}
+        />
         {/* Modal to show steps */}
-        <Overlay
-          isVisible={this.state.modalStepsVisible}
-          onBackdropPress={() => {
-            this.setState({
-              modalStepsVisible: !this.state.modalStepsVisible,
-            });
-          }}
-          animationType="fade"
-          overlayStyle={[styles.modalView, { width: "80%" }]}
-        >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={{ minWidth: "60%" }}
-          >
-            <Text style={styles.SubHeading}>Steps</Text>
-            <View>
-              <Input
-                multiline={true}
-                ref={this.stepRef}
-                placeholder="Add Step"
-                onChangeText={(value) =>
-                  this.setState({ stepInput: value.trim() })
-                }
-                onSubmitEditing={Keyboard.dismiss}
-                rightIcon={
-                  <Icon
-                    name="add-circle-outline"
-                    size={30}
-                    onPress={() => {
-                      if (this.state.stepInput.length == 0) {
-                        this.stepRef.current.shake();
-                      } else {
-                        let stepTemp = this.state.steps;
-                        let data = { description: this.state.stepInput };
-                        stepTemp.push(data);
-                        this.setState({ steps: stepTemp, stepInput: "" });
-                      }
-                      this.stepRef.current.clear();
-                    }}
-                  />
-                }
-              />
-            </View>
-            <FlatList
-              data={this.state.steps}
-              renderItem={({ item, index }) => (
-                <this.Item title={item.description} index={index} />
-              )}
-              keyExtractor={(item) => item.id}
-              extraData={this.state.steps}
-            />
-          </KeyboardAvoidingView>
-        </Overlay>
+        <this.StepOverlay />
       </View>
     );
   }
+
+  DescriptionOverlay({ title, subtext }) {
+    return (
+      <Overlay
+        isVisible={this.state.modalDescriptionVisible}
+        onBackdropPress={() => {
+          this.setState({
+            modalDescriptionVisible: !this.state.modalDescriptionVisible,
+          });
+        }}
+        animationType="fade"
+        overlayStyle={styles.modalView}
+      >
+        <View>
+          <Text style={styles.SubHeading}>{title}</Text>
+          <Text style={styles.modalText}>{subtext}</Text>
+        </View>
+      </Overlay>
+    );
+  }
+
+  StepOverlay() {
+    return (
+      <Overlay
+        isVisible={this.state.modalStepsVisible}
+        onBackdropPress={() => {
+          this.setState({
+            modalStepsVisible: !this.state.modalStepsVisible,
+          });
+        }}
+        animationType="fade"
+        overlayStyle={[styles.modalView, { width: "80%" }]}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={{ minWidth: "70%" }}
+        >
+          <Text style={styles.SubHeading}>Steps</Text>
+          <View>
+            <Input
+              multiline={true}
+              ref={this.stepRef}
+              placeholder="Add Step"
+              onChangeText={(value) =>
+                this.setState({ stepInput: value.trim() })
+              }
+              onSubmitEditing={Keyboard.dismiss}
+              rightIcon={
+                <Icon
+                  name="add-circle-outline"
+                  size={30}
+                  onPress={() => {
+                    if (this.state.stepInput.length == 0) {
+                      this.stepRef.current.shake();
+                    } else {
+                      let stepTemp = this.state.steps;
+                      let data = { description: this.state.stepInput };
+                      stepTemp.push(data);
+                      this.setState({ steps: stepTemp, stepInput: "" });
+                    }
+                    this.stepRef.current.clear();
+                  }}
+                />
+              }
+            />
+          </View>
+          <FlatList
+            data={this.state.steps}
+            renderItem={({ item, index }) => (
+              <this.Item title={item.description} index={index} />
+            )}
+            keyExtractor={(item) => item.id}
+            extraData={this.state.steps}
+          />
+        </KeyboardAvoidingView>
+      </Overlay>
+    );
+  }
+
   Item({ title, index }) {
     return (
       <View style={[styles.pop, styles.item]}>
+        <View style={{ flex: 0.5, borderRightWidth: 0.5, paddingRight: 5 }}>
+          <Text style={{ fontSize: 10, textAlign: "center" }}>Step</Text>
+          <Text style={styles.StepText}>{index}</Text>
+        </View>
         <View style={{ flex: 3 }}>
-          <Text numberOfLines={1} style={styles.StepText}>
-            {title}
-          </Text>
+          <TouchableHighlight
+            activeOpacity={0.6}
+            underlayColor="green"
+            onPress={() => {
+              Alert.alert("Task Description", title);
+            }}
+          >
+            <Text numberOfLines={1} style={styles.StepText}>
+              {title}
+            </Text>
+          </TouchableHighlight>
         </View>
         <View style={{ flex: 1 }}>
           <Icon
@@ -279,13 +311,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    width: "80%",
-    padding: 10,
+    width: "90%",
+    paddingLeft: 10,
     marginVertical: 10,
     marginHorizontal: 20,
   },
   StepText: {
     fontSize: 18,
+    textAlign: "center",
+    textTransform: "capitalize",
   },
   HeaderStyle: {
     backgroundColor: "#F2CD5C",
