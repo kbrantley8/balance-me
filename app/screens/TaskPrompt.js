@@ -295,7 +295,10 @@ class TaskPrompt extends Component {
               onChangeText={(value) =>
                 this.setState({ stepInput: value.trim() })
               }
-              onSubmitEditing={Keyboard.dismiss}
+              blurOnSubmit={true}
+              onSubmitEditing={() => {
+                Keyboard.dismiss();
+              }}
               rightIcon={
                 <Icon
                   name="add-circle-outline"
