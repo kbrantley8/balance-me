@@ -2,6 +2,8 @@ import createDataContext from './createDataContext';
 import User from '../backend/model_data/User';
 import Task from '../backend/model_data/Task';
 import userService from '../backend/services/userService';
+const axios = require('axios');
+const urlbase = 'https://balance-me-proj.herokuapp.com';
 
 
 const authReducer = (state, action) => {
@@ -10,6 +12,8 @@ const authReducer = (state, action) => {
             // return {...state, user: action.user, assigned_tasks: action.assigned_tasks, created_tasks: action.created_tasks, daily_tasks: action.daily_tasks}
             return {...state, user: action.user, daily_tasks: action.daily_tasks}
         case 'fetch_daily_tasks':
+            return {...state, daily_tasks: action.daily_tasks}
+        case 'minute_update_daily_tasks':
             return {...state, daily_tasks: action.daily_tasks}
         case 'add_error':
             return {...state, error_message: action.error_message}
@@ -56,11 +60,92 @@ const fetchDailyTasks = (dispatch) => {
     }
 }
 
+const minuteUpdateDailyTasks = (dispatch) => {
+    return async(email) => {
+        var start = new Date();
+        start.setHours(0,0,0,0);
+        start = (start.getTime() / 1000);
+
+        var end = new Date();
+        end.setHours(23,59,59,0);
+        end = (end.getTime() / 1000);
+
+        var currTime = new Date();
+        currTime = currTime.getTime() / 1000;
+
+        var daily_tasks = await userService.getDailyTasks(
+            email, start, end
+        ).then(tasks => { return tasks; });
+        
+
+        for (var task in daily_tasks) {
+            //upcoming -> in progress
+            var currTask = daily_tasks[task];
+            if ((currTask.start_time <= currTime) && (currTask.estimated_completion_time > currTime) && (!currTask.completed)) {
+                var data = {
+                    "status": 1,
+                }
+                var task_id = currTask.id;
+                try {
+                    await axios.post(urlbase + '/updateTask',
+                    { 
+                        task_id,
+                        data
+                    }).then((response) => {
+                    return response;
+                    });
+                } catch (e) {
+                    console.log(e)
+                } 
+            }
+            //in progress -> overdue
+            if ((currTime >= currTask.estimated_completion_time) && (currTime <= (currTask.estimated_completion_time + 3600)) && (!currTask.completed)) {
+                var data = {
+                    "status": 0,
+                }
+                var task_id = currTask.id;
+                try {
+                    await axios.post(urlbase + '/updateTask',
+                    { 
+                        task_id,
+                        data
+                    }).then((response) => {
+                    return response;
+                    });
+                } catch (e) {
+                    console.log(e)
+                } 
+            }
+            //overdue -> missed
+            if ((currTime >= (currTask.estimated_completion_time + 3600)) && (!currTask.completed)) {
+                var data = {
+                    "status": 3,
+                }
+                var task_id = currTask.id;
+                try {
+                    await axios.post(urlbase + '/updateTask',
+                    { 
+                        task_id,
+                        data
+                    }).then((response) => {
+                    return response;
+                    });
+                } catch (e) {
+                    console.log(e)
+                } 
+            }
+        }
+
+        dispatch({type: 'minute_update_daily_tasks', daily_tasks: daily_tasks})
+    }
+}
+
 export const {Provider, Context} = createDataContext(
     authReducer,
     {
         fetchData,
-        fetchDailyTasks
+        fetchDailyTasks,
+        minuteUpdateDailyTasks
     },
     {
         user: new User(),

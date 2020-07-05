@@ -22,9 +22,21 @@ class MyTasks extends Component {
     this.setState({ daily_tasks: state.daily_tasks })
   }
 
-  async componentDidMount() {
-    await this.context.fetchDailyTasks(this.context.state.user.email);
+  minuteUpdateDailyTasks = async () => {
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
+  }
+
+  async componentDidMount() {
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    // await this.context.fetchDailyTasks(this.context.state.user.email);
+    this.setState({ daily_tasks: this.context.state.daily_tasks })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   render() {
