@@ -350,7 +350,7 @@ class TaskPrompt extends Component {
         animationType="fade"
         overlayStyle={[
           styles.modalView,
-          { flex: "1", width: "80%", minHeight: "50%" },
+          { flex: 1, width: "80%", minHeight: "50%" },
         ]}
       >
         <Text style={styles.SubHeading}>Schedule Task</Text>
@@ -367,15 +367,16 @@ class TaskPrompt extends Component {
               styles.pop,
               {
                 flex: 1,
+                justifyContent: "space-evenly",
                 alignItems: "center",
                 margin: 10,
-                borderRadius: "25",
-                borderWidth: this.state.dateSelected,
+                borderRadius: 25,
+                borderWidth: this.state.dateSelected == true ? 1 : 0,
               },
             ]}
             onPress={() => this.setState({ dateSelected: true })}
           >
-            <Icon raised name="today" size={30} />
+            <Icon name="today" size={30} />
             <Text>{this.getReadableDate("date", this.state.date)}</Text>
           </TouchableOpacity>
 
@@ -384,24 +385,24 @@ class TaskPrompt extends Component {
               styles.pop,
               {
                 flex: 1,
+                justifyContent: "space-evenly",
                 alignItems: "center",
                 margin: 10,
-                borderRadius: "25",
-                borderWidth: !this.state.dateSelected,
+                borderRadius: 25,
+                borderWidth: this.state.dateSelected == false ? 1 : 0,
               },
             ]}
             onPress={() => this.setState({ dateSelected: false })}
           >
-            <Icon raised name="schedule" size={30} />
+            <Icon name="schedule" size={30} />
             <Text>{this.getReadableDate("time", this.state.date)}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 3, width: "100%" }}>
           <DateTimePicker
-            testID="dateTimePicker"
+            // testID="dateTimePicker"
             value={this.state.date}
             mode={this.state.dateSelected == true ? "date" : "time"}
-            is24Hour={true}
             onChange={(event, selectedDate) => {
               const currentDate = selectedDate || this.state.date;
               this.setState({ date: currentDate });
