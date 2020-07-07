@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
     padding: 6,
     justifyContent: 'center',
     alignItems: "center",
-    flex: 1,
     flexDirection: 'row',
-    height: 36,
+    height: 54,
+    width: '100%',
     shadowColor: "#000",
     shadowOffset: {
         width: 0,
