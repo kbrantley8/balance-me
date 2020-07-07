@@ -104,6 +104,7 @@ class CustomTask extends Component {
         description: this.state.description,
         points: this.state.value,
         category: this.state.category,
+        steps: [],
       });
     }
   }
@@ -139,7 +140,7 @@ class CustomTask extends Component {
             }
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
-            maxLength={100}
+            maxLength={250}
           />
 
           <Input

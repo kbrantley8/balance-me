@@ -232,28 +232,30 @@ class TaskPrompt extends Component {
           </Text>
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
+              justifyContent: "center",
               alignItems: "center",
               flex: 1,
               marginTop: 5,
             }}
           >
-            <View>
-              <Text style={styles.Body} numberOfLines={6}>
-                {this.state.description}
-              </Text>
+            <Text style={styles.Body} numberOfLines={6}>
+              {this.state.description}
+            </Text>
 
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  this.setState({ modalDescriptionVisible: true });
-                }}
-              >
-                <Text style={styles.FullDescription}>
-                  See Full Description...
-                </Text>
-              </TouchableWithoutFeedback>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                this.setState({ modalDescriptionVisible: true });
+              }}
+              style={{
+                flex: 1,
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.FullDescription}>
+                See Full Description...
+              </Text>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <View style={styles.OptionalInformationContainer}>
@@ -334,7 +336,7 @@ class TaskPrompt extends Component {
                 title="Assign Task"
                 containerStyle={([styles.pop], { borderRadius: 10 })}
                 onPress={() => {
-                  this.setState({ modalDescriptionVisible: true });
+                  alert("In development");
                 }}
               />
             </View>
@@ -661,6 +663,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: "500",
     textAlign: "center",
+    textAlignVertical: "center",
     color: "blue",
     textDecorationLine: "underline",
   },
