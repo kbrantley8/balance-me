@@ -11,27 +11,36 @@ const tabs = [
     { icon: <Icon name="person" size={26}/> },
   ];
 
+let navigation;
 export default class TabBar extends Component {
   constructor(props) {
     super(props);
+    navigation = this.props.navigation;
+
     this.state = {
       index: null
     }
   }
 
-  onPress = () => {
-  //  console.log('test')
-  };
-
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.tabs}>
-          {tabs.map(({ icon }, index) => (
-            <TouchableOpacity key={index} style={styles.tab}>
-              {icon}
-            </TouchableOpacity>
-          ))}
+          <TouchableOpacity style={styles.tab} onPress={
+            () => { navigation.navigate("MyTasks")}
+            }>
+            <Icon name="event" size={26}/> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab} onPress={
+            () => { navigation.navigate("CreateTask")}
+            }>
+            <Icon name="add" size={36}/> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab} onPress={
+            () => { navigation.navigate("CreateTask")}
+            }>
+            <Icon name="person" size={26}/> 
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
   tab: {
     width: 40,
     height: 40,
-    marginHorizontal: 15,
+    marginHorizontal: 24,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
