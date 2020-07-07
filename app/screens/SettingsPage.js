@@ -5,8 +5,6 @@ import Card from './../components/card.js';
 
 import { Context as AppContext } from "../context/appContext";
 
-//TODO: Link Profile page to onPress
-
 class SettingsPage extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +25,7 @@ class SettingsPage extends Component {
         </View>
         <View style={styles.cards}>
           <Card 
+            onPress={() => {this.props.navigation.navigate("ProfileScreen");}}
             insideAlign="flex-start"
             text={this.state.user.first_name + " " + this.state.user.last_name}
             textSize={28}
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FCFCFC",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   cards: {

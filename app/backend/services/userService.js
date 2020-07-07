@@ -1,5 +1,6 @@
 const axios = require('axios');
 const urlbase = 'https://balance-me-proj.herokuapp.com';
+const Task = require("../model_data/Task");
 
 exports.getAllUsers = async () => {
   try {
@@ -162,7 +163,32 @@ exports.getDailyTasks = async (email, start_time, end_time) => {
         return tasks.data
       })
 
-    return tasks;
+      var all_tasks = [];
+      for (var curr_task in tasks) {
+          var task = tasks[curr_task];
+          var new_task = new Task(
+              task._id,
+              task.name,
+              task.point_value,
+              task.category_id, 
+              task.estimated_time,
+              task.description,
+              task.start_time,
+              task.estimated_completion_time,
+              task.status,
+              task.completion_time,
+              task.image_path,
+              task.assigned_user_id,
+              task.created_user_id,
+              task.history,
+              task.repeat,
+              task.completed,
+              task.active,
+          );
+          all_tasks.push(new_task)
+      }
+
+      return all_tasks;
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error, location: "userService.getDailyTasks()"})
