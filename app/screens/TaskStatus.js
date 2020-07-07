@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import Button from './../components/button';
+import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
+import Modal from 'react-native-modal';
 const task = require("./../backend/model_data/Task");
 
 const types = [ 
@@ -45,7 +46,8 @@ class TaskStatus extends Component {
         navigation = this.props.navigation;
 
         this.state = {
-            task: this.props.route.params["task"]
+            task: this.props.route.params["task"],
+            modal: false
         };
 
         this.completed = this.state.task.task.completed;
@@ -60,6 +62,7 @@ class TaskStatus extends Component {
             navigation.navigate("MyTasks");
         } else if (this.status === 1) { // in progress
             this.state.task.task.setComplete(true);
+            this.setState({modal: true});
         } else { // upcoming or overdue
             this.state.task.task.setStatus(1);
             this.setState({status: 1})
@@ -91,12 +94,32 @@ class TaskStatus extends Component {
             { this.completed ? types[4].body : types[this.status].body}
         </Text>
         <View style={styles.button}>
-            <Button
+            <PrimaryButton
                 text={this.completed ? types[4].buttonText: types[this.status].buttonText}
                 color={this.completed ? types[4].color: types[this.status].color}
                 onPress={this.changeTask.bind()}
             />
         </View>
+        <Modal 
+          isVisible={this.state.modal}
+          backdropColor='gray'
+          backdropOpacity={0.4}
+          animationIn='fadeIn'
+          animationOut='fadeOut'
+        >
+          <View style={styles.modal}>
+            <Icon name="sentiment-satisfied" size={70} color="#55A61C"/>
+            <Text style={styles.contentTitle}>Task Complete!</Text>
+            <Text style={styles.modalBody}>You've earned {this.state.task.task.point_value} points!</Text>
+            <View style={{flexDirection:'row'}}>
+             <PrimaryButton text="Great!" color="#55A61C" 
+                onPress={() => {
+                    this.setState({modal: false});
+                    navigation.navigate("MyTasks");
+                    }} />
+            </View>
+          </View>
+        </Modal>
     </SafeAreaView>
     );
   }
@@ -143,6 +166,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 24
     },
+    modal: {
+        backgroundColor: 'white',
+        padding: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+      },
+      contentTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333333',
+        paddingVertical: 12
+      },
+      modalBody: {
+        fontSize: 18,
+        color: '#333333',
+        paddingBottom: 6
+      }
 });
 
 TaskStatus.propTypes = {
