@@ -22,9 +22,21 @@ class MyTasks extends Component {
     this.setState({ daily_tasks: state.daily_tasks })
   }
 
-  async componentDidMount() {
-    await this.context.fetchDailyTasks(this.context.state.user.email);
+  minuteUpdateDailyTasks = async () => {
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
+  }
+
+  async componentDidMount() {
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
+    // await this.context.fetchDailyTasks(this.context.state.user.email);
+    this.setState({ daily_tasks: this.context.state.daily_tasks })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   render() {
@@ -51,8 +63,8 @@ class MyTasks extends Component {
 
     // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
     updateAllTasksToToday = async () => {
-        updateAllTasksToToday();
-        await this.context.fetchDailyTasks(this.context.state.user.email);
+        await updateAllTasksToToday();
+        await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
         this.setState({ daily_tasks: this.context.state.daily_tasks })
     }
 }
@@ -258,31 +270,41 @@ MyTasks.defaultProps = {
 
     var completed_data = {
         start_time: four_am,
-        estimated_completion_time: (four_am + 300)
+        estimated_completion_time: (four_am + 300),
+        status: 2,
+        completed: true
     }
     var task_completed = await taskService.updateTask("5ef3a995f7c61b000425866f", completed_data).then(task => { return task; }); //updates completed task
     
     var upcoming_data = {
         start_time: eleven_pm,
-        estimated_completion_time: (eleven_pm + 300)
+        estimated_completion_time: (eleven_pm + 300),
+        status: 2,
+        completed: false
     }
     var task_upcoming = await taskService.updateTask("5ef3a9f5f7c61b0004258670", upcoming_data).then(task => { return task; }); //updates upcoming task
 
     var missed_data = {
         start_time: four_am,
-        estimated_completion_time: (four_am + 300)
+        estimated_completion_time: (four_am + 300),
+        status: 2,
+        completed: false
     }
     var task_missed = await taskService.updateTask("5ef3aa85f7c61b0004258671", missed_data).then(task => { return task; }); //updates missed task
 
     var overdue_data = {
         start_time: four_am,
-        estimated_completion_time: (four_am + 300)
+        estimated_completion_time: (four_am + 300),
+        status: 2,
+        completed: false
     }
     var task_overdue = await taskService.updateTask("5ef3aeaec70210000476190d", overdue_data).then(task => { return task; }); //updates overdue task
 
     var in_progress_data = {
         start_time: noon,
-        estimated_completion_time: (noon + 300)
+        estimated_completion_time: (noon + 300),
+        status: 2,
+        completed: false
     }
     var task_in_progress = await taskService.updateTask("5ef3afffc70210000476190e", in_progress_data).then(task => { return task; }); //updates in_progress task
   }
