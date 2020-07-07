@@ -37,36 +37,55 @@ const types = [
     },
 ]
 
+let navigation;
 class TaskStatus extends Component {
     constructor(props) {
         super(props);
-    
+        navigation = this.props.navigation;
+
         this.state = {
-            title: this.props.route.params["title"],
-            completed: (this.props.route.params["completed"] === 'true') ? true : false,
-            status: this.props.route.params["status"]
+            task: this.props.route.params["task"]
         };
+
+        this.completed = this.state.task.task.completed;
+        this.status = this.state.task.task.status;
+        this.title = this.state.task.task.name;
     }
+
+  onPress() {
+    console.log('hi');
+  }
+
     
   render() {
     return (
-    <SafeAreaView style={[styles.container, {backgroundColor: (this.state.completed ? types[4].backgroundColor : types[this.state.status].backgroundColor)}]}>
+    <SafeAreaView style={[styles.container, {backgroundColor: (this.completed ? types[4].backgroundColor : types[this.status].backgroundColor)}]}>
         <View style={styles.icons}>
-            <Text>This is where the buttons will go</Text>
+            <Icon name="arrow-back" size={30} onPress={() => {navigation.navigate("MyTasks")}}/>
+            <Icon name="assignment" size={30} onPress={() => {
+                navigation.navigate("TaskDetail", {
+                  taskTitle: this.title,
+                  taskTimer: this.state.task.task.estimated_time,
+                  taskTimestamp: this.state.task.task.start_time, //"October 20, 2020 11:13:00"
+                  taskDescription: this.state.task.task.description,
+                  taskPoints: this.state.task.task.point_value
+                });
+                }}/>
         </View>
-        <Text style={[styles.title, {color: this.state.completed ? types[4].color: types[this.state.status].color } ]}>
-            {this.state.title}
+        <Text style={[styles.title, {color: this.completed ? types[4].color: types[this.status].color } ]}>
+            {this.title}
         </Text>
         <Icon name="alarm" size={54} 
-            style={[styles.clock, {backgroundColor: this.state.completed ? types[4].color: types[this.state.status].color}]}/>
+            style={[styles.clock, {backgroundColor: this.completed ? types[4].color: types[this.status].color}]}/>
         <Text 
-            style={[styles.body, {color: this.state.completed ? types[4].color: types[this.state.status].color }]}>
-            { this.state.completed ? types[4].body : types[this.state.status].body}
+            style={[styles.body, {color: this.completed ? types[4].color: types[this.status].color }]}>
+            { this.completed ? types[4].body : types[this.status].body}
         </Text>
         <View style={styles.button}>
             <Button
-                text={this.state.completed ? types[4].buttonText: types[this.state.status].buttonText}
-                color={this.state.completed ? types[4].color: types[this.state.status].color}
+                text={this.completed ? types[4].buttonText: types[this.status].buttonText}
+                color={this.completed ? types[4].color: types[this.status].color}
+                onPress={this.onPress.bind()}
             />
         </View>
     </SafeAreaView>
@@ -107,8 +126,14 @@ const styles = StyleSheet.create({
         bottom: 32
     },
     icons: {
-        height: 50
-    }
+        height: 50,
+        flexDirection: 'row',
+        marginTop: 12,
+        width: '100%',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        paddingHorizontal: 24
+    },
 });
 
 TaskStatus.propTypes = {

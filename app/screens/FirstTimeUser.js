@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button,  ImageBackground  } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { Input } from 'react-native-elements';
 import PrimaryButton from "./../components/button.js";
 
@@ -7,8 +7,6 @@ import {Context as AppContext} from '../context/appContext';
 
 import 'react-native-gesture-handler';
 
-
-//const backgroundImg = { uri: './../assets/background.png'};
 
 //TODO: Shouldn't be able to go 'back' to this page after page is submitted
 class FirstTimeUser extends Component {
@@ -45,7 +43,7 @@ class FirstTimeUser extends Component {
 
     render() {
         return (
-        <View>
+            <View style={styles.container}>
                 <View style={styles.text}>
                     <Text style={styles.welcome}>Welcome to</Text>
                     <Text style={styles.bigText}>BalanceMe</Text>
@@ -71,7 +69,7 @@ class FirstTimeUser extends Component {
                         onPress={this.handleSubmit}
                     />
                 </View>
-       </View>
+            </View>
         );
     }
 }
@@ -79,10 +77,10 @@ FirstTimeUser.contextType = AppContext;
 
 const styles = StyleSheet.create({
     container: {
-         flex: 1,
-        // backgroundColor: "#FCFCFC",
-        // justifyContent: "center",
-        // alignItems: "center",
+        flex: 1,
+        backgroundColor: "#FCFCFC",
+        justifyContent: "center",
+        alignItems: "center",
     },
     buttons: {
         flex: 1,
@@ -107,11 +105,6 @@ const styles = StyleSheet.create({
         marginTop: 150,
         marginLeft: -75,
     },
-    image: {
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-      },
 });
 
 export default FirstTimeUser;

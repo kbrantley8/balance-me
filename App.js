@@ -67,8 +67,7 @@ export default function App() {
           <Stack.Screen
             name="TaskStatus"
             component={TaskStatus}
-            options={headerOption}
-          />
+            options={headerOption} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
