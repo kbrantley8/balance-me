@@ -29,8 +29,8 @@ class MyTasks extends Component {
   }
 
   async componentDidMount() {
-    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
   }
@@ -63,8 +63,8 @@ class MyTasks extends Component {
 
     // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
     updateAllTasksToToday = async () => {
-        updateAllTasksToToday();
-        await this.context.fetchDailyTasks(this.context.state.user.email);
+        await updateAllTasksToToday();
+        await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
         this.setState({ daily_tasks: this.context.state.daily_tasks })
     }
 }
