@@ -7,6 +7,7 @@ import CreateTask from "./app/screens/CreateTask";
 import ChooseTask from "./app/screens/ChooseTask";
 import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
+import TaskStatus from './app/screens/TaskStatus';
 import CustomTask from "./app/screens/CustomTask";
 import ProfileScreen from "./app/screens/ProfileScreen";
 import EditProfileScreen from "./app/screens/EditProfileScreen";
@@ -62,7 +63,13 @@ export default function App() {
             component={MyTasks}
             options={headerOption}
           />
-          <Stack.Screen name="CustomTask" component={CustomTask} />
+          <Stack.Screen 
+            name="CustomTask" 
+            component={CustomTask} />
+          <Stack.Screen
+            name="TaskStatus"
+            component={TaskStatus}
+            options={headerOption} />
           <Stack.Screen
             name="ProfileScreen"
             component={ProfileScreen}

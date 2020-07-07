@@ -12,8 +12,6 @@ Props:
     point_value: number, point value
     completed: bool
 */
-const taskupdate = require("./../backend/model_data/Task");
-
 export default class Task extends Component {
 
   render() {

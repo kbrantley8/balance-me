@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, Image } from "react-n
 import PrimaryButton from "./../components/button.js";
 import Card from './../components/card.js';
 import Modal from "react-native-modal";
-
+import Tabbar from './../components/tabbar';
 import { Context as AppContext } from "../context/appContext";
 
 import 'react-native-gesture-handler';
-
+let navigation;
 class ProfileScreen extends Component {
     constructor(props) {
         super(props);
@@ -185,6 +185,17 @@ class ProfileScreen extends Component {
                         </View>
                     </Modal>
                 </ScrollView>
+            <Tabbar 
+                taskPress={() => {
+                    this.props.navigation.navigate("MyTasks");
+                  }}
+                addPress={() => {
+                  this.props.navigation.navigate("CreateTask");
+                }}
+                profilePress={() => {
+                  this.props.navigation.navigate("ProfileScreen");
+                }}
+            />
             </View>
         );
     }

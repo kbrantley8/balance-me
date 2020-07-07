@@ -4,6 +4,7 @@ import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
 import PropTypes from 'prop-types';
+import Tabbar from './../components/tabbar';
 
 import {Context as AppContext} from '../context/appContext';
 const taskService = require("../backend/services/taskService");
@@ -57,6 +58,17 @@ class MyTasks extends Component {
                 }}
             />
         </ScrollView>
+        <Tabbar 
+          taskPress={() => {
+              this.props.navigation.navigate("MyTasks");
+            }}
+          addPress={() => {
+            this.props.navigation.navigate("CreateTask");
+          }}
+          profilePress={() => {
+            this.props.navigation.navigate("ProfileScreen");
+          }}
+            />
       </SafeAreaView>
     );
   }
@@ -72,8 +84,6 @@ MyTasks.contextType = AppContext;
 
 const getTime = (time) => {
   let d = new Date(time.toString());
-  console.log(d);
-  console.log(time);
   return d.getHours();
 }
 // functions about getting the date
@@ -126,15 +136,13 @@ const createTasks = (taskList, text) => {
               name={task.name}
               point_value={task.point_value}
               time={(task.start_time) ? getTime(task.start_time) : 'null'}
-              onPress={() => {
-                navigation.navigate("TaskDetail", {
-                  taskTitle: `${task.name}`,
-                  taskTimer: `${task.estimated_time}:00\nMins`,
-                  taskTimestamp: `${task.start_time}`, //"October 20, 2020 11:13:00"
-                  taskDescription: `${task.description}`,
-                  taskPoints: `${task.point_value}`,
+              onPress={
+                () => {
+                  navigation.navigate("TaskStatus", {
+                  task: {task}
                 });
-                }}
+                }
+              }
               quickComplete={ () => {task.setComplete(true)} }
             />
           </View>
