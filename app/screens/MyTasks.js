@@ -60,8 +60,6 @@ MyTasks.contextType = AppContext;
 
 const getTime = (time) => {
   let d = new Date(time.toString());
-  console.log(d);
-  console.log(time);
   return d.getHours();
 }
 // functions about getting the date

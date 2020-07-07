@@ -3,13 +3,14 @@ import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Button from './../components/button';
 import PropTypes from 'prop-types';
+const task = require("./../backend/model_data/Task");
 
 const types = [ 
     { // overdue
     backgroundColor: '#FEEDEA',
     body:  "Your Task is overdue!",
     color: '#F24822',
-    buttonText: 'Complete Task'
+    buttonText: 'Start Task'
     },
     { // in progress
     backgroundColor: '#ECF9FF',
@@ -21,7 +22,7 @@ const types = [
     backgroundColor: '#FCF5DE',
     body:  "Your Task is upcoming!",
     color: '#F2CD5C',
-    buttonText: 'Complete Task'
+    buttonText: 'Start Task'
     },
     { // missed
     backgroundColor: '#F2F2F2',
@@ -50,12 +51,20 @@ class TaskStatus extends Component {
         this.completed = this.state.task.task.completed;
         this.status = this.state.task.task.status;
         this.title = this.state.task.task.name;
+
+        this.changeTask = this.changeTask.bind(this);
     }
 
-  onPress() {
-    console.log('hi');
-  }
-
+    changeTask() {
+        if (this.completed || this.status === 3) { // completed or missed
+            navigation.navigate("MyTasks");
+        } else if (this.status === 1) { // in progress
+            this.state.task.task.setComplete(true);
+        } else { // upcoming or overdue
+            this.state.task.task.setStatus(1);
+            this.setState({status: 1})
+        }
+    }
     
   render() {
     return (
@@ -85,7 +94,7 @@ class TaskStatus extends Component {
             <Button
                 text={this.completed ? types[4].buttonText: types[this.status].buttonText}
                 color={this.completed ? types[4].color: types[this.status].color}
-                onPress={this.onPress.bind()}
+                onPress={this.changeTask.bind()}
             />
         </View>
     </SafeAreaView>
