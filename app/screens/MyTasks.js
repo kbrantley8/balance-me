@@ -4,6 +4,7 @@ import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
 import PropTypes from 'prop-types';
+import Tabbar from './../components/tabbar';
 
 import {Context as AppContext} from '../context/appContext';
 const taskService = require("../backend/services/taskService");
@@ -45,6 +46,17 @@ class MyTasks extends Component {
                 }}
             />
         </ScrollView>
+        <Tabbar 
+          taskPress={() => {
+              this.props.navigation.navigate("MyTasks");
+            }}
+          addPress={() => {
+            this.props.navigation.navigate("CreateTask");
+          }}
+          profilePress={() => {
+            this.props.navigation.navigate("ProfileScreen");
+          }}
+            />
       </SafeAreaView>
     );
   }

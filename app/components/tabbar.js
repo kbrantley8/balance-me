@@ -27,17 +27,17 @@ export default class TabBar extends Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.tabs}>
           <TouchableOpacity style={styles.tab} onPress={
-            () => { navigation.navigate("MyTasks")}
+            () => { this.props.taskPress()}
             }>
             <Icon name="event" size={26}/> 
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} onPress={
-            () => { navigation.navigate("CreateTask")}
+            () => { this.props.addPress() }
             }>
             <Icon name="add" size={36}/> 
           </TouchableOpacity>
           <TouchableOpacity style={styles.tab} onPress={
-            () => { navigation.navigate("CreateTask")}
+            () => {  this.props.profilePress() }
             }>
             <Icon name="person" size={26}/> 
           </TouchableOpacity>
@@ -83,10 +83,14 @@ const styles = StyleSheet.create({
 
 //puts restrictions on what type each prop can be
 TabBar.propTypes = {
-  onPress: PropTypes.func,
+  taskPress: PropTypes.func,
+  addPress: PropTypes.func,
+  profilePress: PropTypes.func,
 };
 
 // what will the default be if none is specified
 TabBar.defaultProps = {
-  onPress: () => {}
+  taskPress: () => {},
+  addPress: () => {},
+  profilePress: () => {}
 }

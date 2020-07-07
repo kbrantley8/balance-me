@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "./../components/button.js";
-import Tabbar from './../components/tabbar';
 
 import { Context as AppContext } from "../context/appContext";
 class WelcomeScreen extends Component {
@@ -38,7 +37,6 @@ class WelcomeScreen extends Component {
             }}
           />
         </View>
-        <Tabbar />
       </View>
     );
   }
