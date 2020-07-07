@@ -8,7 +8,7 @@ import { Context as AppContext } from "../context/appContext";
 import 'react-native-gesture-handler';
 
 
-class ProfileScreen extends Component {
+class EditProfileScreen extends Component {
 
     render() {
         return (

@@ -9,6 +9,8 @@ import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
 import TaskStatus from './app/screens/TaskStatus';
 import CustomTask from "./app/screens/CustomTask";
+import ProfileScreen from "./app/screens/ProfileScreen";
+import EditProfileScreen from "./app/screens/EditProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -68,6 +70,16 @@ export default function App() {
             name="TaskStatus"
             component={TaskStatus}
             options={headerOption} />
+          <Stack.Screen
+            name="ProfileScreen"
+            component={ProfileScreen}
+            options={headerOption}
+          />
+          <Stack.Screen
+            name="EditProfileScreen"
+            component={EditProfileScreen}
+            options={headerOption}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
