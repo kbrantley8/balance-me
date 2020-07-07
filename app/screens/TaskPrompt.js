@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Alert,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import {
   Icon,
@@ -17,6 +18,8 @@ import {
   Button,
   Input,
   ThemeProvider,
+  ButtonGroup,
+  Divider,
 } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -52,17 +55,24 @@ class TaskPrompt extends Component {
       value: this.props.route.params["points"],
       type: this.props.route.params["type"],
       steps: this.props.route.params["steps"],
-      scheduledDateAndTime: null,
+      scheduledDateAndTime: this.props.route.params["timeStamp"],
 
-      date: new Date(), // temp variable to show time and date on the overlay
+      // variable for the screen updates
+      date:
+        this.props.route.params["timeStamp"] == null
+          ? new Date()
+          : this.props.route.params["timeStamp"], // temp variable to show time and date on the overlay
       tempSteps: clone(this.props.route.params["steps"]),
       mode: "date",
+      show: false,
       modalDescriptionVisible: false,
       modalStepsVisible: false,
       modalScheduleVisible: false,
       modalAssignVisible: false,
       stepInput: "",
       dateSelected: true,
+      selectedDayIndexes: [],
+      selectedFrequencyIndex: -1,
     };
     this.stepRef = React.createRef();
     this.Item = this.Item.bind(this);
@@ -70,6 +80,8 @@ class TaskPrompt extends Component {
     this.DescriptionOverlay = this.DescriptionOverlay.bind(this);
     this.ScheduleOverlay = this.ScheduleOverlay.bind(this);
     this.getReadableDate = this.getReadableDate.bind(this);
+    this.updateDayIndex = this.updateDayIndex.bind(this);
+    this.updateFrequencyIndex = this.updateFrequencyIndex.bind(this);
 
     this.monthNames = [
       "January",
@@ -85,6 +97,22 @@ class TaskPrompt extends Component {
       "November",
       "December",
     ];
+
+    this.weekDays = ["S", "M", "T", "W", "Th", "F", "Sa"];
+    this.frequency = ["Weekly", "biweekly", "Monthly"];
+
+    console.log(this.state.date);
+  }
+
+  updateDayIndex(selectedDayIndexes) {
+    this.setState({ selectedDayIndexes: selectedDayIndexes.sort() });
+  }
+  updateFrequencyIndex(selectedFrequencyIndex) {
+    if (selectedFrequencyIndex == this.state.selectedFrequencyIndex) {
+      this.setState({ selectedFrequencyIndex: -1 });
+    } else {
+      this.setState({ selectedFrequencyIndex });
+    }
   }
 
   getReadableDate(type, date) {
@@ -125,16 +153,48 @@ class TaskPrompt extends Component {
               {this.state.name}
             </Text>
             <View style={[styles.pop, styles.ValueCountContainer]}>
-              <Icon
-                name="stars"
-                size={40}
-                color="gold"
-                underlayColor="black"
-                iconStyle={styles.GoldIconStyle}
-              />
-              <Text style={styles.PointValue}>{this.state.value}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  name="stars"
+                  size={40}
+                  color="gold"
+                  underlayColor="black"
+                  iconStyle={styles.GoldIconStyle}
+                />
+                <Text style={styles.PointValue}>{this.state.value}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Icon
+                  name="alarm"
+                  size={40}
+                  color="gold"
+                  underlayColor="black"
+                  iconStyle={styles.GoldIconStyle}
+                />
+                <Text style={styles.PointValue}>{this.state.time}</Text>
+              </View>
             </View>
           </View>
+          <Text
+            style={{
+              textTransform: "capitalize",
+              fontWeight: "bold",
+            }}
+          >
+            {this.state.category}
+          </Text>
           <View
             style={{
               flexDirection: "row",
@@ -162,6 +222,18 @@ class TaskPrompt extends Component {
           </View>
         </View>
         <View style={styles.OptionalInformationContainer}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Divider
+              style={{ flex: 1, height: 1, backgroundColor: "#b5b5b5" }}
+            />
+            <Text style={{ color: "#b5b5b5", fontWeight: "bold" }}>
+              {" "}
+              Optional{" "}
+            </Text>
+            <Divider
+              style={{ flex: 1, height: 1, backgroundColor: "#b5b5b5" }}
+            />
+          </View>
           {/* =================== Add steps for the task =================== */}
           <View style={[styles.pop, styles.OptionalInput]}>
             <View
@@ -332,98 +404,11 @@ class TaskPrompt extends Component {
             onPress={() => {
               this.setState({
                 modalStepsVisible: !this.state.modalStepsVisible,
-                steps: this.state.tempSteps,
+                steps: clone(this.state.tempSteps),
               });
             }}
           />
         </KeyboardAvoidingView>
-      </Overlay>
-    );
-  }
-  ScheduleOverlay() {
-    return (
-      <Overlay
-        isVisible={this.state.modalScheduleVisible}
-        onBackdropPress={() => {
-          this.setState({
-            modalScheduleVisible: !this.state.modalScheduleVisible,
-            tempSteps: [],
-          });
-        }}
-        animationType="fade"
-        overlayStyle={[
-          styles.modalView,
-          { flex: 1, width: "80%", minHeight: "50%" },
-        ]}
-      >
-        <Text style={styles.SubHeading}>Schedule Task</Text>
-        <View
-          style={{
-            flex: 1.5,
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <TouchableOpacity
-            style={[
-              styles.pop,
-              {
-                flex: 1,
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                margin: 10,
-                borderRadius: 25,
-                borderWidth: this.state.dateSelected == true ? 1 : 0,
-              },
-            ]}
-            onPress={() => this.setState({ dateSelected: true })}
-          >
-            <Icon name="today" size={30} />
-            <Text>{this.getReadableDate("date", this.state.date)}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              styles.pop,
-              {
-                flex: 1,
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                margin: 10,
-                borderRadius: 25,
-                borderWidth: this.state.dateSelected == false ? 1 : 0,
-              },
-            ]}
-            onPress={() => this.setState({ dateSelected: false })}
-          >
-            <Icon name="schedule" size={30} />
-            <Text>{this.getReadableDate("time", this.state.date)}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ flex: 3, width: "100%" }}>
-          <DateTimePicker
-            // testID="dateTimePicker"
-            value={this.state.date}
-            mode={this.state.dateSelected == true ? "date" : "time"}
-            onChange={(event, selectedDate) => {
-              const currentDate = selectedDate || this.state.date;
-              this.setState({ date: currentDate });
-            }}
-          />
-        </View>
-        <View style={{ flex: 1, width: "100%" }}>
-          <Button
-            raised={true}
-            title="Schedule Task"
-            onPress={() => {
-              this.setState({
-                scheduledDateAndTime: this.state.date,
-                modalScheduleVisible: !this.state.modalScheduleVisible,
-              });
-            }}
-          />
-        </View>
       </Overlay>
     );
   }
@@ -461,6 +446,135 @@ class TaskPrompt extends Component {
           />
         </View>
       </View>
+    );
+  }
+  ScheduleOverlay() {
+    return (
+      <Overlay
+        isVisible={this.state.modalScheduleVisible}
+        onBackdropPress={() => {
+          this.setState({
+            modalScheduleVisible: !this.state.modalScheduleVisible,
+            tempSteps: [],
+          });
+        }}
+        animationType="fade"
+        overlayStyle={[
+          styles.modalView,
+          { flex: 1, width: "80%", minHeight: "80%" },
+        ]}
+      >
+        <Text style={styles.SubHeading}>Schedule Task</Text>
+        <View
+          style={{
+            flex: 1.5,
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <TouchableOpacity
+            style={[
+              styles.pop,
+              {
+                flex: 1,
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                margin: 10,
+                borderRadius: 25,
+                borderWidth:
+                  this.state.dateSelected == true &&
+                  (Platform.OS == "ios" ? true : this.state.show)
+                    ? 1
+                    : 0,
+              },
+            ]}
+            onPress={() => this.setState({ dateSelected: true, show: true })}
+          >
+            <Icon name="today" size={30} />
+            <Text style={{ textAlign: "center" }}>
+              {this.getReadableDate("date", this.state.date)}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.pop,
+              {
+                flex: 1,
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                margin: 10,
+                borderRadius: 25,
+                borderWidth:
+                  this.state.dateSelected == false &&
+                  (Platform.OS == "ios" ? true : this.state.show)
+                    ? 1
+                    : 0,
+              },
+            ]}
+            onPress={() => this.setState({ dateSelected: false, show: true })}
+          >
+            <Icon name="schedule" size={30} />
+            <Text style={{ textAlign: "center" }}>
+              {this.getReadableDate("time", this.state.date)}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 3, width: "100%" }}>
+          {(Platform.OS == "ios" ? true : this.state.show) && (
+            <DateTimePicker
+              // testID="dateTimePicker"
+              value={this.state.date}
+              mode={this.state.dateSelected == true ? "date" : "time"}
+              display="spinner"
+              onChange={(event, selectedDate) => {
+                console.log(event);
+                if (Platform.OS == "android") {
+                  this.setState({ show: false });
+                }
+                const currentDate = selectedDate || this.state.date;
+                this.setState({ date: currentDate });
+              }}
+            />
+          )}
+        </View>
+
+        <View style={{ flex: 2.5, width: "100%", marginTop: 5 }}>
+          <Text style={styles.SubHeading}>Repeat</Text>
+          <Text>Days</Text>
+          <ButtonGroup
+            selectMultiple={true}
+            onPress={this.updateDayIndex}
+            selectedIndexes={this.state.selectedDayIndexes}
+            buttons={this.weekDays}
+            containerStyle={{ flex: 1, borderRadius: 10 }}
+            textStyle={{ fontWeight: "bold" }}
+          />
+
+          <Text>Frequency</Text>
+          <ButtonGroup
+            onPress={this.updateFrequencyIndex}
+            selectedIndex={this.state.selectedFrequencyIndex}
+            buttons={this.frequency}
+            containerStyle={{ flex: 1, borderRadius: 10 }}
+            textStyle={{ fontWeight: "bold" }}
+          />
+        </View>
+
+        <View style={{ flex: 1, justifyContent: "flex-end", width: "100%" }}>
+          <Button
+            raised={true}
+            title="Schedule Task"
+            onPress={() => {
+              this.setState({
+                scheduledDateAndTime: this.state.date,
+                modalScheduleVisible: !this.state.modalScheduleVisible,
+              });
+            }}
+          />
+        </View>
+      </Overlay>
     );
   }
 }
@@ -605,7 +719,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalView: {
-    maxHeight: "80%",
+    maxHeight: "90%",
     maxWidth: "90%",
     margin: 20,
     backgroundColor: "white",
