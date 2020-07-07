@@ -9,6 +9,7 @@ import {
 } from "react-native-elements";
 
 import { Context as AppContext } from "../context/appContext";
+import Task from '../backend/model_data/Task';
 
 const taskService = require("../backend/services/taskService");
 
@@ -82,21 +83,42 @@ class CustomTask extends Component {
         this.state.selectedCategoryIndex,
         this.state.time * 60,
         this.state.description,
-        current_time + 300,
-        current_time + 300 + this.state.time * 60,
+        null,
+        null,
         2,
         "none",
         state.user.id,
         state.user.id
       );
 
-      alert(
-        `Name:${this.state.name}
-        Description:${this.state.description}
-        Time Estimate:${this.state.time}
-        Category:${this.state.category}
-        Point Value:${this.state.value}`
+      var new_task = new Task(
+        task.task_id,
+        task.name,
+        task.point_value,
+        task.category_id, 
+        task.estimated_time,
+        task.description,
+        task.start_time,
+        task.estimated_completion_time,
+        task.status,
+        task.completion_time,
+        task.image_path,
+        task.assigned_user_id,
+        task.created_user_id,
+        task.history,
+        task.repeat,
+        task.completed,
+        task.active,
+        task.steps
       );
+
+      // alert(
+      //   `Name:${this.state.name}
+      //   Description:${this.state.description}
+      //   Time Estimate:${this.state.time}
+      //   Category:${this.state.category}
+      //   Point Value:${this.state.value}`
+      // );
 
       this.props.navigation.navigate("TaskPrompt", {
         name: this.state.name,
@@ -105,6 +127,7 @@ class CustomTask extends Component {
         points: this.state.value,
         category: this.state.category,
         steps: [],
+        task: new_task
       });
     }
   }

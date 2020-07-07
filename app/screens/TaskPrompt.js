@@ -54,6 +54,7 @@ class TaskPrompt extends Component {
       time: this.props.route.params["timer"],
       value: this.props.route.params["points"],
       steps: this.props.route.params["steps"],
+      task: this.props.route.params['task'],
       scheduledDateAndTime: this.props.route.params["timeStamp"],
 
       // variable for the screen updates
@@ -104,7 +105,7 @@ class TaskPrompt extends Component {
     console.log(this.state.date);
   }
 
-  confirm() {
+  async confirm() {
     const name = this.state.name;
     const value = this.state.value;
     const category = this.state.category;
@@ -114,27 +115,31 @@ class TaskPrompt extends Component {
     const date = this.state.scheduledDateAndTime;
 
     let days = [];
-    let frequency = "";
+    let frequency = [];
     this.state.selectedDayIndexes.forEach((item, index) => {
       days.push(this.weekDays[item]);
     });
 
     if (this.state.selectedFrequencyIndex >= 0) {
-      frequency = this.frequency[this.state.selectedFrequencyIndex];
+      frequency.push(this.frequency[this.state.selectedFrequencyIndex]);
     }
 
     const repeat = { days: days, frequency: frequency };
+    if (date) {
+      await this.state.task.updateStartTime(date.getTime() / 1000);
+    }
+    await this.state.task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
 
-    alert(`
-    name: ${name}\n
-    value: ${value}\n
-    category: ${category}\n
-    description: ${description}\n
-    time: ${time}\n
-    steps: ${JSON.stringify(steps)}\n
-    date: ${date}\n
-    repeat: ${JSON.stringify(repeat)}
-    `);
+    // alert(`
+    // name: ${name}\n
+    // value: ${value}\n
+    // category: ${category}\n
+    // description: ${description}\n
+    // time: ${time}\n
+    // steps: ${JSON.stringify(steps)}\n
+    // date: ${date}\n
+    // repeat: ${JSON.stringify(repeat)}
+    // `);
 
     this.props.navigation.navigate("MyTasks");
   }
