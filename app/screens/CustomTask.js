@@ -8,7 +8,7 @@ import {
   Slider,
 } from "react-native-elements";
 
-import {Context as AppContext} from '../context/appContext';
+import { Context as AppContext } from "../context/appContext";
 
 const taskService = require("../backend/services/taskService");
 
@@ -74,7 +74,6 @@ class CustomTask extends Component {
       ref.current.clear();
       ref.current.focus();
     } else {
-
       let { state } = this.context;
       var current_time = Math.round(Date.now() / 1000);
       var task = await taskService.createTask(
@@ -84,12 +83,12 @@ class CustomTask extends Component {
         this.state.time * 60,
         this.state.description,
         current_time + 300,
-        (current_time + 300) + (this.state.time * 60),
+        current_time + 300 + this.state.time * 60,
         2,
         "none",
         state.user.id,
         state.user.id
-      )
+      );
 
       alert(
         `Name:${this.state.name}
@@ -98,6 +97,14 @@ class CustomTask extends Component {
         Category:${this.state.category}
         Point Value:${this.state.value}`
       );
+
+      this.props.navigation.navigate("TaskPrompt", {
+        name: this.state.name,
+        timer: this.state.time,
+        description: this.state.description,
+        points: this.state.value,
+        category: this.state.category,
+      });
     }
   }
 

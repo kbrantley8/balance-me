@@ -53,7 +53,6 @@ class TaskPrompt extends Component {
       category: this.props.route.params["category"],
       time: this.props.route.params["timer"],
       value: this.props.route.params["points"],
-      type: this.props.route.params["type"],
       steps: this.props.route.params["steps"],
       scheduledDateAndTime: this.props.route.params["timeStamp"],
 
@@ -82,6 +81,7 @@ class TaskPrompt extends Component {
     this.getReadableDate = this.getReadableDate.bind(this);
     this.updateDayIndex = this.updateDayIndex.bind(this);
     this.updateFrequencyIndex = this.updateFrequencyIndex.bind(this);
+    this.confirm = this.confirm.bind(this);
 
     this.monthNames = [
       "January",
@@ -102,6 +102,41 @@ class TaskPrompt extends Component {
     this.frequency = ["Weekly", "biweekly", "Monthly"];
 
     console.log(this.state.date);
+  }
+
+  confirm() {
+    const name = this.state.name;
+    const value = this.state.value;
+    const category = this.state.category;
+    const description = this.state.description;
+    const time = this.state.time;
+    const steps = this.state.steps;
+    const date = this.state.scheduledDateAndTime;
+
+    let days = [];
+    let frequency = "";
+    this.state.selectedDayIndexes.forEach((item, index) => {
+      days.push(this.weekDays[item]);
+    });
+
+    if (this.state.selectedFrequencyIndex >= 0) {
+      frequency = this.frequency[this.state.selectedFrequencyIndex];
+    }
+
+    const repeat = { days: days, frequency: frequency };
+
+    alert(`
+    name: ${name}\n
+    value: ${value}\n
+    category: ${category}\n
+    description: ${description}\n
+    time: ${time}\n
+    steps: ${JSON.stringify(steps)}\n
+    date: ${date}\n
+    repeat: ${JSON.stringify(repeat)}
+    `);
+
+    this.props.navigation.navigate("MyTasks");
   }
 
   updateDayIndex(selectedDayIndexes) {
@@ -305,7 +340,14 @@ class TaskPrompt extends Component {
             </View>
           </View>
         </View>
-        <View style={styles.ConfirmationContainer}></View>
+        <View style={styles.ConfirmationContainer}>
+          <Button
+            icon={<Icon raised name="check" size={15} color="blue" />}
+            title="Confirm"
+            containerStyle={([styles.pop], { borderRadius: 10, width: "80%" })}
+            onPress={this.confirm}
+          />
+        </View>
 
         {/* Modal to show full descrtion */}
         <this.DescriptionOverlay
@@ -580,21 +622,6 @@ class TaskPrompt extends Component {
 }
 TaskPrompt.contextType = AppContext;
 const styles = StyleSheet.create({
-  item: {
-    flexDirection: "row",
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "90%",
-    paddingLeft: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
-  },
-  StepText: {
-    fontSize: 18,
-    textAlign: "center",
-    textTransform: "capitalize",
-  },
   HeaderStyle: {
     backgroundColor: "#F2CD5C",
   },
@@ -650,9 +677,26 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingRight: "10%",
   },
+  item: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "90%",
+    paddingLeft: 10,
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  StepText: {
+    fontSize: 18,
+    textAlign: "center",
+    textTransform: "capitalize",
+  },
   ConfirmationContainer: {
     flex: 3,
     backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   PointContainer: {
     flex: 2,

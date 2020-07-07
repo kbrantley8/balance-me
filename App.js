@@ -22,7 +22,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="TaskPrompt">
+        <Stack.Navigator>
           <Stack.Screen
             name="FirstTimeUser"
             component={FirstTimeUser}
@@ -73,7 +73,6 @@ export default function App() {
                 "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
               points: 5,
               category: "other",
-              type: "Custom",
               steps: [
                 { description: "pick up brush" },
                 { description: "put toothpaste" },
