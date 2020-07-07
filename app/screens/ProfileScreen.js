@@ -8,12 +8,18 @@ import { Context as AppContext } from "../context/appContext";
 
 import 'react-native-gesture-handler';
 
-//TODO: Remove all info placeholders + replace with data from backend
-
 class ProfileScreen extends Component {
-    state = {
-        isModalVisible: false
-    };
+    constructor(props) {
+        super(props);
+        navigation = this.props.navigation;
+        var state = {};
+    }
+
+    UNSAFE_componentWillMount() {
+        let { state } = this.context;
+        this.setState({ user: state.user })
+        this.setState({ isModalVisible: false })
+    }
 
     _toggleModal = () =>
         this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -24,13 +30,13 @@ class ProfileScreen extends Component {
                 <ScrollView style={{flex: 1}}>
                     <View style={styles.header}>
                         <Card
-                            onPress={() => {this.props.navigation.navigate("SettingsPage");}}
+                            //onPress={() => {this.props.navigation.navigate("SettingsPage");}}
                             text=""
                             height={50}
                             width={50}
                             color="#FCFCFC"
                             bColor="#FCFCFC"
-                            imageUri={require('./../assets/icons8-long-arrow-left-100.png')}
+                            //imageUri={require('./../assets/icons8-long-arrow-left-100.png')}
                             imgHeight={40}
                             imgWidth={40}
                         />
@@ -68,15 +74,15 @@ class ProfileScreen extends Component {
                     <Text style={styles.subheaderText}>Personal Information</Text>
                     <View style={styles.leftAndRight} backgroundColor="#FFE8A1">
                         <Text style={styles.smallTextBold}>First Name</Text>
-                        <Text style={styles.smallText}>Firstname</Text>
+                        <Text style={styles.smallText}>{this.state.user.first_name}</Text>
                     </View>
                     <View style={styles.leftAndRight}>
                         <Text style={styles.smallTextBold}>Last Name</Text>
-                        <Text style={styles.smallText}>McLastname</Text>
+                        <Text style={styles.smallText}>{this.state.user.last_name}</Text>
                     </View>
                     <View style={styles.leftAndRight} backgroundColor="#FFE8A1">
                         <Text style={styles.smallTextBold}>Email</Text>
-                        <Text style={styles.smallText}>EMAIL@EXAMPLE.COM</Text>
+                        <Text style={styles.smallText}>{this.state.user.email}</Text>
                     </View>
                     <View style={styles.deleteAccount} paddingBottom={40} paddingTop={12}>
                         <Card
@@ -183,6 +189,8 @@ class ProfileScreen extends Component {
         );
     }
 }
+
+ProfileScreen.contextType = AppContext;
 
 const styles = StyleSheet.create({
   container: {

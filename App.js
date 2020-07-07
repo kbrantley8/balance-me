@@ -8,6 +8,8 @@ import ChooseTask from "./app/screens/ChooseTask";
 import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
 import CustomTask from "./app/screens/CustomTask";
+import ProfileScreen from "./app/screens/ProfileScreen";
+import EditProfileScreen from "./app/screens/EditProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -61,6 +63,16 @@ export default function App() {
             options={headerOption}
           />
           <Stack.Screen name="CustomTask" component={CustomTask} />
+          <Stack.Screen
+            name="ProfileScreen"
+            component={ProfileScreen}
+            options={headerOption}
+          />
+          <Stack.Screen
+            name="EditProfileScreen"
+            component={EditProfileScreen}
+            options={headerOption}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
