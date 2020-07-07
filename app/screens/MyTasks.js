@@ -114,15 +114,24 @@ const createTasks = (taskList, text) => {
               name={task.name}
               point_value={task.point_value}
               time={(task.start_time) ? getTime(task.start_time) : 'null'}
-              onPress={() => {
-                navigation.navigate("TaskDetail", {
-                  taskTitle: `${task.name}`,
-                  taskTimer: `${task.estimated_time}:00\nMins`,
-                  taskTimestamp: `${task.start_time}`, //"October 20, 2020 11:13:00"
-                  taskDescription: `${task.description}`,
-                  taskPoints: `${task.point_value}`,
+              // onPress={() => {
+              //   navigation.navigate("TaskDetail", {
+              //     taskTitle: `${task.name}`,
+              //     taskTimer: `${task.estimated_time}:00\nMins`,
+              //     taskTimestamp: `${task.start_time}`, //"October 20, 2020 11:13:00"
+              //     taskDescription: `${task.description}`,
+              //     taskPoints: `${task.point_value}`,
+              //   });
+              //   }}
+              onPress={
+                () => {
+                  navigation.navigate("TaskStatus", {
+                  title: `${task.name}`,
+                  status: `${task.status}`,
+                  completed: `${task.completed}`
                 });
-                }}
+                }
+              }
               quickComplete={ () => {task.setComplete(true)} }
             />
           </View>
