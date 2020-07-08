@@ -25,7 +25,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { Context as AppContext } from "../context/appContext";
 
-import Task from "../backend/model_data/Task"
+import Task from "../backend/model_data/Task";
 
 const taskService = require("../backend/services/taskService");
 const clone = require("rfdc")(); // Returns the deep copy function
@@ -37,7 +37,7 @@ class TaskPrompt extends Component {
       headerRight: () => (
         <Icon
           onPress={() => {
-            alert("Todo: go back to choose task screen");
+            this.props.navigation.navigate("WelcomeScreen");
           }}
           name="clear"
           size={30}
@@ -145,7 +145,7 @@ class TaskPrompt extends Component {
       task.task_id,
       task.name,
       task.point_value,
-      task.category_id, 
+      task.category_id,
       task.estimated_time,
       task.description,
       task.start_time,
@@ -507,7 +507,7 @@ class TaskPrompt extends Component {
           <Text style={{ fontSize: 10, textAlign: "center" }}>Step</Text>
           <Text style={styles.StepText}>{index}</Text>
         </View>
-        <View style={{ flex: 3 }}>
+        <View style={{ flex: 3, paddingLeft: 5 }}>
           <TouchableHighlight
             activeOpacity={0.6}
             underlayColor="green"
