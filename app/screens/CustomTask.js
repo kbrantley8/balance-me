@@ -75,42 +75,7 @@ class CustomTask extends Component {
       ref.current.clear();
       ref.current.focus();
     } else {
-      let { state } = this.context;
       var current_time = Math.round(Date.now() / 1000);
-      var task = await taskService.createTask(
-        this.state.name,
-        this.state.value,
-        this.state.selectedCategoryIndex,
-        this.state.time * 60,
-        this.state.description,
-        null,
-        null,
-        2,
-        "none",
-        state.user.id,
-        state.user.id
-      );
-
-      var new_task = new Task(
-        task.task_id,
-        task.name,
-        task.point_value,
-        task.category_id, 
-        task.estimated_time,
-        task.description,
-        task.start_time,
-        task.estimated_completion_time,
-        task.status,
-        task.completion_time,
-        task.image_path,
-        task.assigned_user_id,
-        task.created_user_id,
-        task.history,
-        task.repeat,
-        task.completed,
-        task.active,
-        task.steps
-      );
 
       // alert(
       //   `Name:${this.state.name}
@@ -126,8 +91,8 @@ class CustomTask extends Component {
         description: this.state.description,
         points: this.state.value,
         category: this.state.category,
-        steps: [],
-        task: new_task
+        selectedCategoryIndex: this.state.selectedCategoryIndex,
+        steps: []
       });
     }
   }

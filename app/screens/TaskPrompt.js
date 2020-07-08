@@ -25,6 +25,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { Context as AppContext } from "../context/appContext";
 
+import Task from "../backend/model_data/Task"
+
 const taskService = require("../backend/services/taskService");
 const clone = require("rfdc")(); // Returns the deep copy function
 class TaskPrompt extends Component {
@@ -54,7 +56,7 @@ class TaskPrompt extends Component {
       time: this.props.route.params["timer"],
       value: this.props.route.params["points"],
       steps: this.props.route.params["steps"],
-      task: this.props.route.params['task'],
+      selectedCategoryIndex: this.props.route.params["selectedCategoryIndex"],
       scheduledDateAndTime: this.props.route.params["timeStamp"],
 
       // variable for the screen updates
@@ -123,12 +125,48 @@ class TaskPrompt extends Component {
     if (this.state.selectedFrequencyIndex >= 0) {
       frequency.push(this.frequency[this.state.selectedFrequencyIndex]);
     }
+    let { state } = this.context;
+
+    var task = await taskService.createTask(
+      this.state.name,
+      this.state.value,
+      this.state.selectedCategoryIndex,
+      this.state.time * 60,
+      this.state.description,
+      null,
+      null,
+      2,
+      "none",
+      state.user.id,
+      state.user.id
+    );
+
+    var new_task = new Task(
+      task.task_id,
+      task.name,
+      task.point_value,
+      task.category_id, 
+      task.estimated_time,
+      task.description,
+      task.start_time,
+      task.estimated_completion_time,
+      task.status,
+      task.completion_time,
+      task.image_path,
+      task.assigned_user_id,
+      task.created_user_id,
+      task.history,
+      task.repeat,
+      task.completed,
+      task.active,
+      task.steps
+    );
 
     const repeat = { days: days, frequency: frequency };
     if (date) {
-      await this.state.task.updateStartTime(date.getTime() / 1000);
+      await new_task.updateStartTime(date.getTime() / 1000);
     }
-    await this.state.task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
+    await new_task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
 
     // alert(`
     // name: ${name}\n
