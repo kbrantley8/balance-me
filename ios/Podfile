@@ -31,6 +31,7 @@ target 'balanceme' do
   pod 'React-jsinspector', :path => "#{rnPrefix}/ReactCommon/jsinspector"
   pod 'ReactCommon/jscallinvoker', :path => "#{rnPrefix}/ReactCommon"
   pod 'ReactCommon/turbomodule/core', :path => "#{rnPrefix}/ReactCommon"
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
   pod 'Yoga', :path => "#{rnPrefix}/ReactCommon/yoga"
   pod 'DoubleConversion', :podspec => "#{rnPrefix}/third-party-podspecs/DoubleConversion.podspec"
   pod 'glog', :podspec => "#{rnPrefix}/third-party-podspecs/glog.podspec"
