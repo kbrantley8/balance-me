@@ -9,7 +9,7 @@ import {
 } from "react-native-elements";
 
 import { Context as AppContext } from "../context/appContext";
-import Task from '../backend/model_data/Task';
+import Task from "../backend/model_data/Task";
 
 const taskService = require("../backend/services/taskService");
 
@@ -21,7 +21,7 @@ class CustomTask extends Component {
       headerRight: () => (
         <Icon
           onPress={() => {
-            alert("Todo: go back to choose task screen");
+            this.props.navigation.navigate("MyTasks");
           }}
           name="clear"
           size={30}
@@ -92,7 +92,7 @@ class CustomTask extends Component {
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
-        steps: []
+        steps: [],
       });
     }
   }

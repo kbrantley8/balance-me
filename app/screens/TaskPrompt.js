@@ -37,7 +37,7 @@ class TaskPrompt extends Component {
       headerRight: () => (
         <Icon
           onPress={() => {
-            this.props.navigation.navigate("WelcomeScreen");
+            this.props.navigation.navigate("MyTasks");
           }}
           name="clear"
           size={30}
