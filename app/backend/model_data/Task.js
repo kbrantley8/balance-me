@@ -19,7 +19,8 @@ module.exports = class Task {
         history,
         repeat,
         completed,
-        active
+        active,
+        steps
     ) {
         this.id = id;
         this.name = name;
@@ -38,6 +39,7 @@ module.exports = class Task {
         this.repeat = repeat;
         this.completed = completed;
         this.active = active;
+        this.steps = steps;
     };
     // getAssignedUser = async function() {
     //     try {
@@ -110,6 +112,7 @@ module.exports = class Task {
             this.repeat = task.repeat;
             this.completed = task.completed;
             this.active = task.active;
+            this.steps = task.steps;
 
             return this;
         } catch (e) {
@@ -144,6 +147,7 @@ module.exports = class Task {
             this.repeat = task.repeat;
             this.completed = task.completed;
             this.active = task.active;
+            this.steps = task.steps;
 
             return this;
         } catch (e) {
@@ -168,7 +172,8 @@ module.exports = class Task {
         history,
         repeat,
         completed,
-        active
+        active,
+        steps
     ) {
         var data = {
             name: name,
@@ -186,7 +191,8 @@ module.exports = class Task {
             history: history,
             repeat: repeat,
             completed: completed,
-            active: active
+            active: active,
+            steps: steps
         }
         try {
             var task = await taskService.updateTask(this.id, data)
@@ -209,6 +215,7 @@ module.exports = class Task {
             this.repeat = task.repeat;
             this.completed = task.completed;
             this.active = task.active;
+            this.steps = task.steps;
 
             return this;
         } catch (e) {
@@ -253,6 +260,53 @@ module.exports = class Task {
             .then(task => { return task });
 
             this.history = task.history;
+            return this;
+
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+    updateStepsAndRepeat = async function(
+        steps,
+        repeat
+    ) {
+        var data = {
+            steps: steps,
+            repeat: repeat
+        }
+
+        try {
+            var task = await taskService.updateTask(this.id, data)
+            .then(task => { return task });
+
+            this.steps = task.steps;
+            this.repeat = task.repeat;
+
+            return this;
+
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+    updateStartTime = async function(
+        start_time
+    ) {
+        var data = {
+            start_time: start_time,
+            estimated_completion_time: start_time + this.estimated_time
+        }
+
+        try {
+            var task = await taskService.updateTask(this.id, data)
+            .then(task => { return task });
+
+            this.start_time = task.start_time;
+            this.estimated_completion_time = task.estimated_completion_time;
+            
             return this;
 
         } catch (e) {
