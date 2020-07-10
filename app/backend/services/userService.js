@@ -184,6 +184,7 @@ exports.getDailyTasks = async (email, start_time, end_time) => {
               task.repeat,
               task.completed,
               task.active,
+              task.steps
           );
           all_tasks.push(new_task)
       }

@@ -9,6 +9,7 @@ import TaskDetail from "./app/screens/TaskDetail";
 import MyTasks from "./app/screens/MyTasks";
 import TaskStatus from "./app/screens/TaskStatus";
 import CustomTask from "./app/screens/CustomTask";
+import TaskPrompt from "./app/screens/TaskPrompt";
 import ProfileScreen from "./app/screens/ProfileScreen";
 import EditProfileScreen from "./app/screens/EditProfileScreen";
 import InitialLoading from "./app/screens/InitialLoading";
@@ -77,6 +78,24 @@ export default function App() {
             name="TaskStatus"
             component={TaskStatus}
             options={headerOption}
+          />
+          <Stack.Screen
+            name="TaskPrompt"
+            component={TaskPrompt}
+            // initialParams={{
+            //   name: "Name of Task",
+            //   timer: "5",
+            //   timeStamp: new Date("October 13, 2020 11:13:00"),
+            //   description:
+            //     "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
+            //   points: 5,
+            //   category: "other",
+            //   steps: [
+            //     { description: "pick up brush" },
+            //     { description: "put toothpaste" },
+            //     { description: "brush teeth" },
+            //   ],
+            // }}
           />
           <Stack.Screen
             name="ProfileScreen"
