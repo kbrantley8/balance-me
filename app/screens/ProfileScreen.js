@@ -7,6 +7,7 @@ import Tabbar from './../components/tabbar';
 import { Context as AppContext } from "../context/appContext";
 
 import { userStorage } from "../backend/local_storage/userStorage";
+import userService from "../backend/services/userService";
 
 import 'react-native-gesture-handler';
 let navigation;
@@ -26,8 +27,10 @@ class ProfileScreen extends Component {
     _toggleModal = () =>
         this.setState({ isModalVisible: !this.state.isModalVisible });
 
-    _deleteAccount = () => {
-        userStorage.removeUser();
+    _deleteAccount = async () => {
+        await userStorage.removeUser();
+        await userService.deleteUser(this.state.user.email);
+        this.context.deleteUser();
         this.props.navigation.navigate("FirstTimeUser");
     }
 

@@ -29,7 +29,7 @@ class FirstTimeUser extends Component {
   };
 
   async UNSAFE_componentWillMount() {
-    await this.context.fetchData("rpatel@gmail.com");
+    await this.context.fetchData("fakeemail@gmail.com");
   }
 
   constructor(props) {
