@@ -26,6 +26,20 @@ module.exports = class User {
         }
     }
     
+    updateLastName = async function(new_name) {
+        try {
+            var user = await userService.updateLastName(this.email, new_name)
+            .then(user => { return user });
+            
+            this.last_name = user.last_name;
+
+            return this;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
     updateEmail = async function(new_email, input_password) {
         try {
             var user = await userService.updateEmail(this.email, new_email, input_password)
