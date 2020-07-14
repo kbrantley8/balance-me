@@ -149,6 +149,24 @@ exports.updateFirstName = async (email, first_name) => {
   }
 }
 
+exports.updateLastName = async (email, last_name) => {
+
+  try {
+    var user = await axios.post(urlbase + '/updateLastName', 
+      { 
+        email,
+        last_name
+      }).then(user => {
+        return user.data
+      })
+
+    return user;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error})
+  }
+}
+
 exports.getDailyTasks = async (email, start_time, end_time) => {
 
   try {
