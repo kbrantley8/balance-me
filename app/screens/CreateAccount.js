@@ -4,11 +4,21 @@ import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
 import "react-native-gesture-handler";
 
-//TODO: Shouldn"t be able to go "back" to this page after page is submitted
-class FirstTimeUser extends Component {
+//TODO: Should be able to go "back" to this page after page is submitted
+class CreateAccount extends Component {
   state = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+  };
+
+  handleFirstName = (text) => {
+    this.setState({ firstName: text });
+  };
+
+  handleLastName = (text) => {
+    this.setState({ lastName: text });
   };
 
   handleEmail = (text) => {
@@ -19,19 +29,8 @@ class FirstTimeUser extends Component {
     this.setState({ password: text });
   };
 
-  handleLogIn = async () => {
-    const value = this.state.namevalue;
-    console.log("value: ", value);
-    if (typeof value != "undefined" && value != "" && value != null) {
-      global.username = value;
-      // KORY TODO: when we get local storage, add way of pulling local data instead of remote
-      await this.context.state.user.updateFirstName(value);
-      this.props.navigation.navigate("WelcomeScreen");
-    }
-  };
-
   handleSignUp = async () => {
-    this.props.navigation.navigate("CreateAccount");
+    this.props.navigation.navigate("WelcomeScreen");
   };
 
   async UNSAFE_componentWillMount() {
@@ -42,39 +41,39 @@ class FirstTimeUser extends Component {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={styles.headerText}>Balance Me</Text>
+          <Text style={styles.headerText}>Create Account</Text>
           <View style={styles.formBlock}>
             <Input
-              label="Sign In"
+              placeholder="First Name"
+              maxLength={30}
+              onChangeText={this.handleFirstName}
+              inputStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainer}
+            />
+            <Input
+              placeholder="Last Name"
+              maxLength={30}
+              onChangeText={this.handleLastName}
+              inputStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainer}
+            />
+            <Input
               placeholder="Email"
               maxLength={30}
               onChangeText={this.handleEmail}
-              labelStyle={styles.formLabel}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
-              leftIcon={ 
-                <Icon name="mail-outline" type="material" size={24} iconStyle={styles.inputIcon} />
-              }
             />
             <Input
               placeholder="Password"
               maxLength={30}
               onChangeText={this.handlePassword}
-              type="password"
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
-              leftIcon={
-                <Icon name="lock" type="material" size={24} iconStyle={styles.inputIcon} />
-              }
             />
           </View>
           <Button 
-            title="Log In"
-            onPress={this.handleLogIn}
-            buttonStyle={styles.logInButton} 
-          />
-          <Button 
-            title="Create Account"
+            title="Sign Up"
             onPress={this.handleSignUp}
             buttonStyle={styles.signUpButton}
           />
@@ -84,7 +83,7 @@ class FirstTimeUser extends Component {
   }
 }
 
-FirstTimeUser.contextType = AppContext;
+CreateAccount.contextType = AppContext;
 
 const styles = StyleSheet.create({
   background: {
@@ -99,13 +98,13 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
   headerText: {
-    marginTop: 100,
+    marginTop: 75,
     fontSize: 48,
-    fontWeight: "600",
+    fontWeight: "400",
   },
   formBlock: {
-    marginTop: 50,
-    marginBottom: 25,
+    marginTop: 40,
+    marginBottom: 40,
   },
   formLabel: {
     color: "black",
@@ -122,23 +121,14 @@ const styles = StyleSheet.create({
   inputLabel: {
     color: "black",
     fontSize: 20,
-    paddingTop: 15,
-    paddingLeft: 5,
+    paddingTop: 10,
     fontWeight: "300",
-  },
-  inputIcon: {
-    paddingTop: 15,
-  },
-  logInButton: {
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 20,
   },
   signUpButton: {
     borderRadius: 5,
     padding: 10,
-    backgroundColor: "#F2CD5C",
+    backgroundColor: "#1D76AA",
   },
 });
 
-export default FirstTimeUser;
+export default CreateAccount;

@@ -2,6 +2,7 @@ import * as React from "react";
 import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
 import FirstTimeUser from "./app/screens/FirstTimeUser";
+import CreateAccount from "./app/screens/CreateAccount";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
 import CreateTask from "./app/screens/CreateTask";
 import ChooseTask from "./app/screens/ChooseTask";
@@ -29,6 +30,11 @@ export default function App() {
           <Stack.Screen
             name="FirstTimeUser"
             component={FirstTimeUser}
+            options={headerOption}
+          />
+          <Stack.Screen
+            name="CreateAccount"
+            component={CreateAccount}
             options={headerOption}
           />
           <Stack.Screen
