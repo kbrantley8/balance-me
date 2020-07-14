@@ -4,7 +4,7 @@ import { Input } from "react-native-elements";
 import PrimaryButton from "./../components/button.js";
 
 import { Context as AppContext } from "../context/appContext";
-
+import { taskStorage } from "../backend/local_storage/taskStorage";
 import "react-native-gesture-handler";
 
 //TODO: Shouldn't be able to go 'back' to this page after page is submitted
@@ -24,12 +24,15 @@ class FirstTimeUser extends Component {
       global.username = value;
       // KORY TODO: when we get local storage, add way of pulling local data instead of remote
       await this.context.state.user.updateFirstName(value);
-      this.props.navigation.navigate("WelcomeScreen");
+
+      taskStorage.storeDefaultTask();
+
+      await this.props.navigation.navigate("WelcomeScreen");
     }
   };
 
   async UNSAFE_componentWillMount() {
-    await this.context.fetchData("fakeemail@gmail.com");
+    await this.context.fetchData("rpatel1@gmail.com");
   }
 
   constructor(props) {

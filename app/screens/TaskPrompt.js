@@ -22,7 +22,7 @@ import {
   Divider,
 } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { taskStorage } from "../backend/local_storage/taskStorage";
 import { Context as AppContext } from "../context/appContext";
 
 import Task from "../backend/model_data/Task";
@@ -179,6 +179,12 @@ class TaskPrompt extends Component {
     // repeat: ${JSON.stringify(repeat)}
     // `);
 
+    // taskStorage.addHealthItem({
+    //   name: new_task.name,
+    //   description: new_task.description,
+    //   steps: new_task.steps,
+    // });
+    // taskStorage.printHealth();
     this.props.navigation.navigate("MyTasks");
   }
 
