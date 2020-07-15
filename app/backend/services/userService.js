@@ -149,6 +149,24 @@ exports.updateFirstName = async (email, first_name) => {
   }
 }
 
+exports.updateLastName = async (email, last_name) => {
+
+  try {
+    var user = await axios.post(urlbase + '/updateLastName', 
+      { 
+        email,
+        last_name
+      }).then(user => {
+        return user.data
+      })
+
+    return user;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error})
+  }
+}
+
 exports.getDailyTasks = async (email, start_time, end_time) => {
 
   try {
@@ -184,6 +202,7 @@ exports.getDailyTasks = async (email, start_time, end_time) => {
               task.repeat,
               task.completed,
               task.active,
+              task.steps
           );
           all_tasks.push(new_task)
       }
@@ -192,5 +211,22 @@ exports.getDailyTasks = async (email, start_time, end_time) => {
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error, location: "userService.getDailyTasks()"})
+  }
+}
+
+exports.deleteUser = async (email) => {
+  try {
+    var val = await axios.delete(urlbase + '/deleteUser', 
+      { 
+        data: {
+          email
+        }
+      }).then(val => {
+        return val.data
+      })
+    return val;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error})
   }
 }

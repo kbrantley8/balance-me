@@ -8,7 +8,8 @@ import {
   Slider,
 } from "react-native-elements";
 
-import {Context as AppContext} from '../context/appContext';
+import { Context as AppContext } from "../context/appContext";
+import Task from "../backend/model_data/Task";
 
 const taskService = require("../backend/services/taskService");
 
@@ -20,7 +21,7 @@ class CustomTask extends Component {
       headerRight: () => (
         <Icon
           onPress={() => {
-            alert("Todo: go back to choose task screen");
+            this.props.navigation.navigate("MyTasks");
           }}
           name="clear"
           size={30}
@@ -74,30 +75,25 @@ class CustomTask extends Component {
       ref.current.clear();
       ref.current.focus();
     } else {
-
-      let { state } = this.context;
       var current_time = Math.round(Date.now() / 1000);
-      var task = await taskService.createTask(
-        this.state.name,
-        this.state.value,
-        this.state.selectedCategoryIndex,
-        this.state.time * 60,
-        this.state.description,
-        current_time + 300,
-        (current_time + 300) + (this.state.time * 60),
-        2,
-        "none",
-        state.user.id,
-        state.user.id
-      )
 
-      alert(
-        `Name:${this.state.name}
-        Description:${this.state.description}
-        Time Estimate:${this.state.time}
-        Category:${this.state.category}
-        Point Value:${this.state.value}`
-      );
+      // alert(
+      //   `Name:${this.state.name}
+      //   Description:${this.state.description}
+      //   Time Estimate:${this.state.time}
+      //   Category:${this.state.category}
+      //   Point Value:${this.state.value}`
+      // );
+
+      this.props.navigation.navigate("TaskPrompt", {
+        name: this.state.name,
+        timer: this.state.time,
+        description: this.state.description,
+        points: this.state.value,
+        category: this.state.category,
+        selectedCategoryIndex: this.state.selectedCategoryIndex,
+        steps: [],
+      });
     }
   }
 
@@ -132,7 +128,7 @@ class CustomTask extends Component {
             }
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
-            maxLength={100}
+            maxLength={250}
           />
 
           <Input
