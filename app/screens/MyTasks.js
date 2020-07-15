@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     paddingBottom: 6,
+    paddingTop: 6,
   },
   date: {
     padding: 6,
