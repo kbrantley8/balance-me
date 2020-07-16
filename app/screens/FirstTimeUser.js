@@ -9,6 +9,8 @@ class FirstTimeUser extends Component {
   state = {
     email: "",
     password: "",
+    error_email: "",
+    error_password: ""
   };
 
   handleEmail = (text) => {
@@ -20,23 +22,30 @@ class FirstTimeUser extends Component {
   };
 
   handleLogIn = async () => {
-    const value = this.state.namevalue;
-    console.log("value: ", value);
-    if (typeof value != "undefined" && value != "" && value != null) {
-      global.username = value;
-      // KORY TODO: when we get local storage, add way of pulling local data instead of remote
-      await this.context.state.user.updateFirstName(value);
+    await this.context.loginUser(this.state.email, this.state.password);
+    if (this.context.state.login_err_msg.message) {
+      if (this.context.state.login_err_msg.status == 404) {
+        this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "" })
+      } else if (this.context.state.login_err_msg.status == 401) {
+        this.setState({ error_password: this.context.state.login_err_msg.message, error_email: "" })
+      }
+    } else {
+      this.setState({ error_email: "", error_password: "" })
       this.props.navigation.navigate("WelcomeScreen");
     }
+    // const value = this.state.namevalue;
+    // console.log("value: ", value);
+    // if (typeof value != "undefined" && value != "" && value != null) {
+    //   global.username = value;
+    //   // KORY TODO: when we get local storage, add way of pulling local data instead of remote
+    //   await this.context.state.user.updateFirstName(value);
+    //   this.props.navigation.navigate("WelcomeScreen");
+    // }
   };
 
   handleSignUp = async () => {
     this.props.navigation.navigate("CreateAccount");
   };
-
-  async UNSAFE_componentWillMount() {
-    await this.context.fetchData("rpatel@gmail.com");
-  }
 
   render() {
     return (
@@ -55,6 +64,7 @@ class FirstTimeUser extends Component {
               leftIcon={ 
                 <Icon name="mail-outline" type="material" size={24} iconStyle={styles.inputIcon} />
               }
+              errorMessage={this.state.error_email}
             />
             <Input
               placeholder="Password"
@@ -66,6 +76,7 @@ class FirstTimeUser extends Component {
               leftIcon={
                 <Icon name="lock" type="material" size={24} iconStyle={styles.inputIcon} />
               }
+              errorMessage={this.state.error_password}
             />
           </View>
           <Button 
