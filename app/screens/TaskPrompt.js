@@ -443,7 +443,7 @@ class TaskPrompt extends Component {
       >
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          style={{ minWidth: "70%" }}
+          style={{ minWidth: "75%", width: '100%', height: '100%'}}
         >
           <Text style={styles.SubHeading}>Steps</Text>
           <View>
@@ -503,8 +503,8 @@ class TaskPrompt extends Component {
   Item({ title, index }) {
     return (
       <View style={[styles.pop, styles.item]}>
-        <View style={{ flex: 0.5, borderRightWidth: 0.5, paddingRight: 5 }}>
-          <Text style={{ fontSize: 10, textAlign: "center" }}>Step</Text>
+        <View style={{ flex: 0.8, borderRightWidth: 0.5, paddingHorizontal: 8 }}>
+          <Text style={{ fontSize: 12, textAlign: "center"}}>Step</Text>
           <Text style={styles.StepText}>{index}</Text>
         </View>
         <View style={{ flex: 3, paddingLeft: 5 }}>
@@ -726,12 +726,10 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
-    width: "90%",
-    paddingLeft: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
+    width: '95%',
+    margin: 6
   },
   StepText: {
     fontSize: 18,
@@ -813,8 +811,9 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    paddingVertical: 24,
+    paddingHorizontal: 18,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
