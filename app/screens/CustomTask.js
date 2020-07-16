@@ -107,7 +107,8 @@ class CustomTask extends Component {
   render() {
     const { selectedCategoryIndex } = this.state;
     return (
-      <View style={styles.Background}>
+      <View style={styles.background}>
+      <View style={styles.form}>
         <Input
           ref={this.nameRef}
           placeholder="Enter a name for the task"
@@ -142,7 +143,7 @@ class CustomTask extends Component {
           labelStyle={styles.labelText}
           maxLength={3}
         />
-        <View style={[styles.InputContainer, { flex: 2 }]}>
+        <View style={styles.InputContainer}>
           <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
             Category
           </Text>
@@ -168,7 +169,7 @@ class CustomTask extends Component {
             <View style={styles.ValueCountContainer}>
               <Icon
                 name="stars"
-                size={40}
+                size={30}
                 // style={{ marginRight:  }}
                 color="gold"
                 underlayColor="black"
@@ -182,14 +183,16 @@ class CustomTask extends Component {
             onValueChange={(value) => this.setState({ value })}
             maximumValue={50}
             minimumValue={1}
+            thumbTintColor='#1D76AA'
             step={1}
           />
         </View>
 
         {/* Time picker will go here
         <View style={{ flex: 2 }}></View> */}
-        <View style={styles.ControlContainer}>
-          <BTN raised={true} title="Create Task" onPress={this.checkInputs} style={{width: 300}} />
+      </View>
+        <View style={styles.ButtonContainer}>
+          <BTN raised={true} title="Create Task" onPress={this.checkInputs} style={{width: 300}}/>
         </View>
       </View>
     );
@@ -197,29 +200,37 @@ class CustomTask extends Component {
 }
 CustomTask.contextType = AppContext;
 const styles = StyleSheet.create({
-  Background: {
+  background: {
+    backgroundColor: '#FFF9F3',
     flex: 1,
-    padding: 5,
+    padding: 12,
+  },
+  form: {
+    flex: 1,
     alignItems: "center",
     backgroundColor: "white",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.5,
+    borderRadius: 10,
   },
   HeaderStyle: {
     backgroundColor: "#F2CD5C",
   },
   InputContainer: {
     flex: 1,
-    margin: 12,
-    width: "96%",
-    marginVertical: 12,
+    marginTop: 12,
+    width: "100%",
   },
   PointContainer: {
-    flex: 1.4,
     margin: 10,
-    width: "95%",
+    width: "100%",
     justifyContent: "center",
     padding: 12,
-    backgroundColor: "#fcfbe8",
-    borderRadius: 10,
   },
   ValueCountContainer: {
     paddingHorizontal: 10,
@@ -230,22 +241,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F2CD5C",
   },
-  ControlContainer: {
-    flex: 1,
+  ButtonContainer: {
     marginTop: 12,
     width: '100%',
-    justifyContent: 'center',
-    alignContent: 'center',
     alignItems: 'center'
   },
   labelText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "black",
+    color: "#606060",
   },
   PointValue: {
     fontWeight: "500",
-    fontSize: 20,
+    fontSize: 18,
     textAlign: "center",
     textDecorationStyle: "solid",
     textDecorationColor: "black",
