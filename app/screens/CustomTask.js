@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: '#FFF9F3',
     flex: 1,
-    padding: 12,
+    padding: 18,
   },
   form: {
     flex: 1,
