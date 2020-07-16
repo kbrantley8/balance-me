@@ -33,7 +33,7 @@ class CustomTask extends Component {
       headerStyle: styles.HeaderStyle,
     });
 
-    this.categoryButtons = ["Chore", "Health", "Activity", "Other"];
+    this.categoryButtons = ["Health", "Home", "School", "Other"];
     this.weekDaysButtons = ["S", "M", "T", "W", "T", "F", "S"];
     this.updateCategoryIndex = this.updateCategoryIndex.bind(this);
     this.checkInputs = this.checkInputs.bind(this);

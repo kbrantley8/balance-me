@@ -18,6 +18,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { Provider as AppProvider } from "./app/context/appContext";
 import { userStorage } from "./app/backend/local_storage/userStorage";
+import { taskStorage } from "./app/backend/local_storage/taskStorage";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const Stack = createStackNavigator();
 export default function App() {
   // Uncomment this to removed the user from the application for testing or development purposes.
   // userStorage.removeUser();
+  // taskStorage.removeCategories();
   const headerOption = { headerShown: false };
   return (
     <AppProvider>

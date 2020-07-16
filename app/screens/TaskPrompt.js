@@ -179,12 +179,16 @@ class TaskPrompt extends Component {
     // repeat: ${JSON.stringify(repeat)}
     // `);
 
-    // taskStorage.addHealthItem({
-    //   name: new_task.name,
-    //   description: new_task.description,
-    //   steps: new_task.steps,
-    // });
-    // taskStorage.printHealth();
+    taskStorage.addTaskIntoCateogry(
+      {
+        name: new_task.name,
+        description: new_task.description,
+        steps: new_task.steps,
+      },
+      this.state.category
+    );
+    // remove before production
+    taskStorage.printCategory(this.state.category);
     this.props.navigation.navigate("MyTasks");
   }
 

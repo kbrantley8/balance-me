@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { userStorage } from "../backend/local_storage/userStorage";
 import { ActivityIndicator, SafeAreaView, Platform } from "react-native";
 import { Context as AppContext } from "../context/appContext";
+import { taskStorage } from "../backend/local_storage/taskStorage";
 export default class InitialLoading extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,8 @@ export default class InitialLoading extends Component {
         this.props.navigation.navigate("FirstTimeUser");
       } else {
         await this.context.fetchData(user.email);
+        await taskStorage.updateLists();
+        // taskStorage.printCategory("Other");
         this.props.navigation.navigate("WelcomeScreen");
       }
     } catch (error) {

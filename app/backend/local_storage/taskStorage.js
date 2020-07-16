@@ -171,62 +171,145 @@ export class taskStorage {
           { description: "Get dressed!" },
         ],
       },
-      {
-        name: "Walk the dog",
-        description: "Take care of your dog by taking it on a walk.",
-        steps: [
-          { description: "Get dressed to go on a walk" },
-          { description: "Grab a leash for your dog and some plastic bags" },
-          {
-            description: "Use the plastic bags to clean up after the dog",
-          },
-          { description: "Make sure the dog has water if it is hot outside" },
-        ],
-      },
     ],
   };
+  static defaultOther = {
+    list: [],
+  };
 
-  static health = [];
-  static home = [];
-  static school = [];
-  static other = [];
+  static health = {
+    list: [],
+  };
+  static home = {
+    list: [],
+  };
+  static school = {
+    list: [],
+  };
+  static other = {
+    list: [],
+  };
 
   static storeDefaultTask = async () => {
     try {
-      console.log(JSON.stringify(this.defaultHealth));
       const jsonHealthValue = JSON.stringify(this.defaultHealth["list"]);
-      await AsyncStorage.setItem("health", jsonHealthValue);
+      await AsyncStorage.setItem("Health", jsonHealthValue);
       const jsonHomeValue = JSON.stringify(this.defaultHome["list"]);
-      await AsyncStorage.setItem("home", jsonHomeValue);
+      await AsyncStorage.setItem("Home", jsonHomeValue);
       const jsonSchoolValue = JSON.stringify(this.defaultSchool["list"]);
-      await AsyncStorage.setItem("school", jsonSchoolValue);
+      await AsyncStorage.setItem("School", jsonSchoolValue);
+      const jsonOtherValue = JSON.stringify(this.defaultOther["list"]);
+      await AsyncStorage.setItem("Other", jsonOtherValue);
 
-      this.health = this.defaultSchool;
+      this.health = this.defaultHealth;
       this.home = this.defaultHome;
       this.school = this.defaultSchool;
+      this.other = this.defaultOther;
     } catch (e) {
       console.error(e);
     }
   };
 
-  static getHealth = () => {
-    return this.health;
+  static updateLists = async () => {
+    if (this.health.length != 0) {
+      try {
+        const jsonHealthValue = await AsyncStorage.getItem("Health");
+        this.health = JSON.parse(jsonHealthValue);
+        const jsonHomeValue = await AsyncStorage.getItem("Home");
+        this.home = JSON.parse(jsonHomeValue);
+        const jsonSchoolValue = await AsyncStorage.getItem("School");
+        this.school = JSON.parse(jsonSchoolValue);
+        const jsonOtherValue = await AsyncStorage.getItem("Other");
+        this.other = JSON.parse(jsonOtherValue);
+        return true;
+      } catch (error) {
+        console.error(error);
+      }
+      return false;
+    }
+  };
+  // pass in the name of the category: Health, Home, School, Other
+  static getCategory = (category) => {
+    switch (category) {
+      case "Health":
+        return this.health["list"];
+      case "Home":
+        return this.home["list"];
+      case "School":
+        return this.school["list"];
+      case "Other":
+        return this.other["list"];
+      default:
+        break;
+    }
+    return null;
   };
 
-  static addHealthItem = async (value) => {
+  static addTaskIntoCateogry = async (value, category) => {
     try {
-      this.health["list"].push(value);
-      const jsonHealthValue = JSON.stringify(this.health);
-      await AsyncStorage.setItem("health", jsonHealthValue);
+      let jsonValue = null;
+      switch (category) {
+        case "Health":
+          this.health["list"].push(value);
+          jsonValue = JSON.stringify(this.health);
+          break;
+        case "Home":
+          this.home["list"].push(value);
+          jsonValue = JSON.stringify(this.home);
+          break;
+        case "School":
+          this.school["list"].push(value);
+          jsonValue = JSON.stringify(this.school);
+          break;
+        case "Other":
+          this.other["list"].push(value);
+          jsonValue = JSON.stringify(this.other);
+          break;
+        default:
+          return null;
+      }
+      return await AsyncStorage.setItem(category, jsonValue);
     } catch (e) {
       console.error(e);
     }
   };
 
-  static printHealth = async () => {
+  static removeCategories = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem("health");
-      console.log(JSON.stringify(jsonValue));
+      const keys = ["Health", "Home", "School", "Other"];
+      await AsyncStorage.multiRemove(keys);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //testing purpose
+  static printCategory = async (category) => {
+    try {
+      switch (category) {
+        case "Health":
+          const jsonHealthValue = await AsyncStorage.getItem("Health");
+          let jsonHealth = JSON.parse(jsonHealthValue);
+          console.log(jsonHealth);
+          break;
+        case "Home":
+          const jsonHomeValue = await AsyncStorage.getItem("Home");
+          let jsonHome = JSON.parse(jsonHomeValue);
+          console.log(jsonHome);
+          break;
+        case "School":
+          const jsonSchoolValue = await AsyncStorage.getItem("School");
+          let jsonSchool = JSON.parse(jsonSchoolValue);
+          console.log(jsonSchool);
+          break;
+        case "Other":
+          const jsonOtherValue = await AsyncStorage.getItem("Other");
+          let jsonOther = JSON.parse(jsonOtherValue);
+          console.log(jsonOther);
+          break;
+        default:
+          console.log("Category not detected");
+      }
     } catch (error) {
       console.error(e);
     }
