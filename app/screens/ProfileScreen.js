@@ -6,6 +6,9 @@ import Modal from "react-native-modal";
 import Tabbar from './../components/tabbar';
 import { Context as AppContext } from "../context/appContext";
 
+import { userStorage } from "../backend/local_storage/userStorage";
+import userService from "../backend/services/userService";
+
 import 'react-native-gesture-handler';
 let navigation;
 class ProfileScreen extends Component {
@@ -23,6 +26,13 @@ class ProfileScreen extends Component {
 
     _toggleModal = () =>
         this.setState({ isModalVisible: !this.state.isModalVisible });
+
+    _deleteAccount = async () => {
+        await userStorage.removeUser();
+        await userService.deleteUser(this.state.user.email);
+        this.context.deleteUser();
+        this.props.navigation.navigate("FirstTimeUser");
+    }
 
     render() {
         return (
@@ -173,7 +183,8 @@ class ProfileScreen extends Component {
                                 insideAlign="center"
                             />
                             <Card
-                                text="YES, DELETE MY ACCOUNT" //TODO: Actually delete the account
+                                onPress={this._deleteAccount}
+                                text="YES, DELETE MY ACCOUNT"
                                 textColor="#FFFFFF"
                                 textSize={20}
                                 height={60}

@@ -19,6 +19,8 @@ const authReducer = (state, action) => {
             return {...state, user: action.user, login_err_msg: {}}
         case 'login_error':
             return {...state, login_err_msg: action.login_err_msg}
+        case 'delete_user':
+            return {...state, user: action.user}
         case 'add_error':
             return {...state, error_message: action.error_message}
         default: 
@@ -161,13 +163,20 @@ const loginUser = (dispatch) => {
     }
 }
 
+const deleteUser = (dispatch) => {
+    return async(email) => {
+        dispatch({type: 'delete_user', user: new User()})
+    }
+}
+
 export const {Provider, Context} = createDataContext(
     authReducer,
     {
         fetchData,
         fetchDailyTasks,
         minuteUpdateDailyTasks,
-        loginUser
+        loginUser,
+        deleteUser
     },
     {
         user: null,

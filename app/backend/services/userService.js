@@ -235,3 +235,20 @@ exports.loginUser = async (email, password) => {
     return {status: e.response.status, message: e.response.data.error, location: "userService.loginUser()"};
   }
 }
+
+exports.deleteUser = async (email) => {
+  try {
+    var val = await axios.delete(urlbase + '/deleteUser', 
+      { 
+        data: {
+          email
+        }
+      }).then(val => {
+        return val.data
+      })
+    return val;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error})
+  }
+}
