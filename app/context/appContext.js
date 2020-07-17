@@ -15,6 +15,10 @@ const authReducer = (state, action) => {
             return {...state, daily_tasks: action.daily_tasks}
         case 'minute_update_daily_tasks':
             return {...state, daily_tasks: action.daily_tasks}
+        case 'login_user':
+            return {...state, user: action.user, login_err_msg: {}}
+        case 'login_error':
+            return {...state, login_err_msg: action.login_err_msg}
         case 'delete_user':
             return {...state, user: action.user}
         case 'add_error':
@@ -142,6 +146,23 @@ const minuteUpdateDailyTasks = (dispatch) => {
     }
 }
 
+const loginUser = (dispatch) => {
+    return async(email, password) => {
+        var userData = await userService.loginUser(email, password)
+        .then(user => { return user});
+        
+        if (userData.status == 404) {
+            dispatch({type: 'login_error', login_err_msg: { "message": userData.message, "status": userData.status }})
+        } else if (userData.status == 401) {
+            dispatch({type: 'login_error', login_err_msg: { "message": userData.message, "status": userData.status }})
+        } else {
+            var user = new User(userData._id, userData.first_name, userData.last_name, userData.account_type,
+                userData.password, userData.email, userData.points);
+            dispatch({type: 'login_user', user: user})
+        }
+    }
+}
+
 const deleteUser = (dispatch) => {
     return async(email) => {
         dispatch({type: 'delete_user', user: new User()})
@@ -154,13 +175,14 @@ export const {Provider, Context} = createDataContext(
         fetchData,
         fetchDailyTasks,
         minuteUpdateDailyTasks,
+        loginUser,
         deleteUser
     },
     {
-        user: new User(),
+        user: null,
         // assigned_tasks: new Task(),
         // created_tasks: new Task(),
-        daily_tasks: new Task(),
+        daily_tasks: null,
         error_message: ''
     }
 )
