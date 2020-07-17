@@ -3,6 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
 import "react-native-gesture-handler";
+import userService from '../backend/services/userService';
+
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 //TODO: Should be able to go "back" to this page after page is submitted
 class CreateAccount extends Component {
@@ -11,6 +14,10 @@ class CreateAccount extends Component {
     lastName: "",
     email: "",
     password: "",
+    error_firstName: "",
+    error_lastName: "",
+    error_email: "",
+    error_password: ""
   };
 
   handleFirstName = (text) => {
@@ -30,12 +37,50 @@ class CreateAccount extends Component {
   };
 
   handleSignUp = async () => {
-    this.props.navigation.navigate("WelcomeScreen");
+    var valid = true;
+    if (!this.state.firstName) {
+      this.setState({ error_firstName: "Please provide your first name."})
+      valid = false;
+    } else {
+      this.setState({ error_firstName: ""})
+    }
+    if (!this.state.lastName) {
+      this.setState({ error_lastName: "Please provide your last name."})
+      valid = false;
+    } else {
+      this.setState({ error_lastName: ""})
+    }
+    if (!this.state.email) {
+      this.setState({ error_email: "Please provide your email."})
+      valid = false;
+    } else {
+      if (!emailRegex.test(this.state.email)) {
+        this.setState({ error_email: "Please provide an email in a valid format."})
+        valid = false;
+      } else {
+        this.setState({ error_email: ""})
+      }
+    }
+    if (!this.state.password) {
+      this.setState({ error_password: "Please provide a password."})
+      valid = false;
+    } else {
+      this.setState({ error_password: ""})
+    }
+    if (!valid) {
+      return;
+    } else {
+      var new_user = await userService.createUser(this.state.firstName, this.state.lastName, 0, this.state.password, this.state.email);
+      if (new_user.status == 422) {
+        this.setState({ error_email: "That email already exists. You can try logging in with that email or using a different email."})
+        return;
+      } else {
+        this.setState({ error_email: ""})
+        await this.context.loginUser(this.state.email, this.state.password);
+        this.props.navigation.navigate("WelcomeScreen");
+      }
+    }
   };
-
-  async UNSAFE_componentWillMount() {
-    await this.context.fetchData("rpatel@gmail.com");
-  }
 
   render() {
     return (
@@ -49,6 +94,7 @@ class CreateAccount extends Component {
               onChangeText={this.handleFirstName}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
+              errorMessage={this.state.error_firstName}
             />
             <Input
               placeholder="Last Name"
@@ -56,6 +102,7 @@ class CreateAccount extends Component {
               onChangeText={this.handleLastName}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
+              errorMessage={this.state.error_lastName}
             />
             <Input
               placeholder="Email"
@@ -63,6 +110,7 @@ class CreateAccount extends Component {
               onChangeText={this.handleEmail}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
+              errorMessage={this.state.error_email}
             />
             <Input
               placeholder="Password"
@@ -70,6 +118,7 @@ class CreateAccount extends Component {
               onChangeText={this.handlePassword}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
+              errorMessage={this.state.error_password}
             />
           </View>
           <Button 

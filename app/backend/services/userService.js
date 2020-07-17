@@ -34,6 +34,7 @@ exports.createUser = async (first_name, last_name, account_type, password, email
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error})
+    return {status: e.response.status, message: e.response.data.error};
   }
 }
 
