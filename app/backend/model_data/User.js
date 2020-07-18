@@ -20,8 +20,9 @@ module.exports = class User {
     this.password = password;
     this.email = email;
     this.points = points;
+    this.updateUser();
   }
-  
+
   updateUser = function () {
     let userJson = {
       id: this.id,
@@ -67,21 +68,24 @@ module.exports = class User {
       console.log(e);
       return false;
     }
-  }
-    
-  updateLastName = async function(new_name) {
-      try {
-          var user = await userService.updateLastName(this.email, new_name)
-          .then(user => { return user });
-          
-          this.last_name = user.last_name;
+  };
 
-          return this;
-      } catch (e) {
-          console.log(e);
-          return false;
-      }
-  }
+  updateLastName = async function (new_name) {
+    try {
+      var user = await userService
+        .updateLastName(this.email, new_name)
+        .then((user) => {
+          return user;
+        });
+
+      this.last_name = user.last_name;
+
+      return this;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
 
   updatePoints = async function (new_points) {
     try {
