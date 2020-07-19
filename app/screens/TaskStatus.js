@@ -66,7 +66,9 @@ class TaskStatus extends Component {
         } else { // upcoming or overdue
             this.state.task.task.setStatus(1);
             this.setState({status: 1})
+            navigation.navigate("MyTasks");
         }
+        this.props.route.params['callback']()
     }
     
   render() {

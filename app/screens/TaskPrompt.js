@@ -11,6 +11,8 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
+  Modal
 } from "react-native";
 import {
   Icon,
@@ -75,6 +77,7 @@ class TaskPrompt extends Component {
       dateSelected: true,
       selectedDayIndexes: [],
       selectedFrequencyIndex: -1,
+      loading_icon: false
     };
     this.stepRef = React.createRef();
     this.Item = this.Item.bind(this);
@@ -108,6 +111,7 @@ class TaskPrompt extends Component {
   }
 
   async confirm() {
+    this.setState({ loading_icon: true });
     const name = this.state.name;
     const value = this.state.value;
     const category = this.state.category;
@@ -178,7 +182,7 @@ class TaskPrompt extends Component {
     // date: ${date}\n
     // repeat: ${JSON.stringify(repeat)}
     // `);
-
+    this.setState({ loading_icon: false });
     this.props.navigation.navigate("MyTasks");
   }
 
@@ -217,8 +221,23 @@ class TaskPrompt extends Component {
   }
 
   render() {
+    var loading_icon = <Modal
+    transparent={true}
+    animationType={'none'}
+    visible={true}>
+    <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+        size={Platform.OS == "ios" ? "large" : 50}
+        color="#37C1FF"
+      />
+      </View>
+    </View>
+  </Modal>;
+  
     return (
       <View style={styles.Background}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.BasicInformationContainer}>
           <View
             style={{
@@ -828,5 +847,21 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "justify",
   },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  }
 });
 export default TaskPrompt;

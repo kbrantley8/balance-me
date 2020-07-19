@@ -41,6 +41,10 @@ class ProfileScreen extends Component {
     this.props.navigation.navigate("FirstTimeUser");
   };
 
+  callback(user) {
+    this.setState({ user: user});
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -60,7 +64,9 @@ class ProfileScreen extends Component {
             <Text style={styles.bigText}>Profile</Text>
             <Card
               onPress={() => {
-                this.props.navigation.navigate("EditProfileScreen");
+                this.props.navigation.navigate("EditProfileScreen", {
+                  callback: this.callback.bind(this)
+                });
               }}
               text=""
               height={50}

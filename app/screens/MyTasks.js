@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
@@ -15,7 +15,9 @@ class MyTasks extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
-    var state = {};
+    var state = {
+      loading_icon: false
+    };
   }
 
   UNSAFE_componentWillMount() {
@@ -24,14 +26,16 @@ class MyTasks extends Component {
   }
 
   minuteUpdateDailyTasks = async () => {
+    this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ loading_icon: false })
   }
 
   async componentDidMount() {
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
   }
@@ -41,6 +45,10 @@ class MyTasks extends Component {
   }
 
   render() {
+    var loading_icon = <ActivityIndicator
+    size={Platform.OS == "ios" ? "large" : 50}
+    color="#37C1FF"
+  />;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={{flex: 1, padding: 12}}>
@@ -50,7 +58,8 @@ class MyTasks extends Component {
           </Text>
           <Text style={styles.progress}>Your Progress</Text>
           <Progress/>
-          { this.state.daily_tasks ? addTasks(this.state.daily_tasks) : noTasks() } 
+          {(this.state.loading_icon) ? loading_icon : null}
+          { this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks() } 
             <PrimaryButton
                 text="Update Daily Tasks"
                 onPress={() => {
@@ -63,7 +72,8 @@ class MyTasks extends Component {
               this.props.navigation.navigate("MyTasks");
             }}
           addPress={() => {
-            this.props.navigation.navigate("CreateTask");
+            this.props.navigation.navigate("CreateTask",
+            {callback: this.callback.bind(this)});
           }}
           profilePress={() => {
             this.props.navigation.navigate("ProfileScreen");
@@ -79,6 +89,73 @@ class MyTasks extends Component {
         await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
         this.setState({ daily_tasks: this.context.state.daily_tasks })
     }
+
+    async callback(tasks) {
+      this.setState({loading_icon: true})
+      await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+      this.setState({ daily_tasks: this.context.state.daily_tasks })
+      this.setState({loading_icon: false})
+    }
+
+    // creates a section of tasks with a title and list of tasks, if the array is not empty
+  createTasks = (taskList, text) => {
+    const TaskList = taskList.map((task, index) => {
+        return (
+          <View key={index} style={{paddingVertical: 3}}>
+            <Task
+              id={task.id}
+              completed={task.completed}
+              status={task.status}
+              name={task.name}
+              point_value={task.point_value}
+              time={(task.start_time) ? getTime(task.start_time) : 'null'}
+              onPress={
+                () => {
+                  navigation.navigate("TaskStatus", {
+                  task: {task},
+                  callback: this.callback.bind(this)
+                });
+                }
+              }
+              quickComplete={ () => {task.setComplete(true)} }
+            />
+          </View>
+        )
+    })  
+    return (
+        (taskList.length != 0) ? 
+            (<View>
+                <Text style={styles.progress}>{text}</Text>
+                {TaskList}
+            </View>)
+            : null 
+    );
+  }
+
+  //breaks down the tasks array into sections
+  addTasks = (tasks) => {
+  //get completed tasks
+  const complete = tasks.filter((task) => task.completed);
+
+  // get incomplete tasks
+  const incomplete = tasks.filter((task) => !task.completed);
+
+    //get each incomplete task type
+    const overdue = incomplete.filter(task => task.status === 0);
+    const inProgress = incomplete.filter(task => task.status === 1);
+    const upcoming = incomplete.filter(task => task.status === 2);
+    const missed = incomplete.filter(task => task.status === 3);
+
+    return (
+        <View>
+            {this.createTasks(overdue, "Overdue")}
+            {this.createTasks(inProgress, "In Progress")}
+            {this.createTasks(upcoming, "Upcoming")}
+            {this.createTasks(complete, "Completed")}
+            {this.createTasks(missed, "Missed")}
+        </View>
+    )
+  }
 }
 MyTasks.contextType = AppContext;
 
@@ -123,65 +200,6 @@ const getMonthofYear = () => {
         "December",
       ][month];
 };
-
-// creates a section of tasks with a title and list of tasks, if the array is not empty
-const createTasks = (taskList, text) => {
-    const TaskList = taskList.map((task, index) => {
-        return (
-          <View key={index} style={{paddingVertical: 3}}>
-            <Task
-              id={task.id}
-              completed={task.completed}
-              status={task.status}
-              name={task.name}
-              point_value={task.point_value}
-              time={(task.start_time) ? getTime(task.start_time) : 'null'}
-              onPress={
-                () => {
-                  navigation.navigate("TaskStatus", {
-                  task: {task}
-                });
-                }
-              }
-              quickComplete={ () => {task.setComplete(true)} }
-            />
-          </View>
-        )
-    })  
-    return (
-        (taskList.length != 0) ? 
-            (<View>
-                <Text style={styles.progress}>{text}</Text>
-                {TaskList}
-            </View>)
-             : null 
-    );
-}
-
-//breaks down the tasks array into sections
-const addTasks = (tasks) => {
-  //get completed tasks
-  const complete = tasks.filter((task) => task.completed);
-
-  // get incomplete tasks
-  const incomplete = tasks.filter((task) => !task.completed);
-
-    //get each incomplete task type
-    const overdue = incomplete.filter(task => task.status === 0);
-    const inProgress = incomplete.filter(task => task.status === 1);
-    const upcoming = incomplete.filter(task => task.status === 2);
-    const missed = incomplete.filter(task => task.status === 3);
-
-    return (
-        <View>
-            {createTasks(overdue, "Overdue")}
-            {createTasks(inProgress, "In Progress")}
-            {createTasks(upcoming, "Upcoming")}
-            {createTasks(complete, "Completed")}
-            {createTasks(missed, "Missed")}
-        </View>
-    )
-}
 
 //if there are no tasks
 const noTasks = () => {
