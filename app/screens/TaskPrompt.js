@@ -145,6 +145,8 @@ class TaskPrompt extends Component {
       state.user.id
     );
 
+    this.props.route.params['callback']();
+
     var new_task = new Task(
       task.task_id,
       task.name,
@@ -171,17 +173,6 @@ class TaskPrompt extends Component {
       await new_task.updateStartTime(date.getTime() / 1000);
     }
     await new_task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
-
-    // alert(`
-    // name: ${name}\n
-    // value: ${value}\n
-    // category: ${category}\n
-    // description: ${description}\n
-    // time: ${time}\n
-    // steps: ${JSON.stringify(steps)}\n
-    // date: ${date}\n
-    // repeat: ${JSON.stringify(repeat)}
-    // `);
     this.setState({ loading_icon: false });
     this.props.navigation.navigate("MyTasks");
   }
