@@ -17,6 +17,9 @@ export class taskStorage {
               "Follow the instructions on the bottle to take the pills",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 0,
       },
       {
         name: "Go on a run",
@@ -31,6 +34,9 @@ export class taskStorage {
               "Bring a bottle of water if you're going on a long run",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 0,
       },
       {
         name: "Drink water",
@@ -43,6 +49,9 @@ export class taskStorage {
               "Make sure to drink more water if you've been sweating",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 0,
       },
       {
         name: "Check blood pressure",
@@ -57,6 +66,9 @@ export class taskStorage {
             description: "Make a note of the blood pressure reading",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 0,
       },
     ],
   };
@@ -72,6 +84,9 @@ export class taskStorage {
             description: "Arrange the pillows",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 1,
       },
       {
         name: "Take out the trash",
@@ -84,6 +99,9 @@ export class taskStorage {
             description: "Put a new garbage bag in the bin",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 1,
       },
       {
         name: "Wash the dishes",
@@ -102,6 +120,9 @@ export class taskStorage {
           },
           { description: "Repeat until all dishes are clean" },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 1,
       },
       {
         name: "Walk the dog",
@@ -114,6 +135,9 @@ export class taskStorage {
           },
           { description: "Make sure the dog has water if it is hot outside" },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 1,
       },
     ],
   };
@@ -134,6 +158,9 @@ export class taskStorage {
               "Make sure to pack any homework that is due and needs to be handed in",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 2,
       },
       {
         name: "Prepare lunch",
@@ -150,6 +177,9 @@ export class taskStorage {
               "Make sure to add an icepack if the food needs to be kept cool",
           },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 2,
       },
       {
         name: "Choose outfit",
@@ -170,6 +200,9 @@ export class taskStorage {
           },
           { description: "Get dressed!" },
         ],
+        point_value: 15,
+        time_estimate: 5,
+        category: 2,
       },
     ],
   };
@@ -232,13 +265,13 @@ export class taskStorage {
   static getCategory = (category) => {
     switch (category) {
       case "Health":
-        return this.health["list"];
+        return this.health;
       case "Home":
-        return this.home["list"];
+        return this.home;
       case "School":
-        return this.school["list"];
+        return this.school;
       case "Other":
-        return this.other["list"];
+        return this.other;
       default:
         break;
     }
@@ -250,19 +283,19 @@ export class taskStorage {
       let jsonValue = null;
       switch (category) {
         case "Health":
-          this.health["list"].push(value);
+          this.health.push(value);
           jsonValue = JSON.stringify(this.health);
           break;
         case "Home":
-          this.home["list"].push(value);
+          this.home.push(value);
           jsonValue = JSON.stringify(this.home);
           break;
         case "School":
-          this.school["list"].push(value);
+          this.school.push(value);
           jsonValue = JSON.stringify(this.school);
           break;
         case "Other":
-          this.other["list"].push(value);
+          this.other.push(value);
           jsonValue = JSON.stringify(this.other);
           break;
         default:

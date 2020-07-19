@@ -47,7 +47,19 @@ class CustomTask extends Component {
       category: "Other",
       time: null,
       value: 5,
+      steps: null
     };
+
+    if (this.props.route.params.task) {
+      var task = this.props.route.params.task.task;
+      this.state.name = task.name;
+      this.state.description = task.description;
+      this.state.value = task.point_value;
+      this.state.time = task.time_estimate.toString();
+      this.state.selectedCategoryIndex = task.category;
+      this.state.steps = task.steps;
+      this.state.category = this.categoryButtons[task.category];
+    }
   }
 
   async checkInputs() {
@@ -84,7 +96,6 @@ class CustomTask extends Component {
       //   Category:${this.state.category}
       //   Point Value:${this.state.value}`
       // );
-
       this.props.navigation.navigate("TaskPrompt", {
         name: this.state.name,
         timer: this.state.time,
@@ -92,7 +103,7 @@ class CustomTask extends Component {
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
-        steps: [],
+        steps: this.state.steps,
       });
     }
   }
@@ -118,6 +129,7 @@ class CustomTask extends Component {
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
             maxLength={15}
+            value={(this.state.name) ? (this.state.name) : ""}
           />
           <Input
             ref={this.descriptionRef}
@@ -129,6 +141,7 @@ class CustomTask extends Component {
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
             maxLength={250}
+            value={(this.state.description) ? (this.state.description) : ""}
           />
 
           <Input
@@ -142,7 +155,8 @@ class CustomTask extends Component {
             returnKeyType="done"
             onSubmitEditing={Keyboard.dismiss}
             labelStyle={styles.labelText}
-            maxLength={3}
+            maxLength={3}n
+            value={(this.state.time) ? (this.state.time) : ''}
           />
           <View style={[styles.InputContainer, { flex: 2 }]}>
             <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>

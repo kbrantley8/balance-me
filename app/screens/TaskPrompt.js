@@ -103,8 +103,6 @@ class TaskPrompt extends Component {
 
     this.weekDays = ["S", "M", "T", "W", "Th", "F", "Sa"];
     this.frequency = ["Weekly", "biweekly", "Monthly"];
-
-    console.log(this.state.date);
   }
 
   async confirm() {
@@ -179,16 +177,19 @@ class TaskPrompt extends Component {
     // repeat: ${JSON.stringify(repeat)}
     // `);
 
-    taskStorage.addTaskIntoCateogry(
+    await taskStorage.addTaskIntoCateogry(
       {
         name: new_task.name,
         description: new_task.description,
         steps: new_task.steps,
+        time_estimate: new_task.estimated_time,
+        category: new_task.category_id,
+        point_value: new_task.point_value
       },
       this.state.category
     );
     // remove before production
-    taskStorage.printCategory(this.state.category);
+    // taskStorage.printCategory(this.state.category);
     this.props.navigation.navigate("MyTasks");
   }
 
@@ -552,7 +553,6 @@ class TaskPrompt extends Component {
         onBackdropPress={() => {
           this.setState({
             modalScheduleVisible: !this.state.modalScheduleVisible,
-            tempSteps: [],
           });
         }}
         animationType="fade"

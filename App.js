@@ -13,6 +13,7 @@ import TaskPrompt from "./app/screens/TaskPrompt";
 import ProfileScreen from "./app/screens/ProfileScreen";
 import EditProfileScreen from "./app/screens/EditProfileScreen";
 import InitialLoading from "./app/screens/InitialLoading";
+import DefaultTaskList from "./app/screens/DefaultTaskList";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -107,6 +108,11 @@ export default function App() {
           <Stack.Screen
             name="EditProfileScreen"
             component={EditProfileScreen}
+            options={headerOption}
+          />
+          <Stack.Screen
+            name="DefaultTaskList"
+            component={DefaultTaskList}
             options={headerOption}
           />
         </Stack.Navigator>

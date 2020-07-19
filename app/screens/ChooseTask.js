@@ -3,8 +3,12 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import Card from "./../components/card.js";
 import Stepper from "./../components/stepper.js";
 import "react-native-gesture-handler";
-
+let navigation;
 class CreateTask extends Component {
+  constructor(props) {
+    super(props)
+    navigation = this.props.navigation;
+  }
   state = {};
   render() {
     return (
@@ -30,24 +34,45 @@ class CreateTask extends Component {
               imageUri={require("./../assets/icons8-healthy-eating-100.png")}
               imgHeight={70}
               imgWidth={70}
+              onPress={
+                () => {
+                  navigation.navigate("DefaultTaskList", {
+                  category: 0
+                });
+                }
+              }
             />
             <Card
-              text="Activity"
+              text="Home"
               height={140}
               width={140}
               color="#A1D991"
               imageUri={require("./../assets/icons8-running-100.png")}
               imgHeight={70}
               imgWidth={70}
+              onPress={
+                () => {
+                  navigation.navigate("DefaultTaskList", {
+                  category: 1
+                });
+                }
+              }
             />
             <Card
-              text="Chore"
+              text="School"
               height={140}
               width={140}
               color="#F24822"
               imageUri={require("./../assets/icons8-yard-work-100.png")}
               imgHeight={70}
               imgWidth={70}
+              onPress={
+                () => {
+                  navigation.navigate("DefaultTaskList", {
+                  category: 2
+                });
+                }
+              }
             />
             <Card
               text="Custom"

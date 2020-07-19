@@ -31,7 +31,7 @@ class MyTasks extends Component {
 
   async componentDidMount() {
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
   }
