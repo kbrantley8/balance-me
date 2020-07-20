@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import Progress from './../components/progress';
@@ -15,7 +15,9 @@ class MyTasks extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
-    var state = {};
+    var state = {
+      loading_icon: false
+    };
   }
 
   UNSAFE_componentWillMount() {
@@ -24,14 +26,16 @@ class MyTasks extends Component {
   }
 
   minuteUpdateDailyTasks = async () => {
+    this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ loading_icon: false })
   }
 
   async componentDidMount() {
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.interval = setInterval(this.minuteUpdateDailyTasks, 60 * 1000);
+    this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
     this.setState({ daily_tasks: this.context.state.daily_tasks })
   }
@@ -41,6 +45,10 @@ class MyTasks extends Component {
   }
 
   render() {
+    var loading_icon = <ActivityIndicator
+    size={Platform.OS == "ios" ? "large" : 50}
+    color="#37C1FF"
+  />;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={{ flex: 1, padding: 12, paddingTop: 50 }}>
@@ -49,21 +57,23 @@ class MyTasks extends Component {
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
           <Text style={styles.progress}>Your Progress</Text>
-          <Progress />
-          {this.state.daily_tasks ? addTasks(this.state.daily_tasks) : noTasks()}
-          <PrimaryButton
-            text="Update Daily Tasks"
-            onPress={() => {
-              this.updateAllTasksToToday()
-            }}
-          />
+          <Progress/>
+          {(this.state.loading_icon) ? loading_icon : null}
+          { this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks() } 
+            <PrimaryButton
+                text="Update Daily Tasks"
+                onPress={() => {
+                    this.updateAllTasksToToday()
+                }}
+            />
         </ScrollView>
         <Tabbar
           taskPress={() => {
             this.props.navigation.navigate("MyTasks");
           }}
           addPress={() => {
-            this.props.navigation.navigate("CreateTask");
+            this.props.navigation.navigate("CreateTask",
+            {callback: this.callback.bind(this)});
           }}
           profilePress={() => {
             this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });
@@ -73,93 +83,57 @@ class MyTasks extends Component {
     );
   }
 
-  // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
-  updateAllTasksToToday = async () => {
-    await updateAllTasksToToday();
-    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
-  }
-}
-MyTasks.contextType = AppContext;
+    // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
+    updateAllTasksToToday = async () => {
+        await updateAllTasksToToday();
+        await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+        this.setState({ daily_tasks: this.context.state.daily_tasks })
+    }
 
-const getTime = (time) => {
-  let d = new Date(time.toString());
-  return d.getHours();
-}
-// functions about getting the date
-const getDay = () => {
-  return new Date().getDate();
-}
-const getDayOfWeek = () => {
-  const dayOfWeek = new Date().getDay();
-  return isNaN(dayOfWeek)
-    ? null
-    : [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ][dayOfWeek];
-};
-const getMonthofYear = () => {
-  const month = new Date().getMonth();
-  return isNaN(month)
-    ? null
-    : [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ][month];
-};
+    async callback() {
+      this.setState({loading_icon: true})
+      await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+      this.setState({ daily_tasks: this.context.state.daily_tasks })
+      this.setState({loading_icon: false})
+    }
 
-// creates a section of tasks with a title and list of tasks, if the array is not empty
-const createTasks = (taskList, text) => {
-  const TaskList = taskList.map((task, index) => {
+    // creates a section of tasks with a title and list of tasks, if the array is not empty
+  createTasks = (taskList, text) => {
+    const TaskList = taskList.map((task, index) => {
+        return (
+          <View key={index} style={{paddingVertical: 3}}>
+            <Task
+              id={task.id}
+              completed={task.completed}
+              status={task.status}
+              name={task.name}
+              point_value={task.point_value}
+              time={(task.start_time) ? getTime(task.start_time) : 'null'}
+              onPress={
+                () => {
+                  navigation.navigate("TaskStatus", {
+                  task: {task},
+                  callback: this.callback.bind(this)
+                });
+                }
+              }
+              quickComplete={ () => {task.setComplete(true)} }
+            />
+          </View>
+        )
+    })  
     return (
-      <View key={index} style={{ paddingVertical: 3 }}>
-        <Task
-          id={task.id}
-          completed={task.completed}
-          status={task.status}
-          name={task.name}
-          point_value={task.point_value}
-          time={(task.start_time) ? getTime(task.start_time) : 'null'}
-          onPress={
-            () => {
-              navigation.navigate("TaskStatus", {
-                task: { task }
-              });
-            }
-          }
-          quickComplete={() => { task.setComplete(true) }}
-        />
-      </View>
-    )
-  })
-  return (
-    (taskList.length != 0) ?
-      (<View>
-        <Text style={styles.progress}>{text}</Text>
-        {TaskList}
-      </View>)
-      : null
-  );
-}
+        (taskList.length != 0) ? 
+            (<View>
+                <Text style={styles.progress}>{text}</Text>
+                {TaskList}
+            </View>)
+            : null 
+    );
+  }
 
-//breaks down the tasks array into sections
-const addTasks = (tasks) => {
+  //breaks down the tasks array into sections
+  addTasks = (tasks) => {
   //get completed tasks
   const complete = tasks.filter((task) => task.completed);
 
@@ -172,16 +146,60 @@ const addTasks = (tasks) => {
   const upcoming = incomplete.filter(task => task.status === 2);
   const missed = incomplete.filter(task => task.status === 3);
 
-  return (
-    <View>
-      {createTasks(overdue, "Overdue")}
-      {createTasks(inProgress, "In Progress")}
-      {createTasks(upcoming, "Upcoming")}
-      {createTasks(complete, "Completed")}
-      {createTasks(missed, "Missed")}
-    </View>
-  )
+    return (
+        <View>
+            {this.createTasks(overdue, "Overdue")}
+            {this.createTasks(inProgress, "In Progress")}
+            {this.createTasks(upcoming, "Upcoming")}
+            {this.createTasks(complete, "Completed")}
+            {this.createTasks(missed, "Missed")}
+        </View>
+    )
+  }
 }
+MyTasks.contextType = AppContext;
+
+const getTime = (time) => {
+  let d = new Date(time.toString());
+  return d.getHours();
+}
+// functions about getting the date
+const getDay = () => {
+    return new Date().getDate(); 
+}
+const getDayOfWeek = () => {
+  const dayOfWeek = new Date().getDay();
+  return isNaN(dayOfWeek)
+    ? null
+    : [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ][dayOfWeek];
+};
+const getMonthofYear = () => {
+  const month = new Date().getMonth();
+  return isNaN(month)
+    ? null
+    : [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ][month];
+};
 
 //if there are no tasks
 const noTasks = () => {

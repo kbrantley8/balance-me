@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, Modal } from "react-native";
 import { Input } from 'react-native-elements';
 import PrimaryButton from "./../components/button.js";
 import Card from './../components/card.js';
@@ -14,11 +14,13 @@ class EditProfileScreen extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
-    var state = {
+    this.state = {
       fname: "",
       lname: "",
-      userEmail: ""
+      userEmail: "",
+      loading_icon: false
     };
+
   }
 
   UNSAFE_componentWillMount() {
@@ -40,15 +42,33 @@ class EditProfileScreen extends Component {
 
   handleSubmit = async () => {
     // KORY TODO: when we get local storage, add way of pulling local data instead of remote
+    this.setState({ loading_icon: true })
     await this.context.state.user.updateFirstName(this.state.fname);
     await this.context.state.user.updateLastName(this.state.lname);
-    await this.context.state.user.updateEmail(this.state.userEmail);
-    this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });
+    await this.context.state.user.updateEmail(this.state.userEmail, this.context.state.user.password);
+    await this.context.fetchData(this.state.userEmail);
+    this.props.route.params["callback"](this.context.state.user)
+    this.props.navigation.navigate("ProfileScreen");
+    this.setState({ loading_icon: false })
   }
 
   render() {
+    var loading_icon = <Modal
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+          size={Platform.OS == "ios" ? "large" : 50}
+          color="#37C1FF"
+      />
+      </View>
+      </View>
+    </Modal>
     return (
       <View style={styles.container}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.header}>
           <Card
             onPress={() => { this.props.navigation.navigate("ProfileScreen"); }}
@@ -133,48 +153,64 @@ class EditProfileScreen extends Component {
 EditProfileScreen.contextType = AppContext;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-  },
-  header: {
-    justifyContent: 'space-between',
-    paddingBottom: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginTop: 20,
-    flexDirection: "row"
-  },
-  textboxArea: {
-    paddingTop: "10%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  buttons: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  text: {
-    marginTop: 56,
-    marginLeft: -120,
-  },
-  welcome: {
-    fontSize: 30,
-    paddingBottom: 6,
-    fontWeight: "200",
-  },
-  bigText: {
-    fontSize: 30,
-    fontWeight: "700",
-    paddingTop: 20,
-  },
-  formText: {
-    //marginTop: 150,
-    //marginLeft: "-45%",
-    paddingLeft: "10%"
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#FCFCFC",
+    },
+    header: {
+      justifyContent: 'space-between',
+      paddingBottom: 30,
+      paddingLeft: 10,
+      paddingRight: 10,
+      marginTop: 20,
+      flexDirection: "row"
+    },
+    textboxArea: {
+        paddingTop: "10%",
+        justifyContent: "center",
+        alignItems: "flex-start",
+    },
+    buttons: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "center",
+        marginBottom: 24,
+    },
+    text: {
+        marginTop: 56,
+        marginLeft: -120,
+    },
+    welcome: {
+        fontSize: 30,
+        paddingBottom: 6,
+        fontWeight: "200",
+    },
+    bigText: {
+      fontSize: 30,
+      fontWeight: "700",
+      paddingTop: 20,
+    },
+    formText: {
+        //marginTop: 150,
+        //marginLeft: "-45%",
+        paddingLeft: "10%"
+    },
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040'
+    },
+    activityIndicatorWrapper: {
+      backgroundColor: '#FFFFFF',
+      height: 100,
+      width: 100,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    }
 });
 
 export default EditProfileScreen;

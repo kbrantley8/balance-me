@@ -58,7 +58,8 @@ class CreateTask extends Component {
               imgHeight={70}
               imgWidth={70}
               onPress={() => {
-                this.props.navigation.navigate("CustomTask");
+                this.props.navigation.navigate("CustomTask",
+                {callback: this.props.route.params['callback']});
               }}
             />
           </View>

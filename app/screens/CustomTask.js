@@ -93,6 +93,7 @@ class CustomTask extends Component {
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
         steps: [],
+        callback: this.props.route.params['callback']
       });
     }
   }
