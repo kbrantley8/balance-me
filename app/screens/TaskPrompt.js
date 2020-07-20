@@ -179,7 +179,7 @@ class TaskPrompt extends Component {
     // repeat: ${JSON.stringify(repeat)}
     // `);
 
-    this.props.navigation.navigate("MyTasks");
+    this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
   }
 
   updateDayIndex(selectedDayIndexes) {
@@ -196,7 +196,7 @@ class TaskPrompt extends Component {
   getReadableDate(type, date) {
     let dateFormat = `${
       this.monthNames[date.getMonth()]
-    } ${this.state.date.getDate()}, ${date.getFullYear()}`;
+      } ${this.state.date.getDate()}, ${date.getFullYear()}`;
 
     if (type == "date") {
       return dateFormat;
@@ -352,9 +352,9 @@ class TaskPrompt extends Component {
                   this.state.scheduledDateAndTime == null
                     ? "Schedule Task"
                     : this.getReadableDate(
-                        "both",
-                        this.state.scheduledDateAndTime
-                      )
+                      "both",
+                      this.state.scheduledDateAndTime
+                    )
                 }
                 containerStyle={([styles.pop], { borderRadius: 10 })}
                 onPress={() => {
@@ -443,7 +443,7 @@ class TaskPrompt extends Component {
       >
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          style={{ minWidth: "75%", width: '100%', height: '100%'}}
+          style={{ minWidth: "75%", width: '100%', height: '100%' }}
         >
           <Text style={styles.SubHeading}>Steps</Text>
           <View>
@@ -504,7 +504,7 @@ class TaskPrompt extends Component {
     return (
       <View style={[styles.pop, styles.item]}>
         <View style={{ flex: 0.8, borderRightWidth: 0.5, paddingHorizontal: 8 }}>
-          <Text style={{ fontSize: 12, textAlign: "center"}}>Step</Text>
+          <Text style={{ fontSize: 12, textAlign: "center" }}>Step</Text>
           <Text style={styles.StepText}>{index}</Text>
         </View>
         <View style={{ flex: 3, paddingLeft: 5 }}>
@@ -571,7 +571,7 @@ class TaskPrompt extends Component {
                 borderRadius: 25,
                 borderWidth:
                   this.state.dateSelected == true &&
-                  (Platform.OS == "ios" ? true : this.state.show)
+                    (Platform.OS == "ios" ? true : this.state.show)
                     ? 1
                     : 0,
               },
@@ -595,7 +595,7 @@ class TaskPrompt extends Component {
                 borderRadius: 25,
                 borderWidth:
                   this.state.dateSelected == false &&
-                  (Platform.OS == "ios" ? true : this.state.show)
+                    (Platform.OS == "ios" ? true : this.state.show)
                     ? 1
                     : 0,
               },
