@@ -97,9 +97,9 @@ class CustomTask extends Component {
       //   Point Value:${this.state.value}`
       // );
       this.props.navigation.navigate("TaskPrompt", {
-        name: this.state.name,
+        name: this.state.name.trim(),
         timer: this.state.time,
-        description: this.state.description,
+        description: this.state.description.trim(),
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
@@ -125,7 +125,7 @@ class CustomTask extends Component {
             ref={this.nameRef}
             placeholder="Enter a name for the task"
             label="Name"
-            onChangeText={(value) => this.setState({ name: value.trim() })}
+            onChangeText={(value) => this.setState({ name: value })}
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
             maxLength={15}
@@ -136,7 +136,7 @@ class CustomTask extends Component {
             placeholder="Enter a description of the task"
             label="Description"
             onChangeText={(value) =>
-              this.setState({ description: value.trim() })
+              this.setState({ description: value })
             }
             containerStyle={styles.InputContainer}
             labelStyle={styles.labelText}
@@ -155,7 +155,7 @@ class CustomTask extends Component {
             returnKeyType="done"
             onSubmitEditing={Keyboard.dismiss}
             labelStyle={styles.labelText}
-            maxLength={3}n
+            maxLength={3} n
             value={(this.state.time) ? (this.state.time) : ''}
           />
           <View style={[styles.InputContainer, { flex: 2 }]}>
