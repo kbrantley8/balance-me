@@ -13,7 +13,7 @@ export default class InitialLoading extends Component {
   async componentDidMount() {
     try {
       let user = await userStorage.getUser().then((res) => {
-        console.log(`user: ${res.email}`);
+        console.log(`user: ${(res != null) ? res.email : "null"}`);
         this.setState({ loading: false });
         return res;
       });

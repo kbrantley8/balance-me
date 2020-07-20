@@ -32,23 +32,23 @@ class DefaultTaskList extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={{ flex: 1, justifyContent: "flex-end" }}>
-                <View style={styles.headerContainer}>
-                    <Button 
-                        title="back"
-                        onPress={() => {
-                            this.props.navigation.navigate("ChooseTask");
-                        }}
+                <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}>
+                    <View style={styles.headerContainer}>
+                        <Button
+                            title="back"
+                            onPress={() => {
+                                this.props.navigation.navigate("ChooseTask");
+                            }}
                         />
-                    <Text style={styles.mainText}>Let's create a task:</Text>
-                    <Stepper step={3}/>
-                </View>
-                <View style={styles.selection}>
-                    <Text style={styles.titleText}>{this.state.title}</Text>
-                    {/* <Default_Task></Default_Task> */}
-                    {this.createTasks()}
-                </View>
-            </ScrollView>
+                        <Text style={styles.mainText}>Let's create a task:</Text>
+                        <Stepper step={3} />
+                    </View>
+                    <View style={styles.selection}>
+                        <Text style={styles.titleText}>{this.state.title}</Text>
+                        {/* <Default_Task></Default_Task> */}
+                        {this.createTasks()}
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         );
     }
@@ -59,19 +59,19 @@ class DefaultTaskList extends Component {
             console.log(task)
             return (
                 <Default_Task
-                  key={index}
-                  name={task.name}
-                  point_value={task.point_value}
-                  onPress={
-                    () => {
-                        this.props.navigation.navigate("CustomTask", {
-                            task: {task} 
-                        })
+                    key={index}
+                    name={task.name}
+                    point_value={task.point_value}
+                    onPress={
+                        () => {
+                            this.props.navigation.navigate("CustomTask", {
+                                task: { task }
+                            })
+                        }
                     }
-                  }
                 />
             )
-        })  
+        })
         return (
             TaskList
         );
@@ -80,8 +80,8 @@ class DefaultTaskList extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: "#FCFCFC",
+        flex: 1,
+        backgroundColor: "#FCFCFC",
     },
     headerContainer: {
         flex: 1,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold',
         padding: 24,
-        
+
     }
 
 });
