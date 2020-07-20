@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, Modal } from "react-native";
 import { Input } from 'react-native-elements';
 import PrimaryButton from "./../components/button.js";
 import Card from './../components/card.js';
@@ -14,11 +14,13 @@ class EditProfileScreen extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
-    var state = {
+    this.state = {
       fname: "",
       lname: "",
-      userEmail: ""
+      userEmail: "",
+      loading_icon: false
     };
+
   }
 
   UNSAFE_componentWillMount() {
@@ -38,20 +40,38 @@ class EditProfileScreen extends Component {
     this.setState({ userEmail: text })
   }
 
-  handleSubmit = async  () => {
+  handleSubmit = async () => {
     // KORY TODO: when we get local storage, add way of pulling local data instead of remote
+    this.setState({ loading_icon: true })
     await this.context.state.user.updateFirstName(this.state.fname);
     await this.context.state.user.updateLastName(this.state.lname);
-    await this.context.state.user.updateEmail(this.state.userEmail);
+    await this.context.state.user.updateEmail(this.state.userEmail, this.context.state.user.password);
+    await this.context.fetchData(this.state.userEmail);
+    this.props.route.params["callback"](this.context.state.user)
     this.props.navigation.navigate("ProfileScreen");
+    this.setState({ loading_icon: false })
   }
 
   render() {
+    var loading_icon = <Modal
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+          size={Platform.OS == "ios" ? "large" : 50}
+          color="#37C1FF"
+      />
+      </View>
+      </View>
+    </Modal>
     return (
       <View style={styles.container}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.header}>
           <Card
-            onPress={() => {this.props.navigation.navigate("ProfileScreen");}}
+            onPress={() => { this.props.navigation.navigate("ProfileScreen"); }}
             text=""
             height={50}
             width={50}
@@ -86,7 +106,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Last Name:</Text>
@@ -101,7 +121,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Email:</Text>
@@ -116,7 +136,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
         </View>
         <View style={styles.buttons}>
@@ -175,6 +195,22 @@ const styles = StyleSheet.create({
         //marginLeft: "-45%",
         paddingLeft: "10%"
     },
+    modalBackground: {
+      flex: 1,
+      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      backgroundColor: '#00000040'
+    },
+    activityIndicatorWrapper: {
+      backgroundColor: '#FFFFFF',
+      height: 100,
+      width: 100,
+      borderRadius: 10,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    }
 });
 
 export default EditProfileScreen;

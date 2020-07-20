@@ -34,6 +34,7 @@ exports.createUser = async (first_name, last_name, account_type, password, email
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error})
+    return {status: e.response.status, message: e.response.data.error};
   }
 }
 
@@ -53,6 +54,7 @@ exports.getUser = async (email) => {
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error, location: "userService.getUser()"})
+    return {status: e.response.status, message: e.response.data.error, location: "userService.getUser()"};
   }
 }
 
@@ -211,6 +213,27 @@ exports.getDailyTasks = async (email, start_time, end_time) => {
 
   } catch (e) {
     console.log({status: e.response.status, message: e.response.data.error, location: "userService.getDailyTasks()"})
+  }
+}
+
+exports.loginUser = async (email, password) => {
+  try {
+    var user = await axios.get(urlbase + '/loginUser', 
+      { 
+        params: {
+          email,
+          password
+        }
+      }
+      ).then(user => {
+        return user.data
+      })
+
+      return user;
+
+  } catch (e) {
+    console.log({status: e.response.status, message: e.response.data.error, location: "userService.loginUser()"})
+    return {status: e.response.status, message: e.response.data.error, location: "userService.loginUser()"};
   }
 }
 

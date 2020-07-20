@@ -40,8 +40,12 @@ class ProfileScreen extends Component {
     await userService.deleteUser(this.state.user.email);
     this.context.deleteUser();
     await taskStorage.removeCategories();
-    this.props.navigation.navigate("FirstTimeUser");
+    this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
   };
+
+  callback(user) {
+    this.setState({ user: user});
+  }
 
   render() {
     return (
@@ -62,7 +66,9 @@ class ProfileScreen extends Component {
             <Text style={styles.bigText}>Profile</Text>
             <Card
               onPress={() => {
-                this.props.navigation.navigate("EditProfileScreen");
+                this.props.navigation.navigate("EditProfileScreen", {
+                  callback: this.callback.bind(this)
+                });
               }}
               text=""
               height={50}
@@ -211,7 +217,7 @@ class ProfileScreen extends Component {
         </ScrollView>
         <Tabbar
           taskPress={() => {
-            this.props.navigation.navigate("MyTasks");
+            this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
           }}
           addPress={() => {
             this.props.navigation.navigate("CreateTask");

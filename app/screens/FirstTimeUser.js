@@ -1,106 +1,155 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-import { Input } from "react-native-elements";
-import PrimaryButton from "./../components/button.js";
-
+import { StyleSheet, View } from "react-native";
+import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
 import { taskStorage } from "../backend/local_storage/taskStorage";
 import "react-native-gesture-handler";
 
-//TODO: Shouldn't be able to go 'back' to this page after page is submitted
+//TODO: Shouldn"t be able to go "back" to this page after page is submitted
 class FirstTimeUser extends Component {
   state = {
-    namevalue: "",
+    email: "",
+    password: "",
+    error_email: "",
+    error_password: ""
   };
 
-  handleName = (text) => {
-    this.setState({ namevalue: text });
+  handleEmail = (text) => {
+    this.setState({ email: text });
   };
 
-  handleSubmit = async () => {
-    const value = this.state.namevalue;
-    console.log("value: ", value);
-    if (typeof value != "undefined" && value != "" && value != null) {
-      global.username = value;
-      // KORY TODO: when we get local storage, add way of pulling local data instead of remote
-      await this.context.state.user.updateFirstName(value);
-      await taskStorage.storeDefaultTask();
-      await this.props.navigation.navigate("WelcomeScreen");
+  handlePassword = (text) => {
+    this.setState({ password: text });
+  };
+
+  handleLogIn = async () => {
+    await this.context.loginUser(this.state.email, this.state.password);
+    if (this.context.state.login_err_msg.message) {
+      if (this.context.state.login_err_msg.status == 404) {
+        this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "" })
+      } else if (this.context.state.login_err_msg.status == 401) {
+        this.setState({ error_password: this.context.state.login_err_msg.message, error_email: "" })
+      }
+    } else {
+      this.setState({ error_email: "", error_password: "" })
+      this.props.navigation.navigate("WelcomeScreen");
     }
+    // const value = this.state.namevalue;
+    // console.log("value: ", value);
+    // if (typeof value != "undefined" && value != "" && value != null) {
+    //   global.username = value;
+    //   // KORY TODO: when we get local storage, add way of pulling local data instead of remote
+    //   await this.context.state.user.updateFirstName(value);
+    //   this.props.navigation.navigate("WelcomeScreen");
+    // }
   };
 
-  async UNSAFE_componentWillMount() {
-    await this.context.fetchData("kbrantley@gmail.com");
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-    };
-  }
+  handleSignUp = async () => {
+    this.props.navigation.navigate("CreateAccount");
+  };
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.text}>
-          <Text style={styles.welcome}>Welcome to</Text>
-          <Text style={styles.bigText}>BalanceMe</Text>
-        </View>
-        <View style={styles.formText}>
-          <Text style={styles.welcome}>What's your name?</Text>
-        </View>
-        <Input
-          placeholder="Name"
-          maxLength={30}
-          onChangeText={this.handleName}
-          paddingHorizontal={20}
-          borderRadius={10}
-          borderColor="#000000"
-          borderWidth={1}
-          marginLeft={35}
-          marginRight={50}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <View style={styles.buttons}>
-          <PrimaryButton text="Let's Get Started" onPress={this.handleSubmit} />
+      <View style={styles.background}>
+        <View style={styles.container}>
+          <Text style={styles.headerText}>Balance Me</Text>
+          <View style={styles.formBlock}>
+            <Input
+              label="Sign In"
+              placeholder="Email"
+              maxLength={30}
+              onChangeText={this.handleEmail}
+              labelStyle={styles.formLabel}
+              inputStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainer}
+              leftIcon={ 
+                <Icon name="mail-outline" type="material" size={24} iconStyle={styles.inputIcon} />
+              }
+              errorMessage={this.state.error_email}
+            />
+            <Input
+              placeholder="Password"
+              maxLength={30}
+              onChangeText={this.handlePassword}
+              type="password"
+              inputStyle={styles.inputLabel}
+              inputContainerStyle={styles.inputContainer}
+              leftIcon={
+                <Icon name="lock" type="material" size={24} iconStyle={styles.inputIcon} />
+              }
+              errorMessage={this.state.error_password}
+            />
+          </View>
+          <Button 
+            title="Log In"
+            onPress={this.handleLogIn}
+            buttonStyle={styles.logInButton} 
+          />
+          <Button 
+            title="Create Account"
+            onPress={this.handleSignUp}
+            buttonStyle={styles.signUpButton}
+          />
         </View>
       </View>
     );
   }
 }
+
 FirstTimeUser.contextType = AppContext;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  background: {
+    width: "100%",
+    height: "100%",
     backgroundColor: "#FCFCFC",
-    justifyContent: "center",
-    alignItems: "center",
   },
-  buttons: {
-    flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 24,
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: 30,
+    marginRight: 30,
   },
-  text: {
-    marginTop: 56,
-    marginLeft: -120,
+  headerText: {
+    marginTop: 100,
+    fontSize: 48,
+    fontWeight: "600",
   },
-  welcome: {
-    fontSize: 30,
-    paddingBottom: 6,
-    fontWeight: "200",
+  formBlock: {
+    marginTop: 50,
+    marginBottom: 25,
   },
-  bigText: {
-    fontSize: 42,
-    paddingBottom: 12,
-    fontWeight: "700",
+  formLabel: {
+    color: "black",
+    fontSize: 24,
+    marginLeft: -5,
+    fontWeight: "500",
   },
-  formText: {
-    marginTop: 150,
-    marginLeft: -75,
+  inputContainer: {
+    marginLeft: -5,
+    marginRight: -5,
+    borderBottomWidth: 0.5,
+    borderColor: "black",
+  },
+  inputLabel: {
+    color: "black",
+    fontSize: 20,
+    paddingTop: 15,
+    paddingLeft: 5,
+    fontWeight: "300",
+  },
+  inputIcon: {
+    paddingTop: 15,
+  },
+  logInButton: {
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20,
+  },
+  signUpButton: {
+    borderRadius: 5,
+    padding: 10,
+    backgroundColor: "#F2CD5C",
   },
 });
 

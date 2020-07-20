@@ -51,14 +51,16 @@ class CustomTask extends Component {
     };
 
     if (this.props.route.params) {
-      var task = this.props.route.params.task.task;
-      this.state.name = task.name;
-      this.state.description = task.description;
-      this.state.value = task.point_value;
-      this.state.time = (task.time_estimate / 60).toString();
-      this.state.selectedCategoryIndex = task.category;
-      this.state.steps = task.steps;
-      this.state.category = this.categoryButtons[task.category];
+      if (this.props.route.params.task) {
+        var task = this.props.route.params.task.task;
+        this.state.name = task.name;
+        this.state.description = task.description;
+        this.state.value = task.point_value;
+        this.state.time = (task.time_estimate / 60).toString();
+        this.state.selectedCategoryIndex = task.category;
+        this.state.steps = task.steps;
+        this.state.category = this.categoryButtons[task.category];
+      }
     }
   }
 
@@ -103,7 +105,7 @@ class CustomTask extends Component {
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
-        steps: this.state.steps,
+        steps: this.state.steps
       });
     }
   }
@@ -118,95 +120,95 @@ class CustomTask extends Component {
   render() {
     const { selectedCategoryIndex } = this.state;
     return (
-      <View style={styles.Background}>
-        <View style={styles.FormBackground}>
-          {/* <View style={{ flex: 2, width: "100%" }}> */}
-          <Input
-            ref={this.nameRef}
-            placeholder="Enter a name for the task"
-            label="Name"
-            onChangeText={(value) => this.setState({ name: value })}
-            containerStyle={styles.InputContainer}
-            labelStyle={styles.labelText}
-            maxLength={15}
-            value={(this.state.name) ? (this.state.name) : ""}
-          />
-          <Input
-            ref={this.descriptionRef}
-            placeholder="Enter a description of the task"
-            label="Description"
-            onChangeText={(value) =>
-              this.setState({ description: value })
-            }
-            containerStyle={styles.InputContainer}
-            labelStyle={styles.labelText}
-            maxLength={250}
-            value={(this.state.description) ? (this.state.description) : ""}
-          />
+      <View style={styles.background}>
+      <View style={styles.form}>
+        <Input
+          ref={this.nameRef}
+          placeholder="Enter a name for the task"
+          label="Name"
+          onChangeText={(value) => this.setState({ name: value.trim() })}
+          containerStyle={styles.InputContainer}
+          labelStyle={styles.labelText}
+          maxLength={15}
+          value={(this.state.name) ? (this.state.name) : ""}
+        />
+        <Input
+          ref={this.descriptionRef}
+          placeholder="Enter a description of the task"
+          label="Description"
+          onChangeText={(value) =>
+            this.setState({ description: value.trim() })
+          }
+          containerStyle={styles.InputContainer}
+          labelStyle={styles.labelText}
+          maxLength={250}
+          value={(this.state.description) ? (this.state.description) : ""}
+        />
 
-          <Input
-            ref={this.estimateRef}
-            placeholder="Enter the time in mins"
-            label="Time Estimate (Mins)"
-            onChangeText={(value) => this.setState({ time: value })}
-            containerStyle={styles.InputContainer}
-            keyboardType="number-pad"
-            returnKeyLabel="Done"
-            returnKeyType="done"
-            onSubmitEditing={Keyboard.dismiss}
-            labelStyle={styles.labelText}
-            maxLength={3} n
-            value={(this.state.time) ? (this.state.time) : ''}
+        <Input
+          ref={this.estimateRef}
+          placeholder="Enter the time in mins"
+          label="Time Estimate (Mins)"
+          onChangeText={(value) => this.setState({ time: value })}
+          containerStyle={styles.InputContainer}
+          keyboardType="number-pad"
+          returnKeyLabel="Done"
+          returnKeyType="done"
+          onSubmitEditing={Keyboard.dismiss}
+          labelStyle={styles.labelText}
+          maxLength={3}
+          value={(this.state.time) ? (this.state.time) : ""}
+        />
+        <View style={styles.InputContainer}>
+          <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
+            Category
+          </Text>
+          <ButtonGroup
+            onPress={this.updateCategoryIndex}
+            selectedIndex={selectedCategoryIndex}
+            buttons={this.categoryButtons}
+            containerStyle={{ flex: 1 }}
           />
-          <View style={[styles.InputContainer, { flex: 2 }]}>
-            <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
-              Category
-            </Text>
-            <ButtonGroup
-              onPress={this.updateCategoryIndex}
-              selectedIndex={selectedCategoryIndex}
-              buttons={this.categoryButtons}
-              containerStyle={{ flex: 1 }}
-            />
-          </View>
-
-          <View style={styles.PointContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={[styles.labelText, { marginBottom: "5%" }]}>
-                Point Value
-              </Text>
-              <View style={styles.ValueCountContainer}>
-                <Icon
-                  name="stars"
-                  size={50}
-                  // style={{ marginRight:  }}
-                  color="gold"
-                  underlayColor="black"
-                  iconStyle={styles.GoldIconStyle}
-                />
-                <Text style={styles.PointValue}>{this.state.value}</Text>
-              </View>
-            </View>
-            <Slider
-              value={this.state.value}
-              onValueChange={(value) => this.setState({ value })}
-              maximumValue={50}
-              minimumValue={1}
-              step={1}
-            />
-          </View>
-
-          {/* Time picker will go here
-          <View style={{ flex: 2 }}></View> */}
         </View>
-        <View style={styles.ControlContainer}>
-          <BTN raised={true} title="Create Task" onPress={this.checkInputs} />
+
+        <View style={styles.PointContainer}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={[styles.labelText, { marginBottom: "5%" }]}>
+              Point Value
+            </Text>
+            <View style={styles.ValueCountContainer}>
+              <Icon
+                name="stars"
+                size={30}
+                // style={{ marginRight:  }}
+                color="gold"
+                underlayColor="black"
+                iconStyle={styles.GoldIconStyle}
+              />
+              <Text style={styles.PointValue}>{this.state.value}</Text>
+            </View>
+          </View>
+          <Slider
+            value={this.state.value}
+            onValueChange={(value) => this.setState({ value })}
+            maximumValue={50}
+            minimumValue={1}
+            thumbTintColor='#1D76AA'
+            step={1}
+          />
+        </View>
+
+        {/* Time picker will go here
+        <View style={{ flex: 2 }}></View> */}
+      </View>
+        <View style={styles.ButtonContainer}>
+          <BTN raised={true} title="Create Task" onPress={this.checkInputs} style={{width: 300}}/>
         </View>
       </View>
     );
@@ -214,37 +216,37 @@ class CustomTask extends Component {
 }
 CustomTask.contextType = AppContext;
 const styles = StyleSheet.create({
-  Background: {
-    backgroundColor: "white",
-    padding: 20,
+  background: {
+    backgroundColor: '#FFF9F3',
     flex: 1,
-    minHeight: 550,
+    padding: 18,
+  },
+  form: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "white",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.5,
+    borderRadius: 10,
   },
   HeaderStyle: {
     backgroundColor: "#F2CD5C",
   },
   InputContainer: {
     flex: 1,
-    margin: 10,
-    width: "95%",
+    marginTop: 12,
+    width: "100%",
   },
   PointContainer: {
-    flex: 2,
     margin: 10,
-    width: "95%",
+    width: "100%",
     justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#fcfbe8",
-    borderRadius: 10,
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 3.5,
-
-    elevation: 5,
+    padding: 12,
   },
   ValueCountContainer: {
     paddingHorizontal: 10,
@@ -255,49 +257,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#F2CD5C",
   },
-  FormBackground: {
-    flex: 13,
-    backgroundColor: "#F1F2E4",
-    padding: 5,
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 10,
-    shadowColor: "#000000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 3.5,
-
-    elevation: 5,
-  },
-  ControlContainer: {
-    flex: 1,
-    marginTop: 20,
+  ButtonContainer: {
+    marginTop: 12,
+    width: '100%',
+    alignItems: 'center'
   },
   labelText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "black",
+    color: "#606060",
   },
   PointValue: {
     fontWeight: "500",
-    fontSize: 25,
+    fontSize: 18,
     textAlign: "center",
     textDecorationStyle: "solid",
     textDecorationColor: "black",
     color: "#b89d0b",
   },
   GoldIconStyle: {
-    marginHorizontal: 5,
-    shadowColor: "black",
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    marginRight: 5,
   },
 });
 export default CustomTask;

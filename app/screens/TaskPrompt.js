@@ -11,6 +11,8 @@ import {
   Alert,
   TouchableOpacity,
   Platform,
+  ActivityIndicator,
+  Modal
 } from "react-native";
 import {
   Icon,
@@ -75,6 +77,7 @@ class TaskPrompt extends Component {
       dateSelected: true,
       selectedDayIndexes: [],
       selectedFrequencyIndex: -1,
+      loading_icon: false
     };
     this.stepRef = React.createRef();
     this.Item = this.Item.bind(this);
@@ -106,6 +109,7 @@ class TaskPrompt extends Component {
   }
 
   async confirm() {
+    this.setState({ loading_icon: true });
     const name = this.state.name;
     const value = this.state.value;
     const category = this.state.category;
@@ -190,7 +194,8 @@ class TaskPrompt extends Component {
     );
     // remove before production
     // taskStorage.printCategory(this.state.category);
-    this.props.navigation.navigate("MyTasks");
+    this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
+    this.setState({ loading_icon: false });
   }
 
   updateDayIndex(selectedDayIndexes) {
@@ -207,7 +212,7 @@ class TaskPrompt extends Component {
   getReadableDate(type, date) {
     let dateFormat = `${
       this.monthNames[date.getMonth()]
-    } ${this.state.date.getDate()}, ${date.getFullYear()}`;
+      } ${this.state.date.getDate()}, ${date.getFullYear()}`;
 
     if (type == "date") {
       return dateFormat;
@@ -228,8 +233,23 @@ class TaskPrompt extends Component {
   }
 
   render() {
+    var loading_icon = <Modal
+    transparent={true}
+    animationType={'none'}
+    visible={true}>
+    <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+        size={Platform.OS == "ios" ? "large" : 50}
+        color="#37C1FF"
+      />
+      </View>
+    </View>
+  </Modal>;
+  
     return (
       <View style={styles.Background}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.BasicInformationContainer}>
           <View
             style={{
@@ -363,9 +383,9 @@ class TaskPrompt extends Component {
                   this.state.scheduledDateAndTime == null
                     ? "Schedule Task"
                     : this.getReadableDate(
-                        "both",
-                        this.state.scheduledDateAndTime
-                      )
+                      "both",
+                      this.state.scheduledDateAndTime
+                    )
                 }
                 containerStyle={([styles.pop], { borderRadius: 10 })}
                 onPress={() => {
@@ -454,7 +474,7 @@ class TaskPrompt extends Component {
       >
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-          style={{ minWidth: "70%" }}
+          style={{ minWidth: "75%", width: '100%', height: '100%' }}
         >
           <Text style={styles.SubHeading}>Steps</Text>
           <View>
@@ -514,8 +534,8 @@ class TaskPrompt extends Component {
   Item({ title, index }) {
     return (
       <View style={[styles.pop, styles.item]}>
-        <View style={{ flex: 0.5, borderRightWidth: 0.5, paddingRight: 5 }}>
-          <Text style={{ fontSize: 10, textAlign: "center" }}>Step</Text>
+        <View style={{ flex: 0.8, borderRightWidth: 0.5, paddingHorizontal: 8 }}>
+          <Text style={{ fontSize: 12, textAlign: "center" }}>Step</Text>
           <Text style={styles.StepText}>{index}</Text>
         </View>
         <View style={{ flex: 3, paddingLeft: 5 }}>
@@ -581,7 +601,7 @@ class TaskPrompt extends Component {
                 borderRadius: 25,
                 borderWidth:
                   this.state.dateSelected == true &&
-                  (Platform.OS == "ios" ? true : this.state.show)
+                    (Platform.OS == "ios" ? true : this.state.show)
                     ? 1
                     : 0,
               },
@@ -605,7 +625,7 @@ class TaskPrompt extends Component {
                 borderRadius: 25,
                 borderWidth:
                   this.state.dateSelected == false &&
-                  (Platform.OS == "ios" ? true : this.state.show)
+                    (Platform.OS == "ios" ? true : this.state.show)
                     ? 1
                     : 0,
               },
@@ -736,12 +756,10 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
-    width: "90%",
-    paddingLeft: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
+    width: '95%',
+    margin: 6
   },
   StepText: {
     fontSize: 18,
@@ -823,8 +841,9 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    paddingVertical: 24,
+    paddingHorizontal: 18,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -839,5 +858,21 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "justify",
   },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  }
 });
 export default TaskPrompt;

@@ -19,12 +19,12 @@ export default class InitialLoading extends Component {
       });
 
       if (user == null) {
-        this.props.navigation.navigate("FirstTimeUser");
+        this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
       } else {
         await this.context.fetchData(user.email);
         await taskStorage.updateLists();
         // taskStorage.printCategory("Other");
-        this.props.navigation.navigate("WelcomeScreen");
+        this.props.navigation.reset({ index: 0, routes: [{ name: "WelcomeScreen" }] });
       }
     } catch (error) {
       console.log(`Initial Loading Screen Err: ${error}`);

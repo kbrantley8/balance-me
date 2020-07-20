@@ -33,7 +33,7 @@ class WelcomeScreen extends Component {
             text="My Tasks"
             color="#A1D991"
             onPress={() => {
-              this.props.navigation.navigate("MyTasks");
+              this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
             }}
           />
         </View>
