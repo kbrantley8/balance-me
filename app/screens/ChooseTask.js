@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import Card from "./../components/card.js";
 import Stepper from "./../components/stepper.js";
 import "react-native-gesture-handler";
+import PrimaryButton from "./../components/button.js";
 let navigation;
 class CreateTask extends Component {
   constructor(props) {
@@ -25,6 +26,13 @@ class CreateTask extends Component {
           <Text style={styles.selectText}>
             Select from the following, or create a custom task:
           </Text>
+          <PrimaryButton
+            text="Create A Custom Task"
+            color="black"
+            onPress={() => {
+              this.props.navigation.navigate("CustomTask");
+            }}
+          />
           <View style={styles.cards}>
             <Card
               text="Health"
@@ -37,8 +45,8 @@ class CreateTask extends Component {
               onPress={
                 () => {
                   navigation.navigate("DefaultTaskList", {
-                  category: 0
-                });
+                    category: 0
+                  });
                 }
               }
             />
@@ -53,8 +61,8 @@ class CreateTask extends Component {
               onPress={
                 () => {
                   navigation.navigate("DefaultTaskList", {
-                  category: 1
-                });
+                    category: 1
+                  });
                 }
               }
             />
@@ -69,8 +77,8 @@ class CreateTask extends Component {
               onPress={
                 () => {
                   navigation.navigate("DefaultTaskList", {
-                  category: 2
-                });
+                    category: 2
+                  });
                 }
               }
             />
@@ -107,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: 400,
-    marginTop: 40,
+    marginVertical: 40,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
   },
