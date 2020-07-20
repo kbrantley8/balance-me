@@ -75,7 +75,7 @@ class CreateTask extends Component {
               }
             />
             <Card
-              text="Custom"
+              text="Other"
               height={140}
               width={140}
               color="#F2CD5C"
@@ -83,7 +83,9 @@ class CreateTask extends Component {
               imgHeight={70}
               imgWidth={70}
               onPress={() => {
-                this.props.navigation.navigate("CustomTask");
+                this.props.navigation.navigate("DefaultTaskList", {
+                  category: 3
+                });
               }}
             />
           </View>

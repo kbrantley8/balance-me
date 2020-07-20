@@ -26,6 +26,9 @@ class DefaultTaskList extends Component {
         } else if (this.state.category == 2) {
             this.state.tasks = taskStorage.getCategory('School');
             this.state.title = "School"
+        } else {
+            this.state.tasks = taskStorage.getCategory('Other');
+            this.state.title = "Other"
         }
     }
 
@@ -55,8 +58,14 @@ class DefaultTaskList extends Component {
 
     createTasks = () => {
         var taskList = this.state.tasks;
+        if (taskList.length == 0) {
+            return (
+                <View style={styles.noTasks}>
+                    <Text style={{ color: "red" }}>There are no tasks for this category!</Text>
+                </View>
+            )
+        }
         const TaskList = taskList.map((task, index) => {
-            console.log(task)
             return (
                 <Default_Task
                     key={index}
@@ -93,7 +102,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FBF5E4',
         alignItems: 'center',
         width: '100%',
-        // height: 400,
+        minHeight: 400,
         marginTop: 40,
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
@@ -114,7 +123,10 @@ const styles = StyleSheet.create({
         fontSize: 36,
         fontWeight: 'bold',
         padding: 24,
-
+    },
+    noTasks: {
+        color: "red",
+        alignItems: 'center'
     }
 
 });
