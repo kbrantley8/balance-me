@@ -38,7 +38,7 @@ class ProfileScreen extends Component {
     await userService.deleteUser(this.state.user.email);
     this.context.deleteUser();
     await userStorage.removeUser();
-    this.props.navigation.navigate("FirstTimeUser");
+    this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
   };
 
   callback(user) {
@@ -215,7 +215,7 @@ class ProfileScreen extends Component {
         </ScrollView>
         <Tabbar
           taskPress={() => {
-            this.props.navigation.navigate("MyTasks");
+            this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
           }}
           addPress={() => {
             this.props.navigation.navigate("CreateTask");

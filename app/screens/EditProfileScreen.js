@@ -71,7 +71,7 @@ class EditProfileScreen extends Component {
         {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.header}>
           <Card
-            onPress={() => {this.props.navigation.navigate("ProfileScreen");}}
+            onPress={() => { this.props.navigation.navigate("ProfileScreen"); }}
             text=""
             height={50}
             width={50}
@@ -106,7 +106,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Last Name:</Text>
@@ -121,7 +121,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Email:</Text>
@@ -136,7 +136,7 @@ class EditProfileScreen extends Component {
             borderWidth={1}
             marginLeft={35}
             marginRight={50}
-            inputContainerStyle={{borderBottomWidth:0}}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
         </View>
         <View style={styles.buttons}>

@@ -6,7 +6,7 @@ import Progress from './../components/progress';
 import PropTypes from 'prop-types';
 import Tabbar from './../components/tabbar';
 
-import {Context as AppContext} from '../context/appContext';
+import { Context as AppContext } from '../context/appContext';
 const taskService = require("../backend/services/taskService");
 const task = require("./../backend/model_data/Task");
 //create task components out of tasks, render a form page out of that info
@@ -51,7 +51,7 @@ class MyTasks extends Component {
   />;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{flex: 1, padding: 12}}>
+        <ScrollView style={{ flex: 1, padding: 12, paddingTop: 50 }}>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
@@ -67,18 +67,18 @@ class MyTasks extends Component {
                 }}
             />
         </ScrollView>
-        <Tabbar 
+        <Tabbar
           taskPress={() => {
-              this.props.navigation.navigate("MyTasks");
-            }}
+            this.props.navigation.navigate("MyTasks");
+          }}
           addPress={() => {
             this.props.navigation.navigate("CreateTask",
             {callback: this.callback.bind(this)});
           }}
           profilePress={() => {
-            this.props.navigation.navigate("ProfileScreen");
+            this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });
           }}
-            />
+        />
       </SafeAreaView>
     );
   }
@@ -140,11 +140,11 @@ class MyTasks extends Component {
   // get incomplete tasks
   const incomplete = tasks.filter((task) => !task.completed);
 
-    //get each incomplete task type
-    const overdue = incomplete.filter(task => task.status === 0);
-    const inProgress = incomplete.filter(task => task.status === 1);
-    const upcoming = incomplete.filter(task => task.status === 2);
-    const missed = incomplete.filter(task => task.status === 3);
+  //get each incomplete task type
+  const overdue = incomplete.filter(task => task.status === 0);
+  const inProgress = incomplete.filter(task => task.status === 1);
+  const upcoming = incomplete.filter(task => task.status === 2);
+  const missed = incomplete.filter(task => task.status === 3);
 
     return (
         <View>
@@ -209,10 +209,10 @@ const noTasks = () => {
         It looks like you don't have any tasks for today!
       </Text>
       <PrimaryButton
-        text="Add a Task" 
+        text="Add a Task"
         color="#55A61C"
         onPress={navigation.navigate("CreateTask")}
-       />
+      />
     </View>
   );
 };
@@ -262,78 +262,78 @@ const styles = StyleSheet.create({
 MyTasks.propTypes = {
   tasks: PropTypes.array,
 };
-  
+
 // what will the default be if none is specified
 MyTasks.defaultProps = {
-    tasks: [
-     {
-        id: 1,
-        title: 'Status 1',
-        description: 'description here',
-        completed: false,
-        estimatedTime: 4,
-        point_value: 10,
-        img: './../assets/url',
-        date: '06-19-2020 9:00am',
-        status: 1
-     },
-    ]
-    // tasks: null (uncomment to see noTasks() method run)
+  tasks: [
+    {
+      id: 1,
+      title: 'Status 1',
+      description: 'description here',
+      completed: false,
+      estimatedTime: 4,
+      point_value: 10,
+      img: './../assets/url',
+      date: '06-19-2020 9:00am',
+      status: 1
+    },
+  ]
+  // tasks: null (uncomment to see noTasks() method run)
+}
+
+const updateAllTasksToToday = async () => {
+  //4:00 AM
+  var today = new Date();
+  today.setHours(4, 0, 0, 0);
+  var four_am = (today.getTime() / 1000);
+  //Noon
+  today = new Date();
+  today.setHours(12, 0, 0, 0);
+  var noon = (today.getTime() / 1000);
+  //11:00 PM
+  var today = new Date();
+  today.setHours(23, 0, 0, 0);
+  var eleven_pm = (today.getTime() / 1000);
+
+  var completed_data = {
+    start_time: four_am,
+    estimated_completion_time: (four_am + 300),
+    status: 2,
+    completed: true
   }
+  var task_completed = await taskService.updateTask("5ef3a995f7c61b000425866f", completed_data).then(task => { return task; }); //updates completed task
 
-  const updateAllTasksToToday = async () => {
-    //4:00 AM
-    var today = new Date();
-    today.setHours(4,0,0,0);
-    var four_am = (today.getTime() / 1000);
-    //Noon
-    today = new Date();
-    today.setHours(12,0,0,0);
-    var noon = (today.getTime() / 1000);
-    //11:00 PM
-    var today = new Date();
-    today.setHours(23,0,0,0);
-    var eleven_pm = (today.getTime() / 1000);
-
-    var completed_data = {
-        start_time: four_am,
-        estimated_completion_time: (four_am + 300),
-        status: 2,
-        completed: true
-    }
-    var task_completed = await taskService.updateTask("5ef3a995f7c61b000425866f", completed_data).then(task => { return task; }); //updates completed task
-    
-    var upcoming_data = {
-        start_time: eleven_pm,
-        estimated_completion_time: (eleven_pm + 300),
-        status: 2,
-        completed: false
-    }
-    var task_upcoming = await taskService.updateTask("5ef3a9f5f7c61b0004258670", upcoming_data).then(task => { return task; }); //updates upcoming task
-
-    var missed_data = {
-        start_time: four_am,
-        estimated_completion_time: (four_am + 300),
-        status: 2,
-        completed: false
-    }
-    var task_missed = await taskService.updateTask("5ef3aa85f7c61b0004258671", missed_data).then(task => { return task; }); //updates missed task
-
-    var overdue_data = {
-        start_time: four_am,
-        estimated_completion_time: (four_am + 300),
-        status: 2,
-        completed: false
-    }
-    var task_overdue = await taskService.updateTask("5ef3aeaec70210000476190d", overdue_data).then(task => { return task; }); //updates overdue task
-
-    var in_progress_data = {
-        start_time: noon,
-        estimated_completion_time: (noon + 300),
-        status: 2,
-        completed: false
-    }
-    var task_in_progress = await taskService.updateTask("5ef3afffc70210000476190e", in_progress_data).then(task => { return task; }); //updates in_progress task
+  var upcoming_data = {
+    start_time: eleven_pm,
+    estimated_completion_time: (eleven_pm + 300),
+    status: 2,
+    completed: false
   }
+  var task_upcoming = await taskService.updateTask("5ef3a9f5f7c61b0004258670", upcoming_data).then(task => { return task; }); //updates upcoming task
+
+  var missed_data = {
+    start_time: four_am,
+    estimated_completion_time: (four_am + 300),
+    status: 2,
+    completed: false
+  }
+  var task_missed = await taskService.updateTask("5ef3aa85f7c61b0004258671", missed_data).then(task => { return task; }); //updates missed task
+
+  var overdue_data = {
+    start_time: four_am,
+    estimated_completion_time: (four_am + 300),
+    status: 2,
+    completed: false
+  }
+  var task_overdue = await taskService.updateTask("5ef3aeaec70210000476190d", overdue_data).then(task => { return task; }); //updates overdue task
+
+  var in_progress_data = {
+    start_time: noon,
+    estimated_completion_time: (noon + 300),
+    status: 2,
+    completed: false
+  }
+  var task_in_progress = await taskService.updateTask("5ef3afffc70210000476190e", in_progress_data).then(task => { return task; }); //updates in_progress task
+}
 
 export default MyTasks;
