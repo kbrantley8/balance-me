@@ -50,12 +50,12 @@ class CustomTask extends Component {
       steps: null
     };
 
-    if (this.props.route.params.task) {
+    if (this.props.route.params) {
       var task = this.props.route.params.task.task;
       this.state.name = task.name;
       this.state.description = task.description;
       this.state.value = task.point_value;
-      this.state.time = task.time_estimate.toString();
+      this.state.time = (task.time_estimate / 60).toString();
       this.state.selectedCategoryIndex = task.category;
       this.state.steps = task.steps;
       this.state.category = this.categoryButtons[task.category];
