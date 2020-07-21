@@ -19,6 +19,7 @@ export default class InitialLoading extends Component {
       });
 
       if (user == null) {
+        await taskStorage.storeDefaultTask();
         this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
       } else {
         await this.context.fetchData(user.email);

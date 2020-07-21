@@ -234,19 +234,19 @@ class TaskPrompt extends Component {
 
   render() {
     var loading_icon = <Modal
-    transparent={true}
-    animationType={'none'}
-    visible={true}>
-    <View style={styles.modalBackground}>
-      <View style={styles.activityIndicatorWrapper}>
-      <ActivityIndicator
-        size={Platform.OS == "ios" ? "large" : 50}
-        color="#37C1FF"
-      />
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+        <View style={styles.activityIndicatorWrapper}>
+          <ActivityIndicator
+            size={Platform.OS == "ios" ? "large" : 50}
+            color="#37C1FF"
+          />
+        </View>
       </View>
-    </View>
-  </Modal>;
-  
+    </Modal>;
+
     return (
       <View style={styles.Background}>
         {(this.state.loading_icon) ? loading_icon : null}

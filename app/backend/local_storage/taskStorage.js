@@ -233,7 +233,6 @@ export class taskStorage {
       await AsyncStorage.setItem("School", jsonSchoolValue);
       const jsonOtherValue = JSON.stringify(this.defaultOther["list"]);
       await AsyncStorage.setItem("Other", jsonOtherValue);
-
       this.health = this.defaultHealth;
       this.home = this.defaultHome;
       this.school = this.defaultSchool;
@@ -247,13 +246,14 @@ export class taskStorage {
     if (this.health.length != 0) {
       try {
         const jsonHealthValue = await AsyncStorage.getItem("Health");
-        this.health = JSON.parse(jsonHealthValue);
+        this.health["list"] = JSON.parse(jsonHealthValue);
         const jsonHomeValue = await AsyncStorage.getItem("Home");
-        this.home = JSON.parse(jsonHomeValue);
+        this.home["list"] = JSON.parse(jsonHomeValue);
         const jsonSchoolValue = await AsyncStorage.getItem("School");
-        this.school = JSON.parse(jsonSchoolValue);
+        this.school["list"] = JSON.parse(jsonSchoolValue);
         const jsonOtherValue = await AsyncStorage.getItem("Other");
-        this.other = JSON.parse(jsonOtherValue);
+        this.other["list"] = JSON.parse(jsonOtherValue);
+        console.log(this.health);
         return true;
       } catch (error) {
         console.error(error);
@@ -265,13 +265,13 @@ export class taskStorage {
   static getCategory = (category) => {
     switch (category) {
       case "Health":
-        return this.health;
+        return this.health["list"];
       case "Home":
-        return this.home;
+        return this.home["list"];
       case "School":
-        return this.school;
+        return this.school["list"];
       case "Other":
-        return this.other;
+        return this.other["list"];
       default:
         break;
     }
@@ -283,20 +283,21 @@ export class taskStorage {
       let jsonValue = null;
       switch (category) {
         case "Health":
-          this.health.push(value);
-          jsonValue = JSON.stringify(this.health);
+
+          this.health["list"].push(value);
+          jsonValue = JSON.stringify(this.health["list"]);
           break;
         case "Home":
-          this.home.push(value);
-          jsonValue = JSON.stringify(this.home);
+          this.home["list"].push(value);
+          jsonValue = JSON.stringify(this.home["list"]);
           break;
         case "School":
-          this.school.push(value);
-          jsonValue = JSON.stringify(this.school);
+          this.school["list"].push(value);
+          jsonValue = JSON.stringify(this.school["list"]);
           break;
         case "Other":
-          this.other.push(value);
-          jsonValue = JSON.stringify(this.other);
+          this.other["list"].push(value);
+          jsonValue = JSON.stringify(this.other["list"]);
           break;
         default:
           return null;
