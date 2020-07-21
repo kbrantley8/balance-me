@@ -21,14 +21,14 @@ class MyTasks extends Component {
 
   UNSAFE_componentWillMount() {
     let { state } = this.context;
-    this.setState({ daily_tasks: state.daily_tasks })
+    this.setState({ daily_tasks: state.daily_tasks, points: this.context.state.user.points })
   }
 
   minuteUpdateDailyTasks = async () => {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, points: this.context.state.user.points })
     this.setState({ loading_icon: false })
   }
 
@@ -109,8 +109,8 @@ class MyTasks extends Component {
               }
             }
             quickComplete={() => {
-              task.setComplete(true)
               this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
+              task.setComplete(true);
             }
             }
           />
