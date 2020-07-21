@@ -34,10 +34,10 @@ class MyTasks extends Component {
   }
 
   async componentDidMount() {
+    this.setState({loading_icon: true})
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
-    // await this.context.fetchDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false })
   }
 
   componentWillUnmount() {
@@ -72,8 +72,7 @@ class MyTasks extends Component {
             this.props.navigation.navigate("MyTasks");
           }}
           addPress={() => {
-            this.props.navigation.navigate("CreateTask",
-            {callback: this.callback.bind(this)});
+            this.props.navigation.navigate("CreateTask");
           }}
           profilePress={() => {
             this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });

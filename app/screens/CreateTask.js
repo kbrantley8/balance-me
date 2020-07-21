@@ -24,15 +24,7 @@ class CreateTask extends Component {
                     <View style={styles.cards}>
                         <Card 
                             onPress={() => {
-                                if (this.props.route.params) {
-                                    this.props.navigation.navigate("ChooseTask",
-                                    {callback: this.props.route.params['callback']});
-                                } else {
-                                    this.props.navigation.navigate("ChooseTask",
-                                    {callback: function() {
-                                        console.log('No callback function...ignore this function')
-                                    }});
-                                }
+                                this.props.navigation.navigate("ChooseTask");
                             }}
                             text="Individual" 
                             subtext="I'd like to complete a task by myself"

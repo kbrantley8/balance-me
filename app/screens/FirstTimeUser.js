@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
+import { taskStorage } from "../backend/local_storage/taskStorage";
 import "react-native-gesture-handler";
 
 //TODO: Shouldn"t be able to go "back" to this page after page is submitted

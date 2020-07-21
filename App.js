@@ -14,11 +14,13 @@ import TaskPrompt from "./app/screens/TaskPrompt";
 import ProfileScreen from "./app/screens/ProfileScreen";
 import EditProfileScreen from "./app/screens/EditProfileScreen";
 import InitialLoading from "./app/screens/InitialLoading";
+import DefaultTaskList from "./app/screens/DefaultTaskList";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { Provider as AppProvider } from "./app/context/appContext";
 import { userStorage } from "./app/backend/local_storage/userStorage";
+import { taskStorage } from "./app/backend/local_storage/taskStorage";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,7 @@ const Stack = createStackNavigator();
 export default function App() {
   // Uncomment this to removed the user from the application for testing or development purposes.
   // userStorage.removeUser();
+  // taskStorage.removeCategories();
   const headerOption = { headerShown: false };
   return (
     <AppProvider>
@@ -88,20 +91,20 @@ export default function App() {
           <Stack.Screen
             name="TaskPrompt"
             component={TaskPrompt}
-            // initialParams={{
-            //   name: "Name of Task",
-            //   timer: "5",
-            //   timeStamp: new Date("October 13, 2020 11:13:00"),
-            //   description:
-            //     "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
-            //   points: 5,
-            //   category: "other",
-            //   steps: [
-            //     { description: "pick up brush" },
-            //     { description: "put toothpaste" },
-            //     { description: "brush teeth" },
-            //   ],
-            // }}
+          // initialParams={{
+          //   name: "Name of Task",
+          //   timer: "5",
+          //   timeStamp: new Date("October 13, 2020 11:13:00"),
+          //   description:
+          //     "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
+          //   points: 5,
+          //   category: "other",
+          //   steps: [
+          //     { description: "pick up brush" },
+          //     { description: "put toothpaste" },
+          //     { description: "brush teeth" },
+          //   ],
+          // }}
           />
           <Stack.Screen
             name="ProfileScreen"
@@ -111,6 +114,11 @@ export default function App() {
           <Stack.Screen
             name="EditProfileScreen"
             component={EditProfileScreen}
+            options={headerOption}
+          />
+          <Stack.Screen
+            name="DefaultTaskList"
+            component={DefaultTaskList}
             options={headerOption}
           />
         </Stack.Navigator>

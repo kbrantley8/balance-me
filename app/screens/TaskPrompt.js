@@ -24,7 +24,7 @@ import {
   Divider,
 } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { taskStorage } from "../backend/local_storage/taskStorage";
 import { Context as AppContext } from "../context/appContext";
 
 import Task from "../backend/model_data/Task";
@@ -106,8 +106,6 @@ class TaskPrompt extends Component {
 
     this.weekDays = ["S", "M", "T", "W", "Th", "F", "Sa"];
     this.frequency = ["Weekly", "biweekly", "Monthly"];
-
-    console.log(this.state.date);
   }
 
   async confirm() {
@@ -144,8 +142,6 @@ class TaskPrompt extends Component {
       state.user.id,
       state.user.id
     );
-
-    this.props.route.params['callback']();
 
     var new_task = new Task(
       task.task_id,
@@ -184,8 +180,22 @@ class TaskPrompt extends Component {
     // date: ${date}\n
     // repeat: ${JSON.stringify(repeat)}
     // `);
-    this.setState({ loading_icon: false });
+
+    await taskStorage.addTaskIntoCateogry(
+      {
+        name: new_task.name,
+        description: new_task.description,
+        steps: new_task.steps,
+        time_estimate: new_task.estimated_time,
+        category: new_task.category_id,
+        point_value: new_task.point_value
+      },
+      this.state.category
+    );
+    // remove before production
+    // taskStorage.printCategory(this.state.category);
     this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
+    this.setState({ loading_icon: false });
   }
 
   updateDayIndex(selectedDayIndexes) {
@@ -224,19 +234,19 @@ class TaskPrompt extends Component {
 
   render() {
     var loading_icon = <Modal
-    transparent={true}
-    animationType={'none'}
-    visible={true}>
-    <View style={styles.modalBackground}>
-      <View style={styles.activityIndicatorWrapper}>
-      <ActivityIndicator
-        size={Platform.OS == "ios" ? "large" : 50}
-        color="#37C1FF"
-      />
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+        <View style={styles.activityIndicatorWrapper}>
+          <ActivityIndicator
+            size={Platform.OS == "ios" ? "large" : 50}
+            color="#37C1FF"
+          />
+        </View>
       </View>
-    </View>
-  </Modal>;
-  
+    </Modal>;
+
     return (
       <View style={styles.Background}>
         {(this.state.loading_icon) ? loading_icon : null}
@@ -563,7 +573,6 @@ class TaskPrompt extends Component {
         onBackdropPress={() => {
           this.setState({
             modalScheduleVisible: !this.state.modalScheduleVisible,
-            tempSteps: [],
           });
         }}
         animationType="fade"

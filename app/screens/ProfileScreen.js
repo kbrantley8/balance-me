@@ -17,6 +17,7 @@ import { userStorage } from "../backend/local_storage/userStorage";
 import userService from "../backend/services/userService";
 
 import "react-native-gesture-handler";
+import { taskStorage } from "../backend/local_storage/taskStorage.js";
 let navigation;
 class ProfileScreen extends Component {
   constructor(props) {
@@ -35,9 +36,10 @@ class ProfileScreen extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
   _deleteAccount = async () => {
+    await userStorage.removeUser();
     await userService.deleteUser(this.state.user.email);
     this.context.deleteUser();
-    await userStorage.removeUser();
+    await taskStorage.removeCategories();
     this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
   };
 

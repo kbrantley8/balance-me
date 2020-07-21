@@ -33,7 +33,7 @@ class CustomTask extends Component {
       headerStyle: styles.HeaderStyle,
     });
 
-    this.categoryButtons = ["Chore", "Health", "Activity", "Other"];
+    this.categoryButtons = ["Health", "Home", "School", "Other"];
     this.weekDaysButtons = ["S", "M", "T", "W", "T", "F", "S"];
     this.updateCategoryIndex = this.updateCategoryIndex.bind(this);
     this.checkInputs = this.checkInputs.bind(this);
@@ -47,7 +47,21 @@ class CustomTask extends Component {
       category: "Other",
       time: null,
       value: 5,
+      steps: []
     };
+
+    if (this.props.route.params) {
+      if (this.props.route.params.task) {
+        var task = this.props.route.params.task.task;
+        this.state.name = task.name;
+        this.state.description = task.description;
+        this.state.value = task.point_value;
+        this.state.time = (task.time_estimate / 60).toString();
+        this.state.selectedCategoryIndex = task.category;
+        this.state.steps = task.steps;
+        this.state.category = this.categoryButtons[task.category];
+      }
+    }
   }
 
   async checkInputs() {
@@ -84,16 +98,14 @@ class CustomTask extends Component {
       //   Category:${this.state.category}
       //   Point Value:${this.state.value}`
       // );
-
       this.props.navigation.navigate("TaskPrompt", {
-        name: this.state.name,
+        name: this.state.name.trim(),
         timer: this.state.time,
-        description: this.state.description,
+        description: this.state.description.trim(),
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
-        steps: [],
-        callback: this.props.route.params['callback']
+        steps: this.state.steps
       });
     }
   }
@@ -109,91 +121,94 @@ class CustomTask extends Component {
     const { selectedCategoryIndex } = this.state;
     return (
       <View style={styles.background}>
-      <View style={styles.form}>
-        <Input
-          ref={this.nameRef}
-          placeholder="Enter a name for the task"
-          label="Name"
-          onChangeText={(value) => this.setState({ name: value.trim() })}
-          containerStyle={styles.InputContainer}
-          labelStyle={styles.labelText}
-          maxLength={15}
-        />
-        <Input
-          ref={this.descriptionRef}
-          placeholder="Enter a description of the task"
-          label="Description"
-          onChangeText={(value) =>
-            this.setState({ description: value.trim() })
-          }
-          containerStyle={styles.InputContainer}
-          labelStyle={styles.labelText}
-          maxLength={250}
-        />
+        <View style={styles.form}>
+          <Input
+            ref={this.nameRef}
+            placeholder="Enter a name for the task"
+            label="Name"
+            onChangeText={(value) => this.setState({ name: value })}
+            containerStyle={styles.InputContainer}
+            labelStyle={styles.labelText}
+            maxLength={15}
+            value={(this.state.name) ? (this.state.name) : ""}
+          />
+          <Input
+            ref={this.descriptionRef}
+            placeholder="Enter a description of the task"
+            label="Description"
+            onChangeText={(value) =>
+              this.setState({ description: value })
+            }
+            containerStyle={styles.InputContainer}
+            labelStyle={styles.labelText}
+            maxLength={250}
+            value={(this.state.description) ? (this.state.description) : ""}
+          />
 
-        <Input
-          ref={this.estimateRef}
-          placeholder="Enter the time in mins"
-          label="Time Estimate (Mins)"
-          onChangeText={(value) => this.setState({ time: value })}
-          containerStyle={styles.InputContainer}
-          keyboardType="number-pad"
-          returnKeyLabel="Done"
-          returnKeyType="done"
-          onSubmitEditing={Keyboard.dismiss}
-          labelStyle={styles.labelText}
-          maxLength={3}
-        />
-        <View style={styles.InputContainer}>
-          <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
-            Category
+          <Input
+            ref={this.estimateRef}
+            placeholder="Enter the time in mins"
+            label="Time Estimate (Mins)"
+            onChangeText={(value) => this.setState({ time: value })}
+            containerStyle={styles.InputContainer}
+            keyboardType="number-pad"
+            returnKeyLabel="Done"
+            returnKeyType="done"
+            onSubmitEditing={Keyboard.dismiss}
+            labelStyle={styles.labelText}
+            maxLength={3}
+            value={(this.state.time) ? (this.state.time) : ""}
+          />
+          <View style={styles.InputContainer}>
+            <Text style={[styles.labelText, { marginLeft: 5, padding: 5 }]}>
+              Category
           </Text>
-          <ButtonGroup
-            onPress={this.updateCategoryIndex}
-            selectedIndex={selectedCategoryIndex}
-            buttons={this.categoryButtons}
-            containerStyle={{ flex: 1 }}
-          />
-        </View>
-
-        <View style={styles.PointContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={[styles.labelText, { marginBottom: "5%" }]}>
-              Point Value
-            </Text>
-            <View style={styles.ValueCountContainer}>
-              <Icon
-                name="stars"
-                size={30}
-                // style={{ marginRight:  }}
-                color="gold"
-                underlayColor="black"
-                iconStyle={styles.GoldIconStyle}
-              />
-              <Text style={styles.PointValue}>{this.state.value}</Text>
-            </View>
+            <ButtonGroup
+              onPress={this.updateCategoryIndex}
+              selectedIndex={selectedCategoryIndex}
+              buttons={this.categoryButtons}
+              containerStyle={{ flex: 1 }}
+            />
           </View>
-          <Slider
-            value={this.state.value}
-            onValueChange={(value) => this.setState({ value })}
-            maximumValue={50}
-            minimumValue={1}
-            thumbTintColor='#1D76AA'
-            step={1}
-          />
-        </View>
 
-        {/* Time picker will go here
+          <View style={styles.PointContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={[styles.labelText, { marginBottom: "5%" }]}>
+                Point Value
+            </Text>
+              <View style={styles.ValueCountContainer}>
+                <Icon
+                  name="stars"
+                  size={30}
+                  // style={{ marginRight:  }}
+                  color="gold"
+                  underlayColor="black"
+                  iconStyle={styles.GoldIconStyle}
+                />
+                <Text style={styles.PointValue}>{this.state.value}</Text>
+              </View>
+            </View>
+            <Slider
+              value={this.state.value}
+              onValueChange={(value) => this.setState({ value })}
+              maximumValue={50}
+              minimumValue={1}
+              thumbTintColor='#1D76AA'
+              step={1}
+            />
+          </View>
+
+          {/* Time picker will go here
         <View style={{ flex: 2 }}></View> */}
-      </View>
+        </View>
         <View style={styles.ButtonContainer}>
-          <BTN raised={true} title="Create Task" onPress={this.checkInputs} style={{width: 300}}/>
+          <BTN raised={true} title="Create Task" onPress={this.checkInputs} style={{ width: 300 }} />
         </View>
       </View>
     );
