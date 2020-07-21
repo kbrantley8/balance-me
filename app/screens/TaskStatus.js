@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, Button, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
@@ -55,6 +55,7 @@ class TaskStatus extends Component {
         this.title = this.state.task.task.name;
 
         this.changeTask = this.changeTask.bind(this);
+        console.log(this.status);
     }
 
     changeTask() {
@@ -95,6 +96,16 @@ class TaskStatus extends Component {
             style={[styles.body, {color: this.completed ? types[4].color: types[this.status].color }]}>
             { this.completed ? types[4].body : types[this.status].body}
         </Text>
+        {(this.status === 1) ? 
+            <View style={styles.cardView} >
+                <TouchableOpacity
+                    style={styles.helpComplete}
+                >
+                    <Icon style={styles.helpIcon} name='help-outline'></Icon>
+                    <Text style={styles.helpText}>Help me complete this task</Text>
+                </TouchableOpacity>
+            </View> : 
+            null}
         <View style={styles.button}>
             <PrimaryButton
                 text={this.completed ? types[4].buttonText: types[this.status].buttonText}
@@ -186,6 +197,37 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#333333',
         paddingBottom: 6
+      },
+      cardView: {
+          width: '100%',
+          height: '20%',
+          justifyContent: 'center',
+          alignItems: 'center',
+      },
+      helpComplete: {
+          height: '60%',
+          width: '80%',
+          backgroundColor: '#FFFFFF',
+          borderRadius: 6,
+          flexDirection: 'row',
+          padding: 6,
+          alignItems: 'center',
+          justifyContent: 'center',
+          shadowColor: "#000000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 3.5,
+          borderRadius: 10,
+      },
+      helpText: {
+        fontSize: 18,
+        padding: 6
+      },
+      helpIcon: {
+        fontSize: 50
       }
 });
 
