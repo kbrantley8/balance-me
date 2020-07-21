@@ -44,7 +44,7 @@ class MyTasks extends Component {
   }
 
   getPoints() {
-    return 10;
+    return (this.context.state.user.point_value) ? this.context.state.user.point_value : 0;
   }
 
   render() {
