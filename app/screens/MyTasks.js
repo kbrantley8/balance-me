@@ -56,7 +56,7 @@ class MyTasks extends Component {
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
-          <Text style={styles.progress}>Your Progress {this.state.points}</Text>
+          <Text style={styles.progress}>Your Progress {this.context.state.user.points}</Text>
           <Progress />
           {(this.state.loading_icon) ? loading_icon : null}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
@@ -117,8 +117,8 @@ class MyTasks extends Component {
               }
             }
             quickComplete={() => {
-              task.setComplete(true)
               this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
+              task.setComplete(true);
             }
             }
           />
