@@ -96,7 +96,7 @@ module.exports = class User {
         });
 
       this.points = user.points;
-      await this.updateUser();
+      this.updateUser();
       return this;
     } catch (e) {
       console.log(e);

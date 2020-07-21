@@ -21,14 +21,14 @@ class MyTasks extends Component {
 
   UNSAFE_componentWillMount() {
     let { state } = this.context;
-    this.setState({ daily_tasks: state.daily_tasks })
+    this.setState({ daily_tasks: state.daily_tasks, points: this.context.state.user.points })
   }
 
   minuteUpdateDailyTasks = async () => {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     // await this.context.fetchDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, points: this.context.state.user.points })
     this.setState({ loading_icon: false })
   }
 
@@ -36,7 +36,7 @@ class MyTasks extends Component {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
-    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false, points: this.context.state.user.points })
   }
 
   componentWillUnmount() {
@@ -55,7 +55,7 @@ class MyTasks extends Component {
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
-          <Text style={styles.progress}>Points Earned: {this.context.state.user.points}</Text>
+          <Text style={styles.progress}>Points Earned: {this.state.points}</Text>
 
           {(this.state.loading_icon) ? loading_icon : null}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
