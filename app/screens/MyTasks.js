@@ -50,7 +50,7 @@ class MyTasks extends Component {
     />;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '5%' }}>
+        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }}>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
