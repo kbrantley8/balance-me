@@ -34,10 +34,10 @@ class MyTasks extends Component {
   }
 
   async componentDidMount() {
-    this.setState({loading_icon: true})
+    this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
-    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false, points: this.context.state.user.points })
   }
 
   componentWillUnmount() {
@@ -46,9 +46,9 @@ class MyTasks extends Component {
 
   render() {
     var loading_icon = <ActivityIndicator
-    size={Platform.OS == "ios" ? "large" : 50}
-    color="#37C1FF"
-  />;
+      size={Platform.OS == "ios" ? "large" : 50}
+      color="#37C1FF"
+    />;
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView style={{ flex: 1, padding: 12, paddingTop: 50 }}>
@@ -56,16 +56,16 @@ class MyTasks extends Component {
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
-          <Text style={styles.progress}>Your Progress</Text>
-          <Progress/>
+          <Text style={styles.progress}>Your Progress {this.state.points}</Text>
+          <Progress />
           {(this.state.loading_icon) ? loading_icon : null}
-          { this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks() } 
-            <PrimaryButton
-                text="Update Daily Tasks"
-                onPress={() => {
-                    this.updateAllTasksToToday()
-                }}
-            />
+          {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
+          <PrimaryButton
+            text="Update Daily Tasks"
+            onPress={() => {
+              this.updateAllTasksToToday()
+            }}
+          />
         </ScrollView>
         <Tabbar
           taskPress={() => {
@@ -82,77 +82,81 @@ class MyTasks extends Component {
     );
   }
 
-    // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
-    updateAllTasksToToday = async () => {
-        await updateAllTasksToToday();
-        await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-        this.setState({ daily_tasks: this.context.state.daily_tasks })
-    }
+  // FOR MORGAN: THIS IS UPDATES THE 5 TASKS ASSIGNED TO YOU UPDATE TO TODAY'S TIMES
+  updateAllTasksToToday = async () => {
+    await updateAllTasksToToday();
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    this.setState({ daily_tasks: this.context.state.daily_tasks })
+  }
 
-    async callback() {
-      this.setState({loading_icon: true})
-      await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-      this.setState({ daily_tasks: this.context.state.daily_tasks })
-      this.setState({loading_icon: false})
-    }
+  async callback() {
+    this.setState({ loading_icon: true })
+    await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
+    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ loading_icon: false })
+  }
 
-    // creates a section of tasks with a title and list of tasks, if the array is not empty
+  // creates a section of tasks with a title and list of tasks, if the array is not empty
   createTasks = (taskList, text) => {
     const TaskList = taskList.map((task, index) => {
-        return (
-          <View key={index} style={{paddingVertical: 3}}>
-            <Task
-              id={task.id}
-              completed={task.completed}
-              status={task.status}
-              name={task.name}
-              point_value={task.point_value}
-              time={(task.start_time) ? getTime(task.start_time) : 'null'}
-              onPress={
-                () => {
-                  navigation.navigate("TaskStatus", {
-                  task: {task},
+      return (
+        <View key={index} style={{ paddingVertical: 3 }}>
+          <Task
+            id={task.id}
+            completed={task.completed}
+            status={task.status}
+            name={task.name}
+            point_value={task.point_value}
+            time={(task.start_time) ? getTime(task.start_time) : 'null'}
+            onPress={
+              () => {
+                navigation.navigate("TaskStatus", {
+                  task: { task },
                   callback: this.callback.bind(this)
                 });
-                }
               }
-              quickComplete={ () => {task.setComplete(true)} }
-            />
-          </View>
-        )
-    })  
+            }
+            quickComplete={() => {
+              task.setComplete(true)
+              this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
+            }
+            }
+          />
+        </View>
+      )
+    })
     return (
-        (taskList.length != 0) ? 
-            (<View>
-                <Text style={styles.progress}>{text}</Text>
-                {TaskList}
-            </View>)
-            : null 
+      (taskList.length != 0) ?
+        (<View>
+          <Text style={styles.progress}>{text}</Text>
+          {TaskList}
+        </View>)
+        : null
     );
   }
 
   //breaks down the tasks array into sections
   addTasks = (tasks) => {
-  //get completed tasks
-  const complete = tasks.filter((task) => task.completed);
+    //get completed tasks
+    const complete = tasks.filter((task) => task.completed);
 
-  // get incomplete tasks
-  const incomplete = tasks.filter((task) => !task.completed);
+    // get incomplete tasks
+    const incomplete = tasks.filter((task) => !task.completed);
 
-  //get each incomplete task type
-  const overdue = incomplete.filter(task => task.status === 0);
-  const inProgress = incomplete.filter(task => task.status === 1);
-  const upcoming = incomplete.filter(task => task.status === 2);
-  const missed = incomplete.filter(task => task.status === 3);
+    //get each incomplete task type
+    const overdue = incomplete.filter(task => task.status === 0);
+    const inProgress = incomplete.filter(task => task.status === 1);
+    const upcoming = incomplete.filter(task => task.status === 2);
+    const missed = incomplete.filter(task => task.status === 3);
 
     return (
-        <View>
-            {this.createTasks(overdue, "Overdue")}
-            {this.createTasks(inProgress, "In Progress")}
-            {this.createTasks(upcoming, "Upcoming")}
-            {this.createTasks(complete, "Completed")}
-            {this.createTasks(missed, "Missed")}
-        </View>
+      <View>
+        {this.createTasks(overdue, "Overdue")}
+        {this.createTasks(inProgress, "In Progress")}
+        {this.createTasks(upcoming, "Upcoming")}
+        {this.createTasks(complete, "Completed")}
+        {this.createTasks(missed, "Missed")}
+      </View>
     )
   }
 }
@@ -164,40 +168,40 @@ const getTime = (time) => {
 }
 // functions about getting the date
 const getDay = () => {
-    return new Date().getDate(); 
+  return new Date().getDate();
 }
 const getDayOfWeek = () => {
   const dayOfWeek = new Date().getDay();
   return isNaN(dayOfWeek)
     ? null
     : [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ][dayOfWeek];
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ][dayOfWeek];
 };
 const getMonthofYear = () => {
   const month = new Date().getMonth();
   return isNaN(month)
     ? null
     : [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ][month];
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ][month];
 };
 
 //if there are no tasks
