@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
-import Progress from './../components/progress';
 import PropTypes from 'prop-types';
 import Tabbar from './../components/tabbar';
 
@@ -37,7 +36,7 @@ class MyTasks extends Component {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
     this.interval = setInterval(this.minuteUpdateDailyTasks, 30 * 1000);
-    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false, points: this.context.state.user.points })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false })
   }
 
   componentWillUnmount() {
@@ -51,21 +50,15 @@ class MyTasks extends Component {
     />;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ flex: 1, padding: 12, paddingTop: 50 }}>
+        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }}>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
-          <Text style={styles.progress}>Your Progress {this.context.state.user.points}</Text>
-          <Progress />
+          <Text style={styles.progress}>Points Earned: {this.context.state.user.points}</Text>
+
           {(this.state.loading_icon) ? loading_icon : null}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
-          <PrimaryButton
-            text="Update Daily Tasks"
-            onPress={() => {
-              this.updateAllTasksToToday()
-            }}
-          />
         </ScrollView>
         <Tabbar
           taskPress={() => {
