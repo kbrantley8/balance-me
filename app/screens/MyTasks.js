@@ -85,7 +85,7 @@ class MyTasks extends Component {
   async callback() {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, points: this.context.state.user.points })
     this.setState({ loading_icon: false })
   }
 
