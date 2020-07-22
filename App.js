@@ -57,12 +57,10 @@ export default function App() {
           <Stack.Screen
             name="CreateTask"
             component={CreateTask}
-            options={headerOption}
           />
           <Stack.Screen
             name="ChooseTask"
             component={ChooseTask}
-            options={headerOption}
           />
           <Stack.Screen
             name="TaskDetail"
@@ -91,20 +89,6 @@ export default function App() {
           <Stack.Screen
             name="TaskPrompt"
             component={TaskPrompt}
-          // initialParams={{
-          //   name: "Name of Task",
-          //   timer: "5",
-          //   timeStamp: new Date("October 13, 2020 11:13:00"),
-          //   description:
-          //     "Lorem ipsum dolor sit amet, te brute pertinacia signiferumque mea, civibus fastidii quaerendum eos ei, libris volumus pro no. Id volumus iudicabit has. Euismod insolens ex eum, erant sententiae sed ne, est et malis consul. Cum delectus omittantur ne. Novum nostrum rationibus nam et, qui tincidunt honestatis ut, ut magna feugiat vel. Pri velit percipit no.",
-          //   points: 5,
-          //   category: "other",
-          //   steps: [
-          //     { description: "pick up brush" },
-          //     { description: "put toothpaste" },
-          //     { description: "brush teeth" },
-          //   ],
-          // }}
           />
           <Stack.Screen
             name="ProfileScreen"
@@ -119,7 +103,6 @@ export default function App() {
           <Stack.Screen
             name="DefaultTaskList"
             component={DefaultTaskList}
-            options={headerOption}
           />
         </Stack.Navigator>
       </NavigationContainer>
