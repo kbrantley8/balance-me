@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
+  ActivityIndicator
 } from "react-native";
 import PrimaryButton from "./../components/button.js";
 import Card from "./../components/card.js";
@@ -23,7 +24,7 @@ class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     navigation = this.props.navigation;
-    var state = {};
+    this.state = { loading_icon: false };
   }
 
   UNSAFE_componentWillMount() {
@@ -36,10 +37,13 @@ class ProfileScreen extends Component {
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
   _deleteAccount = async () => {
-    await userStorage.removeUser();
+    this.setState({ isModalVisible: false });
+    this.setState({ loading_icon: true })
+    userStorage.removeUser();
+    taskStorage.removeCategories();
     await userService.deleteUser(this.state.user.email);
     this.context.deleteUser();
-    await taskStorage.removeCategories();
+    this.setState({ loading_icon: false })
     this.props.navigation.reset({ index: 0, routes: [{ name: "FirstTimeUser" }] });
   };
 
@@ -48,6 +52,19 @@ class ProfileScreen extends Component {
   }
 
   render() {
+    var loading_icon = <Modal
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+          size={Platform.OS == "ios" ? "large" : 50}
+          color="#37C1FF"
+      />
+      </View>
+      </View>
+    </Modal>
     return (
       <View style={styles.container}>
         <ScrollView style={{ flex: 1 }}>

@@ -32,7 +32,7 @@ class FirstTimeUser extends Component {
       }
     } else {
       this.setState({ error_email: "", error_password: "" })
-      this.props.navigation.navigate("WelcomeScreen");
+      this.props.navigation.navigate("MyTasks");
     }
     // const value = this.state.namevalue;
     // console.log("value: ", value);

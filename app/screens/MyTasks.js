@@ -39,9 +39,9 @@ class MyTasks extends Component {
     this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false, points: this.context.state.user.points })
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval)
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.interval)
+  // }
 
   render() {
     var loading_icon = <ActivityIndicator
@@ -65,7 +65,7 @@ class MyTasks extends Component {
             this.props.navigation.navigate("MyTasks");
           }}
           addPress={() => {
-            this.props.navigation.navigate("CreateTask");
+            // this.props.navigation.navigate("CreateTask");
           }}
           profilePress={() => {
             this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });
@@ -109,9 +109,10 @@ class MyTasks extends Component {
                 });
               }
             }
-            quickComplete={() => {
-              this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
-              task.setComplete(true);
+            quickComplete={async () => {
+              await this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
+              await task.setComplete(true);
+              this.minuteUpdateDailyTasks()
             }
             }
           />
@@ -255,27 +256,27 @@ const styles = StyleSheet.create({
  Props:
     tasks: An array of task data to create task objects
 */
-MyTasks.propTypes = {
-  tasks: PropTypes.array,
-};
+// MyTasks.propTypes = {
+//   tasks: PropTypes.array,
+// };
 
-// what will the default be if none is specified
-MyTasks.defaultProps = {
-  tasks: [
-    {
-      id: 1,
-      title: 'Status 1',
-      description: 'description here',
-      completed: false,
-      estimatedTime: 4,
-      point_value: 10,
-      img: './../assets/url',
-      date: '06-19-2020 9:00am',
-      status: 1
-    },
-  ]
-  // tasks: null (uncomment to see noTasks() method run)
-}
+// // what will the default be if none is specified
+// MyTasks.defaultProps = {
+//   tasks: [
+//     {
+//       id: 1,
+//       title: 'Status 1',
+//       description: 'description here',
+//       completed: false,
+//       estimatedTime: 4,
+//       point_value: 10,
+//       img: './../assets/url',
+//       date: '06-19-2020 9:00am',
+//       status: 1
+//     },
+//   ]
+//   // tasks: null (uncomment to see noTasks() method run)
+// }
 
 const updateAllTasksToToday = async () => {
   //4:00 AM

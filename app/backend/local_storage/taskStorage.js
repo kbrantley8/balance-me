@@ -18,8 +18,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 0,
+        estimated_time: 900,
+        category_id: 0,
       },
       {
         name: "Go on a run",
@@ -35,8 +35,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 0,
+        estimated_time: 900,
+        category_id: 0,
       },
       {
         name: "Drink water",
@@ -50,8 +50,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 0,
+        estimated_time: 900,
+        category_id: 0,
       },
       {
         name: "Check blood pressure",
@@ -67,8 +67,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 0,
+        estimated_time: 900,
+        category_id: 0,
       },
     ],
   };
@@ -85,8 +85,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 1,
+        estimated_time: 900,
+        category_id: 1,
       },
       {
         name: "Take out the trash",
@@ -100,8 +100,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 1,
+        estimated_time: 900,
+        category_id: 1,
       },
       {
         name: "Wash the dishes",
@@ -121,8 +121,8 @@ export class taskStorage {
           { description: "Repeat until all dishes are clean" },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 1,
+        estimated_time: 900,
+        category_id: 1,
       },
       {
         name: "Walk the dog",
@@ -136,8 +136,8 @@ export class taskStorage {
           { description: "Make sure the dog has water if it is hot outside" },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 1,
+        estimated_time: 900,
+        category_id: 1,
       },
     ],
   };
@@ -159,8 +159,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 2,
+        estimated_time: 900,
+        category_id: 2,
       },
       {
         name: "Prepare lunch",
@@ -178,8 +178,8 @@ export class taskStorage {
           },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 2,
+        estimated_time: 900,
+        category_id: 2,
       },
       {
         name: "Choose outfit",
@@ -201,8 +201,8 @@ export class taskStorage {
           { description: "Get dressed!" },
         ],
         point_value: 15,
-        time_estimate: 5,
-        category: 2,
+        estimated_time: 900,
+        category_id: 2,
       },
     ],
   };
@@ -261,7 +261,7 @@ export class taskStorage {
       return false;
     }
   };
-  // pass in the name of the category: Health, Home, School, Other
+  // pass in the name of the category_id: Health, Home, School, Other
   static getCategory = (category) => {
     switch (category) {
       case "Health":

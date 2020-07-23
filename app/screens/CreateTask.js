@@ -14,7 +14,7 @@ class CreateTask extends Component {
                 <Button 
                     title="back"
                     onPress={() => {
-                        this.props.navigation.navigate("WelcomeScreen");
+                        this.props.navigation.navigate("MyTasks");
                     }}
                     />
                 <Text style={styles.mainText}>Let's create a task:</Text>
