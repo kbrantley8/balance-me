@@ -152,6 +152,7 @@ class TaskPrompt extends Component {
       }
       var task = await taskService.updateTask(this.state.task.id, data) 
     } else {
+      var status_var = (this.state.scheduledDateAndTime) ? 2 : 1;
       var task = await taskService.createTask(
         this.state.name,
         this.state.value,
@@ -160,7 +161,7 @@ class TaskPrompt extends Component {
         this.state.description,
         null,
         null,
-        2,
+        status_var,
         "none",
         state.user.id,
         state.user.id
