@@ -132,6 +132,11 @@ class TaskDetail extends Component {
     var data = new Date(time * 1000 )
     var hours = data.getHours() % 12 || 12;
     var minutes = data.getMinutes();
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+      } else {
+      minutes = minutes + '';
+      }
     var time_stamp = (data.getHours() >= 12) ? 'PM' : 'AM';
     var month = data.toLocaleString('default', { month: 'long' })
     var day = data.getDay();

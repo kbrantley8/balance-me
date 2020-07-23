@@ -145,7 +145,7 @@ class MyTasks extends Component {
     const missed = incomplete.filter(task => task.status === 3);
 
     return (
-      <View>
+      <View style={{ marginBottom: 45 }}>
         {this.createTasks(overdue, "Overdue")}
         {this.createTasks(inProgress, "In Progress")}
         {this.createTasks(upcoming, "Upcoming")}
