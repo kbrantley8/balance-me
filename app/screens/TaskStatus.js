@@ -47,7 +47,8 @@ class TaskStatus extends Component {
 
         this.state = {
             task: this.props.route.params["task"],
-            modal: false
+            modal: false,
+            helpModal: false
         };
 
         this.completed = this.state.task.task.completed;
@@ -55,7 +56,6 @@ class TaskStatus extends Component {
         this.title = this.state.task.task.name;
 
         this.changeTask = this.changeTask.bind(this);
-        console.log(this.status);
     }
 
     changeTask() {
@@ -72,6 +72,23 @@ class TaskStatus extends Component {
         this.props.route.params['callback']()
     }
     
+    getSteps() {
+        if ( this.state.task.task.steps) {
+            const steps = JSON.parse(this.state.task.task.steps);
+            const list = steps.map((item) => { item.description } );
+            console.log(steps);
+            console.log(steps[0].description);
+            console.log('list', list.description)
+            
+            // return steps.map((step, index) => {
+            //     <Text key={index} style={{fontSize: 21}}>
+            //        {step.description}
+            //     </Text>
+            // });
+            return <Text>{steps[0].description}</Text>
+        }
+    }
+
   render() {
     return (
     <SafeAreaView style={[styles.container, {backgroundColor: (this.completed ? types[4].backgroundColor : types[this.status].backgroundColor)}]}>
@@ -100,6 +117,7 @@ class TaskStatus extends Component {
             <View style={styles.cardView} >
                 <TouchableOpacity
                     style={styles.helpComplete}
+                    onPress={() => {this.setState({helpModal: true})}}
                 >
                     <Icon style={styles.helpIcon} name='help-outline'></Icon>
                     <Text style={styles.helpText}>Help me complete this task</Text>
@@ -130,6 +148,24 @@ class TaskStatus extends Component {
                     this.setState({modal: false});
                     navigation.navigate("MyTasks");
                     }} />
+            </View>
+          </View>
+        </Modal>
+        <Modal 
+          isVisible={this.state.helpModal}
+          backdropColor='gray'
+          backdropOpacity={0.4}
+          animationIn='fadeIn'
+          animationOut='fadeOut'
+        >
+          <View style={styles.modal}>
+            <Text style={styles.contentTitle}>{this.title}</Text>
+            <View>
+                {this.getSteps()}
+                <PrimaryButton text="Close" color="#1D76AA" 
+                    onPress={() => {
+                        this.setState({helpModal: false});
+                        }} />
             </View>
           </View>
         </Modal>
