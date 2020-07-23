@@ -75,17 +75,10 @@ class TaskStatus extends Component {
     getSteps() {
         if ( this.state.task.task.steps) {
             const steps = JSON.parse(this.state.task.task.steps);
-            const list = steps.map((item) => { item.description } );
-            console.log(steps);
-            console.log(steps[0].description);
-            console.log('list', list.description)
-            
-            // return steps.map((step, index) => {
-            //     <Text key={index} style={{fontSize: 21}}>
-            //        {step.description}
-            //     </Text>
-            // });
-            return <Text>{steps[0].description}</Text>
+            const list = steps.map((step, index) => {
+                return <Text key={index} style={styles.helpText}>{index + 1}: {step.description}{'\n'}</Text>
+            });
+            return list;
         }
     }
 
@@ -113,7 +106,7 @@ class TaskStatus extends Component {
             style={[styles.body, {color: this.completed ? types[4].color: types[this.status].color }]}>
             { this.completed ? types[4].body : types[this.status].body}
         </Text>
-        {(this.status === 1) ? 
+        {(this.status === 1 && this.completed === false) ? 
             <View style={styles.cardView} >
                 <TouchableOpacity
                     style={styles.helpComplete}
@@ -161,7 +154,7 @@ class TaskStatus extends Component {
           <View style={styles.modal}>
             <Text style={styles.contentTitle}>{this.title}</Text>
             <View>
-                {this.getSteps()}
+                <Text>{this.getSteps()}</Text>
                 <PrimaryButton text="Close" color="#1D76AA" 
                     onPress={() => {
                         this.setState({helpModal: false});
@@ -260,7 +253,8 @@ const styles = StyleSheet.create({
       },
       helpText: {
         fontSize: 18,
-        padding: 6
+        padding: 6,
+        paddingVertical: 12,
       },
       helpIcon: {
         fontSize: 50
