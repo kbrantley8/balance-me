@@ -6,11 +6,28 @@ import 'react-native-gesture-handler';
 import { taskStorage } from './../backend/local_storage/taskStorage'
 
 import Default_Task from './../components/default_task'
+import { Icon } from 'react-native-elements';
 
 //TODO: send "individual" as group preference to chooseTask
 class DefaultTaskList extends Component {
     constructor(props) {
         super(props);
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <Icon
+                    onPress={() => {
+                        this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
+                    }}
+                    name="clear"
+                    size={30}
+                    style={{ marginRight: 10 }}
+                />
+            ),
+            title: "",
+            headerBackTitleVisible: false,
+            headerLeftContainerStyle: { marginLeft: 5 },
+        });
+
         this.state = {
             title: '',
             category: this.props.route.params.category,
@@ -37,12 +54,6 @@ class DefaultTaskList extends Component {
             <SafeAreaView style={styles.container}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}>
                     <View style={styles.headerContainer}>
-                        <Button
-                            title="back"
-                            onPress={() => {
-                                this.props.navigation.navigate("ChooseTask");
-                            }}
-                        />
                         <Text style={styles.mainText}>Let's create a task:</Text>
                         <Stepper step={3} />
                     </View>
