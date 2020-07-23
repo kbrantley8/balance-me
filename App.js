@@ -23,12 +23,13 @@ import { userStorage } from "./app/backend/local_storage/userStorage";
 import { taskStorage } from "./app/backend/local_storage/taskStorage";
 
 const Stack = createStackNavigator();
+console.disableYellowBox = true;
 
 //TODO: Display screen only if name prop not set (should probably be done from App.js using AsyncStorage)
 export default function App() {
   // Uncomment this to removed the user from the application for testing or development purposes.
-  // userStorage.removeUser();
-  // taskStorage.removeCategories();
+  userStorage.removeUser();
+  taskStorage.removeCategories();
   const headerOption = { headerShown: false };
   return (
     <AppProvider>

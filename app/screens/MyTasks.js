@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator, RefreshControl } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
@@ -39,10 +39,9 @@ class MyTasks extends Component {
     this.setState({ daily_tasks: this.context.state.daily_tasks, loading_icon: false, points: this.context.state.user.points })
   }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.interval)
-  // }
-
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
   render() {
     var loading_icon = <ActivityIndicator
       size={Platform.OS == "ios" ? "large" : 50}
@@ -50,14 +49,16 @@ class MyTasks extends Component {
     />;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }}>
+        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }} refreshControl={
+          <RefreshControl refreshing={this.state.loading_icon} onRefresh={() => this.minuteUpdateDailyTasks()} tintColor="#37C1FF" />
+        }>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
           <Text style={styles.progress}>Points Earned: {this.state.points}</Text>
 
-          {(this.state.loading_icon) ? loading_icon : null}
+          {/* {(this.state.loading_icon) ? loading_icon : null} */}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
         </ScrollView>
         <Tabbar
@@ -65,7 +66,7 @@ class MyTasks extends Component {
             this.props.navigation.navigate("MyTasks");
           }}
           addPress={() => {
-            // this.props.navigation.navigate("CreateTask");
+            this.props.navigation.navigate("CreateTask");
           }}
           profilePress={() => {
             this.props.navigation.reset({ index: 0, routes: [{ name: "ProfileScreen" }] });
@@ -205,11 +206,6 @@ const noTasks = () => {
       <Text style={styles.noTaskText}>
         It looks like you don't have any tasks for today!
       </Text>
-      <PrimaryButton
-        text="Add a Task"
-        color="#55A61C"
-        onPress={navigation.navigate("CreateTask")}
-      />
     </View>
   );
 };

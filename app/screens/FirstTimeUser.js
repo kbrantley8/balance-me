@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
+import { userStorage } from "../backend/local_storage/userStorage";
 import { taskStorage } from "../backend/local_storage/taskStorage";
 import "react-native-gesture-handler";
 
@@ -24,6 +25,7 @@ class FirstTimeUser extends Component {
 
   handleLogIn = async () => {
     await this.context.loginUser(this.state.email, this.state.password);
+    await taskStorage.storeDefaultTask();
     if (this.context.state.login_err_msg.message) {
       if (this.context.state.login_err_msg.status == 404) {
         this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "" })

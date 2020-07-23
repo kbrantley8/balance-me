@@ -123,7 +123,7 @@ class TaskPrompt extends Component {
     const description = this.state.description;
     const time = this.state.time;
     const steps = this.state.steps;
-    const date = this.state.scheduledDateAndTime;
+    const date = (this.state.scheduledDateAndTime) ? (this.state.scheduledDateAndTime) : new Date();
 
     let days = [];
     let frequency = [];

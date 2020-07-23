@@ -25,7 +25,7 @@ export default class InitialLoading extends Component {
         await this.context.fetchData(user.email);
         await taskStorage.updateLists();
         // taskStorage.printCategory("Other");
-        this.props.navigation.reset({ index: 0, routes: [{ name: "WelcomeScreen" }] });
+        this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
       }
     } catch (error) {
       console.log(`Initial Loading Screen Err: ${error}`);
