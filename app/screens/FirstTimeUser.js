@@ -28,21 +28,21 @@ class FirstTimeUser extends Component {
   handleLogIn = async () => {
     var valid = true;
     if (!this.state.email) {
-      this.setState({ error_email: "Please provide your email."})
+      this.setState({ error_email: "Please provide your email." })
       valid = false;
     } else {
       if (!emailRegex.test(this.state.email)) {
-        this.setState({ error_email: "Please provide an email in a valid format."})
+        this.setState({ error_email: "Please provide an email in a valid format." })
         valid = false;
       } else {
-        this.setState({ error_email: ""})
+        this.setState({ error_email: "" })
       }
     }
     if (!this.state.password) {
-      this.setState({ error_password: "Please provide a password."})
+      this.setState({ error_password: "Please provide a password." })
       valid = false;
     } else {
-      this.setState({ error_password: ""})
+      this.setState({ error_password: "" })
     }
     if (!valid) {
       return;
@@ -52,7 +52,7 @@ class FirstTimeUser extends Component {
       await taskStorage.storeDefaultTask();
       if (this.context.state.login_err_msg.message) {
         if (this.context.state.login_err_msg.status == 404) {
-          this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "", loading_icon: false})
+          this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "", loading_icon: false })
         } else if (this.context.state.login_err_msg.status == 401) {
           this.setState({ error_password: this.context.state.login_err_msg.message, error_email: "", loading_icon: false })
         }
@@ -78,18 +78,18 @@ class FirstTimeUser extends Component {
 
   render() {
     var loading_icon = <Modal
-    transparent={true}
-    animationType={'none'}
-    visible={true}>
-    <View style={styles.modalBackground}>
-    <View style={styles.activityIndicatorWrapper}>
-    <ActivityIndicator
-        size={Platform.OS == "ios" ? "large" : 50}
-        color="#37C1FF"
-    />
-    </View>
-    </View>
-  </Modal>
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+        <View style={styles.activityIndicatorWrapper}>
+          <ActivityIndicator
+            size={Platform.OS == "ios" ? "large" : 50}
+            color="#37C1FF"
+          />
+        </View>
+      </View>
+    </Modal>
     return (
       <View style={styles.background}>
         {(this.state.loading_icon) ? loading_icon : null}
@@ -104,7 +104,7 @@ class FirstTimeUser extends Component {
               labelStyle={styles.formLabel}
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
-              leftIcon={ 
+              leftIcon={
                 <Icon name="mail-outline" type="material" size={24} iconStyle={styles.inputIcon} />
               }
               errorMessage={this.state.error_email}
@@ -116,18 +116,19 @@ class FirstTimeUser extends Component {
               type="password"
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
+              secureTextEntry={true}
               leftIcon={
                 <Icon name="lock" type="material" size={24} iconStyle={styles.inputIcon} />
               }
               errorMessage={this.state.error_password}
             />
           </View>
-          <Button 
+          <Button
             title="Log In"
             onPress={this.handleLogIn}
-            buttonStyle={styles.logInButton} 
+            buttonStyle={styles.logInButton}
           />
-          <Button 
+          <Button
             title="Create Account"
             onPress={this.handleSignUp}
             buttonStyle={styles.signUpButton}

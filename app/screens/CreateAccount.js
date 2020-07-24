@@ -40,33 +40,33 @@ class CreateAccount extends Component {
   handleSignUp = async () => {
     var valid = true;
     if (!this.state.firstName) {
-      this.setState({ error_firstName: "Please provide your first name."})
+      this.setState({ error_firstName: "Please provide your first name." })
       valid = false;
     } else {
-      this.setState({ error_firstName: ""})
+      this.setState({ error_firstName: "" })
     }
     if (!this.state.lastName) {
-      this.setState({ error_lastName: "Please provide your last name."})
+      this.setState({ error_lastName: "Please provide your last name." })
       valid = false;
     } else {
-      this.setState({ error_lastName: ""})
+      this.setState({ error_lastName: "" })
     }
     if (!this.state.email) {
-      this.setState({ error_email: "Please provide your email."})
+      this.setState({ error_email: "Please provide your email." })
       valid = false;
     } else {
       if (!emailRegex.test(this.state.email)) {
-        this.setState({ error_email: "Please provide an email in a valid format."})
+        this.setState({ error_email: "Please provide an email in a valid format." })
         valid = false;
       } else {
-        this.setState({ error_email: ""})
+        this.setState({ error_email: "" })
       }
     }
     if (!this.state.password) {
-      this.setState({ error_password: "Please provide a password."})
+      this.setState({ error_password: "Please provide a password." })
       valid = false;
     } else {
-      this.setState({ error_password: ""})
+      this.setState({ error_password: "" })
     }
     if (!valid) {
       return;
@@ -74,11 +74,11 @@ class CreateAccount extends Component {
       this.setState({ loading_icon: true })
       var new_user = await userService.createUser(this.state.firstName, this.state.lastName, 0, this.state.password, this.state.email);
       if (new_user.status == 422) {
-        this.setState({ error_email: "That email already exists. You can try logging in with that email or using a different email."})
+        this.setState({ error_email: "That email already exists. You can try logging in with that email or using a different email." })
         this.setState({ loading_icon: false })
         return;
       } else {
-        this.setState({ error_email: ""})
+        this.setState({ error_email: "" })
         await this.context.loginUser(this.state.email, this.state.password);
         this.setState({ loading_icon: false })
         this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
@@ -92,12 +92,12 @@ class CreateAccount extends Component {
       animationType={'none'}
       visible={true}>
       <View style={styles.modalBackground}>
-      <View style={styles.activityIndicatorWrapper}>
-      <ActivityIndicator
-          size={Platform.OS == "ios" ? "large" : 50}
-          color="#37C1FF"
-      />
-      </View>
+        <View style={styles.activityIndicatorWrapper}>
+          <ActivityIndicator
+            size={Platform.OS == "ios" ? "large" : 50}
+            color="#37C1FF"
+          />
+        </View>
       </View>
     </Modal>;
     return (
@@ -137,9 +137,10 @@ class CreateAccount extends Component {
               inputStyle={styles.inputLabel}
               inputContainerStyle={styles.inputContainer}
               errorMessage={this.state.error_password}
+              secureTextEntry={true}
             />
           </View>
-          <Button 
+          <Button
             title="Sign Up"
             onPress={this.handleSignUp}
             buttonStyle={styles.signUpButton}
