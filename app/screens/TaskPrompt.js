@@ -148,7 +148,8 @@ class TaskPrompt extends Component {
         repeat: {
           days: days,
           frequency: frequency
-        }
+        },
+        estimated_completion_time: (date.getTime() / 1000) + (time * 60)
       }
       var task = await taskService.updateTask(this.state.task.id, data) 
     } else {
