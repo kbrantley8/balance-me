@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
 import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
 import "react-native-gesture-handler";
@@ -17,7 +17,8 @@ class CreateAccount extends Component {
     error_firstName: "",
     error_lastName: "",
     error_email: "",
-    error_password: ""
+    error_password: "",
+    loading_icon: false
   };
 
   handleFirstName = (text) => {
@@ -70,21 +71,38 @@ class CreateAccount extends Component {
     if (!valid) {
       return;
     } else {
+      this.setState({ loading_icon: true })
       var new_user = await userService.createUser(this.state.firstName, this.state.lastName, 0, this.state.password, this.state.email);
       if (new_user.status == 422) {
         this.setState({ error_email: "That email already exists. You can try logging in with that email or using a different email."})
+        this.setState({ loading_icon: false })
         return;
       } else {
         this.setState({ error_email: ""})
         await this.context.loginUser(this.state.email, this.state.password);
-        this.props.navigation.navigate("WelcomeScreen");
+        this.setState({ loading_icon: false })
+        this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
       }
     }
   };
 
   render() {
+    var loading_icon = <Modal
+      transparent={true}
+      animationType={'none'}
+      visible={true}>
+      <View style={styles.modalBackground}>
+      <View style={styles.activityIndicatorWrapper}>
+      <ActivityIndicator
+          size={Platform.OS == "ios" ? "large" : 50}
+          color="#37C1FF"
+      />
+      </View>
+      </View>
+    </Modal>;
     return (
       <View style={styles.background}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.container}>
           <Text style={styles.headerText}>Create Account</Text>
           <View style={styles.formBlock}>
@@ -178,6 +196,22 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#1D76AA",
   },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  }
 });
 
 export default CreateAccount;

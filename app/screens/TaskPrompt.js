@@ -35,6 +35,10 @@ class TaskPrompt extends Component {
   constructor(props) {
     super(props);
 
+    var title_header = "Confirm";
+    if (this.props.route.params["edit"]) {
+      title_header = "Confirm Edit"
+    }
     this.props.navigation.setOptions({
       headerRight: () => (
         <Icon
@@ -46,7 +50,7 @@ class TaskPrompt extends Component {
           style={{ marginRight: 10 }}
         />
       ),
-      title: "Confirm",
+      title: title_header,
       headerBackTitleVisible: false,
       headerStyle: styles.HeaderStyle,
     });
@@ -75,9 +79,12 @@ class TaskPrompt extends Component {
       modalAssignVisible: false,
       stepInput: "",
       dateSelected: true,
-      selectedDayIndexes: [],
-      selectedFrequencyIndex: -1,
-      loading_icon: false
+      selectedDayIndexes: (this.props.route.params["selected_days"] ? this.props.route.params["selected_days"] : []),
+      selectedFrequencyIndex: (this.props.route.params["frequency"] ? this.props.route.params["frequency"] : -1),
+      loading_icon: false,
+      edit_bool: this.props.route.params["edit"],
+      task: this.props.route.params['task'],
+      default_bool: this.props.route.params["default"]
     };
     this.stepRef = React.createRef();
     this.Item = this.Item.bind(this);
@@ -116,7 +123,7 @@ class TaskPrompt extends Component {
     const description = this.state.description;
     const time = this.state.time;
     const steps = this.state.steps;
-    const date = this.state.scheduledDateAndTime;
+    const date = (this.state.scheduledDateAndTime) ? (this.state.scheduledDateAndTime) : new Date();
 
     let days = [];
     let frequency = [];
@@ -129,69 +136,89 @@ class TaskPrompt extends Component {
     }
     let { state } = this.context;
 
-    var task = await taskService.createTask(
-      this.state.name,
-      this.state.value,
-      this.state.selectedCategoryIndex,
-      this.state.time * 60,
-      this.state.description,
-      null,
-      null,
-      2,
-      "none",
-      state.user.id,
-      state.user.id
-    );
-
-    var new_task = new Task(
-      task.task_id,
-      task.name,
-      task.point_value,
-      task.category_id,
-      task.estimated_time,
-      task.description,
-      task.start_time,
-      task.estimated_completion_time,
-      task.status,
-      task.completion_time,
-      task.image_path,
-      task.assigned_user_id,
-      task.created_user_id,
-      task.history,
-      task.repeat,
-      task.completed,
-      task.active,
-      task.steps
-    );
-
-    const repeat = { days: days, frequency: frequency };
-    if (date) {
-      await new_task.updateStartTime(date.getTime() / 1000);
+    if (this.state.edit_bool) {
+      var data = {
+        name: name,
+        description: description,
+        estimated_time: time * 60,
+        category_id: this.state.selectedCategoryIndex,
+        point_value: value,
+        steps: JSON.stringify(steps),
+        start_time: date.getTime() / 1000,
+        repeat: {
+          days: days,
+          frequency: frequency
+        },
+        estimated_completion_time: (date.getTime() / 1000) + (time * 60)
+      }
+      var task = await taskService.updateTask(this.state.task.id, data) 
+    } else {
+      var status_var = (this.state.scheduledDateAndTime) ? 2 : 1;
+      var task = await taskService.createTask(
+        this.state.name,
+        this.state.value,
+        this.state.selectedCategoryIndex,
+        this.state.time * 60,
+        this.state.description,
+        null,
+        null,
+        status_var,
+        "none",
+        state.user.id,
+        state.user.id
+      );
+  
+      var new_task = new Task(
+        task.task_id,
+        task.name,
+        task.point_value,
+        task.category_id,
+        task.estimated_time,
+        task.description,
+        task.start_time,
+        task.estimated_completion_time,
+        task.status,
+        task.completion_time,
+        task.image_path,
+        task.assigned_user_id,
+        task.created_user_id,
+        task.history,
+        task.repeat,
+        task.completed,
+        task.active,
+        task.steps
+      );
+  
+      const repeat = { days: days, frequency: frequency };
+      if (date) {
+        await new_task.updateStartTime(date.getTime() / 1000);
+      }
+      await new_task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
+  
+      // alert(`
+      // name: ${name}\n
+      // value: ${value}\n
+      // category: ${category}\n
+      // description: ${description}\n
+      // time: ${time}\n
+      // steps: ${JSON.stringify(steps)}\n
+      // date: ${date}\n
+      // repeat: ${JSON.stringify(repeat)}
+      // `);
+      if (!this.state.default_bool) {
+        await taskStorage.addTaskIntoCateogry(
+          {
+            name: new_task.name,
+            description: new_task.description,
+            steps: new_task.steps,
+            time_estimate: new_task.estimated_time,
+            category: new_task.category_id,
+            point_value: new_task.point_value
+          },
+          this.state.category
+        );
+      }
     }
-    await new_task.updateStepsAndRepeat(JSON.stringify(steps), repeat);
-
-    // alert(`
-    // name: ${name}\n
-    // value: ${value}\n
-    // category: ${category}\n
-    // description: ${description}\n
-    // time: ${time}\n
-    // steps: ${JSON.stringify(steps)}\n
-    // date: ${date}\n
-    // repeat: ${JSON.stringify(repeat)}
-    // `);
-
-    await taskStorage.addTaskIntoCateogry(
-      {
-        name: new_task.name,
-        description: new_task.description,
-        steps: new_task.steps,
-        time_estimate: new_task.estimated_time,
-        category: new_task.category_id,
-        point_value: new_task.point_value
-      },
-      this.state.category
-    );
     // remove before production
     // taskStorage.printCategory(this.state.category);
     this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });

@@ -17,6 +17,12 @@ class CustomTask extends Component {
   constructor(props) {
     super(props);
 
+    var title_header = "Create New Task "
+    if (this.props.route.params) {
+      if (this.props.route.params.edit) {
+        title_header = "Edit Task "
+      }
+    }
     this.props.navigation.setOptions({
       headerRight: () => (
         <Icon
@@ -28,7 +34,7 @@ class CustomTask extends Component {
           style={{ marginRight: 10 }}
         />
       ),
-      title: "Create New Task ",
+      title: title_header,
       headerBackTitleVisible: false,
       headerStyle: styles.HeaderStyle,
     });
@@ -53,13 +59,25 @@ class CustomTask extends Component {
     if (this.props.route.params) {
       if (this.props.route.params.task) {
         var task = this.props.route.params.task.task;
+        this.state.task = task;
         this.state.name = task.name;
         this.state.description = task.description;
         this.state.value = task.point_value;
-        this.state.time = (task.time_estimate / 60).toString();
-        this.state.selectedCategoryIndex = task.category;
+        this.state.time = (task.estimated_time / 60).toString();
+        this.state.selectedCategoryIndex = task.category_id;
         this.state.steps = task.steps;
-        this.state.category = this.categoryButtons[task.category];
+        this.state.category = this.categoryButtons[task.category_id];
+        this.state.start_time = task.start_time;
+        if (task.repeat) {
+          this.state.repeat_days = task.repeat.days;
+          this.state.repeat_freq = task.repeat.frequency;
+        }
+      }
+      if (this.props.route.params.edit) {
+        this.state.edit_bool = this.props.route.params.edit;
+      }
+      if (this.props.route.params.default) {
+        this.state.default_bool = this.props.route.params.default;
       }
     }
   }
@@ -98,6 +116,25 @@ class CustomTask extends Component {
       //   Category:${this.state.category}
       //   Point Value:${this.state.value}`
       // );
+      var weekDays = ["S", "M", "T", "W", "Th", "F", "Sa"];
+      var frequency = ["Weekly", "biweekly", "Monthly"];
+      var weekDays_submit = [];
+      if (this.state.repeat_days) {
+        weekDays.forEach((item, index) => {
+          if (this.state.repeat_days.includes(item)) {
+            weekDays_submit.push(index)
+          }
+        });
+      }
+      var frequency_submit = -1;
+      if (this.state.repeat_freq) {
+        frequency.forEach((item, index) => {
+          if (this.state.repeat_freq.includes(item)) {
+            frequency_submit = index
+          }
+        });
+      }
+
       this.props.navigation.navigate("TaskPrompt", {
         name: this.state.name.trim(),
         timer: this.state.time,
@@ -105,7 +142,13 @@ class CustomTask extends Component {
         points: this.state.value,
         category: this.state.category,
         selectedCategoryIndex: this.state.selectedCategoryIndex,
-        steps: this.state.steps
+        steps: (this.state.edit_bool) ? JSON.parse(this.state.steps) : this.state.steps,
+        timeStamp: (this.state.start_time) ? new Date(this.state.start_time * 1000) : null,
+        selected_days: weekDays_submit,
+        frequency: frequency_submit,
+        edit: this.state.edit_bool,
+        task: this.state.task,
+        default: this.state.default_bool
       });
     }
   }

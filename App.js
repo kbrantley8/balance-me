@@ -23,6 +23,7 @@ import { userStorage } from "./app/backend/local_storage/userStorage";
 import { taskStorage } from "./app/backend/local_storage/taskStorage";
 
 const Stack = createStackNavigator();
+console.disableYellowBox = true;
 
 //TODO: Display screen only if name prop not set (should probably be done from App.js using AsyncStorage)
 export default function App() {

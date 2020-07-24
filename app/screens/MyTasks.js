@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, ActivityIndicator, RefreshControl } from "react-native";
 import Task from './../components/task';
 import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
@@ -44,7 +44,6 @@ class MyTasks extends Component {
   componentWillUnmount() {
     clearInterval(this.interval)
   }
-
   render() {
     var loading_icon = <ActivityIndicator
       size={Platform.OS == "ios" ? "large" : 50}
@@ -52,13 +51,16 @@ class MyTasks extends Component {
     />;
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }}>
+        <ScrollView style={{ flex: 1, padding: 12, paddingTop: '10%' }} refreshControl={
+          <RefreshControl refreshing={this.state.loading_icon} onRefresh={() => this.minuteUpdateDailyTasks()} tintColor="#37C1FF" />
+        }>
           <Text style={styles.myTask}>Today's Tasks</Text>
           <Text style={styles.date}>
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
           <Text style={styles.progress}>Points Earned: {this.state.points}</Text>
-          {(this.state.loading_icon) ? loading_icon : null}
+
+          {/* {(this.state.loading_icon) ? loading_icon : null} */}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
         </ScrollView>
         <Tabbar
@@ -110,9 +112,10 @@ class MyTasks extends Component {
                 });
               }
             }
-            quickComplete={() => {
-              this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
-              task.setComplete(true);
+            quickComplete={async () => {
+              await this.context.state.user.updatePoints(this.context.state.user.points + task.point_value);
+              await task.setComplete(true);
+              this.minuteUpdateDailyTasks()
             }
             }
           />
@@ -144,7 +147,7 @@ class MyTasks extends Component {
     const missed = incomplete.filter(task => task.status === 3);
 
     return (
-      <View>
+      <View style={{ marginBottom: 45 }}>
         {this.createTasks(overdue, "Overdue")}
         {this.createTasks(inProgress, "In Progress")}
         {this.createTasks(upcoming, "Upcoming")}
@@ -205,11 +208,6 @@ const noTasks = () => {
       <Text style={styles.noTaskText}>
         It looks like you don't have any tasks for today!
       </Text>
-      <PrimaryButton
-        text="Add a Task"
-        color="#55A61C"
-        onPress={navigation.navigate("CreateTask")}
-      />
     </View>
   );
 };
@@ -256,27 +254,27 @@ const styles = StyleSheet.create({
  Props:
     tasks: An array of task data to create task objects
 */
-MyTasks.propTypes = {
-  tasks: PropTypes.array,
-};
+// MyTasks.propTypes = {
+//   tasks: PropTypes.array,
+// };
 
-// what will the default be if none is specified
-MyTasks.defaultProps = {
-  tasks: [
-    {
-      id: 1,
-      title: 'Status 1',
-      description: 'description here',
-      completed: false,
-      estimatedTime: 4,
-      point_value: 10,
-      img: './../assets/url',
-      date: '06-19-2020 9:00am',
-      status: 1
-    },
-  ]
-  // tasks: null (uncomment to see noTasks() method run)
-}
+// // what will the default be if none is specified
+// MyTasks.defaultProps = {
+//   tasks: [
+//     {
+//       id: 1,
+//       title: 'Status 1',
+//       description: 'description here',
+//       completed: false,
+//       estimatedTime: 4,
+//       point_value: 10,
+//       img: './../assets/url',
+//       date: '06-19-2020 9:00am',
+//       status: 1
+//     },
+//   ]
+//   // tasks: null (uncomment to see noTasks() method run)
+// }
 
 const updateAllTasksToToday = async () => {
   //4:00 AM

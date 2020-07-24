@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
 import { Text, Button, Input, Icon } from "react-native-elements";
 import { Context as AppContext } from "../context/appContext";
+import { userStorage } from "../backend/local_storage/userStorage";
 import { taskStorage } from "../backend/local_storage/taskStorage";
 import "react-native-gesture-handler";
 
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 //TODO: Shouldn"t be able to go "back" to this page after page is submitted
 class FirstTimeUser extends Component {
   state = {
     email: "",
     password: "",
     error_email: "",
-    error_password: ""
+    error_password: "",
+    loading_icon: false
   };
 
   handleEmail = (text) => {
@@ -23,16 +26,41 @@ class FirstTimeUser extends Component {
   };
 
   handleLogIn = async () => {
-    await this.context.loginUser(this.state.email, this.state.password);
-    if (this.context.state.login_err_msg.message) {
-      if (this.context.state.login_err_msg.status == 404) {
-        this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "" })
-      } else if (this.context.state.login_err_msg.status == 401) {
-        this.setState({ error_password: this.context.state.login_err_msg.message, error_email: "" })
-      }
+    var valid = true;
+    if (!this.state.email) {
+      this.setState({ error_email: "Please provide your email."})
+      valid = false;
     } else {
-      this.setState({ error_email: "", error_password: "" })
-      this.props.navigation.navigate("WelcomeScreen");
+      if (!emailRegex.test(this.state.email)) {
+        this.setState({ error_email: "Please provide an email in a valid format."})
+        valid = false;
+      } else {
+        this.setState({ error_email: ""})
+      }
+    }
+    if (!this.state.password) {
+      this.setState({ error_password: "Please provide a password."})
+      valid = false;
+    } else {
+      this.setState({ error_password: ""})
+    }
+    if (!valid) {
+      return;
+    } else {
+      this.setState({ loading_icon: true })
+      await this.context.loginUser(this.state.email, this.state.password);
+      await taskStorage.storeDefaultTask();
+      if (this.context.state.login_err_msg.message) {
+        if (this.context.state.login_err_msg.status == 404) {
+          this.setState({ error_email: this.context.state.login_err_msg.message, error_password: "", loading_icon: false})
+        } else if (this.context.state.login_err_msg.status == 401) {
+          this.setState({ error_password: this.context.state.login_err_msg.message, error_email: "", loading_icon: false })
+        }
+      } else {
+        this.setState({ error_email: "", error_password: "" })
+        this.setState({ loading_icon: false })
+        this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
+      }
     }
     // const value = this.state.namevalue;
     // console.log("value: ", value);
@@ -49,8 +77,22 @@ class FirstTimeUser extends Component {
   };
 
   render() {
+    var loading_icon = <Modal
+    transparent={true}
+    animationType={'none'}
+    visible={true}>
+    <View style={styles.modalBackground}>
+    <View style={styles.activityIndicatorWrapper}>
+    <ActivityIndicator
+        size={Platform.OS == "ios" ? "large" : 50}
+        color="#37C1FF"
+    />
+    </View>
+    </View>
+  </Modal>
     return (
       <View style={styles.background}>
+        {(this.state.loading_icon) ? loading_icon : null}
         <View style={styles.container}>
           <Text style={styles.headerText}>Balance Me</Text>
           <View style={styles.formBlock}>
@@ -151,6 +193,22 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#F2CD5C",
   },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    backgroundColor: '#00000040'
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#FFFFFF',
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  }
 });
 
 export default FirstTimeUser;

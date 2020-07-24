@@ -88,15 +88,11 @@ class TaskStatus extends Component {
     return (
     <SafeAreaView style={[styles.container, {backgroundColor: (this.completed ? types[4].backgroundColor : types[this.status].backgroundColor)}]}>
         <View style={styles.icons}>
-            <Icon name="arrow-back" size={30} onPress={() => {navigation.navigate("MyTasks")}}/>
+            <Icon name="arrow-back" size={30} onPress={() => {navigation.goBack()}}/>
             <Icon name="assignment" size={30} onPress={() => {
-                navigation.navigate("TaskDetail", {
-                  taskTitle: this.title,
-                  taskTimer: this.state.task.task.estimated_time,
-                  taskTimestamp: this.state.task.task.start_time, //"October 20, 2020 11:13:00"
-                  taskDescription: this.state.task.task.description,
-                  taskPoints: this.state.task.task.point_value
-                });
+                    navigation.navigate("TaskDetail", {
+                        task: this.state.task.task
+                    });
                 }}/>
         </View>
         <Text style={[styles.title, {color: this.completed ? types[4].color: types[this.status].color } ]}>

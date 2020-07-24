@@ -17,12 +17,9 @@ class TaskDetail extends Component {
     });
 
     this.state = {
-      taskTitle: this.props.route.params["taskTitle"],
-      taskTimer: this.props.route.params["taskTimer"],
-      taskDescription: this.props.route.params["taskDescription"],
-      taskTimeStamp: this.props.route.params["taskTimestamp"],
-      points: this.props.route.params["taskPoints"],
-    };
+      task: this.props.route.params['task']
+    }
+    console.log(this.state.task)
 
     this.editTask = this.editTask.bind(this);
     this.startTask = this.startTask.bind(this);
@@ -40,7 +37,7 @@ class TaskDetail extends Component {
           <View
             style={{ flex: 4, alignItems: "center", justifyContent: "center" }}
           >
-            <Text style={styles.TaskTitle}>{this.state.taskTitle}</Text>
+            <Text style={styles.TaskTitle}>{this.state.task.name}</Text>
           </View>
           <View
             style={{
@@ -58,7 +55,7 @@ class TaskDetail extends Component {
                 alignSelf: "center",
               }}
             >
-              <Text style={styles.Time}>{this.state.taskTimer}</Text>
+              <Text style={styles.Time}>{this.state.task.estimated_time / 60}</Text>
             </View>
           </View>
         </View>
@@ -67,7 +64,7 @@ class TaskDetail extends Component {
         <View style={styles.DesriptionContainer}>
           <View style={styles.PopBackground}>
             <Text style={styles.SubHeading}>Description</Text>
-            <Text style={styles.Body}>{this.state.taskDescription}</Text>
+            <Text style={styles.Body}>{this.state.task.description}</Text>
             <TouchableWithoutFeedback onPress={this.fullDescription}>
               <Text style={styles.FullDescription}>
                 See Full Description...
@@ -91,7 +88,7 @@ class TaskDetail extends Component {
                 }}
               >
                 <Text style={styles.CenterTimeStamp}>
-                  {this.state.taskTimeStamp.toString()}
+                  {this.timeToString(this.state.task.start_time)}
                 </Text>
               </View>
             </View>
@@ -106,28 +103,47 @@ class TaskDetail extends Component {
                   alignSelf: "center",
                 }}
               >
-                <Text style={styles.Points}>{this.state.points}</Text>
+                <Text style={styles.Points}>{this.state.task.point_value}</Text>
               </View>
             </View>
           </View>
-          <PrimaryButton
+          {((!this.state.task.completed) && ((this.state.task.status == 2) || (this.state.task.status == 0))) ? <PrimaryButton
             text="Start Now"
             color="#A1D991"
             onPress={this.startTask}
-          />
+          /> : null}
         </View>
       </View>
     );
   }
 
   editTask() {
-    alert("Edit Task");
+    this.props.navigation.navigate("CustomTask", {
+      task: {'task': this.state.task},
+      edit: true
+    })
   }
   fullDescription() {
-    alert(this.state.taskDescription);
+    alert(this.state.task.description);
   }
   startTask() {
-    alert("Task started at " + this.state.taskTimeStamp);
+    alert("Task started at " + this.state.task.start_time);
+  }
+  timeToString = (time) => {
+    var data = new Date(time * 1000 )
+    var hours = data.getHours() % 12 || 12;
+    var minutes = data.getMinutes();
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+      } else {
+      minutes = minutes + '';
+      }
+    var time_stamp = (data.getHours() >= 12) ? 'PM' : 'AM';
+    var month = data.toLocaleString('default', { month: 'long' })
+    var day = data.getDay();
+    var year = data.getFullYear();
+    var str = hours + ":" + minutes + " " + time_stamp + " on " + month + " " + day + ", " + year;
+    return str;
   }
 }
 

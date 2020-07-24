@@ -85,7 +85,8 @@ class DefaultTaskList extends Component {
                     onPress={
                         () => {
                             this.props.navigation.navigate("CustomTask", {
-                                task: { task }
+                                task: { task },
+                                default: true
                             })
                         }
                     }
