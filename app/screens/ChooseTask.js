@@ -4,22 +4,32 @@ import Card from "./../components/card.js";
 import Stepper from "./../components/stepper.js";
 import "react-native-gesture-handler";
 import PrimaryButton from "./../components/button.js";
+import { Icon } from "react-native-elements";
 let navigation;
-class CreateTask extends Component {
+class ChooseTask extends Component {
   constructor(props) {
     super(props)
     navigation = this.props.navigation;
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <Icon
+          onPress={() => {
+            this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
+          }}
+          name="clear"
+          size={30}
+          style={{ marginRight: 10 }}
+        />
+      ),
+      title: "",
+      headerBackTitleVisible: false,
+      headerLeftContainerStyle: { marginLeft: 5 },
+    });
   }
   state = {};
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          title="back"
-          onPress={() => {
-            this.props.navigation.navigate("CreateTask");
-          }}
-        />
         <Text style={styles.mainText}>Let's create a task:</Text>
         <Stepper step={2} />
         <View style={styles.selection}>
@@ -136,4 +146,4 @@ const styles = StyleSheet.create({
     padding: 12,
   },
 });
-export default CreateTask;
+export default ChooseTask;

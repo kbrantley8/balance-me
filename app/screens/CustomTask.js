@@ -27,7 +27,7 @@ class CustomTask extends Component {
       headerRight: () => (
         <Icon
           onPress={() => {
-            this.props.navigation.navigate("MyTasks");
+            this.props.navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
           }}
           name="clear"
           size={30}
