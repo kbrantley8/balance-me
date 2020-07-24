@@ -19,6 +19,7 @@ class TaskDetail extends Component {
     this.state = {
       task: this.props.route.params['task']
     }
+    console.log(this.state.task)
 
     this.editTask = this.editTask.bind(this);
     this.startTask = this.startTask.bind(this);
@@ -106,7 +107,7 @@ class TaskDetail extends Component {
               </View>
             </View>
           </View>
-          {(!this.state.task.completed) ? <PrimaryButton
+          {((!this.state.task.completed) && ((this.state.task.status == 2) || (this.state.task.status == 0))) ? <PrimaryButton
             text="Start Now"
             color="#A1D991"
             onPress={this.startTask}
