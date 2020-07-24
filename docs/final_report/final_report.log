@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  24 JUL 2020 17:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  24 JUL 2020 17:06
 entering extended mode
 **./final_report.tex
 (final_report.tex
@@ -1118,100 +1118,27 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 373.
  (final_report.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 373.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 373.
-
-
-Package rerunfilecheck Warning: File `final_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `final_report.out':
-(rerunfilecheck)             Before: 52B1D487FF8C80D0E07C2EFC12464192;1313
-(rerunfilecheck)             After:  C3D515B79721E0853CCFC7DEF4097C2E;462.
+Package rerunfilecheck Info: File `final_report.out' has not changed.
+(rerunfilecheck)             Checksum: C3D515B79721E0853CCFC7DEF4097C2E;462.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 373.
  ) 
 Here is how much of TeX's memory you used:
- 20258 strings out of 480797
- 373054 string characters out of 2905362
- 648237 words of memory out of 3000000
- 35617 multiletter control sequences out of 15000+200000
+ 20220 strings out of 480797
+ 372716 string characters out of 2905362
+ 647658 words of memory out of 3000000
+ 35601 multiletter control sequences out of 15000+200000
  592935 words of font info for 176 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,8n,83p,489b,291s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{section.55} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.53} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.51} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.49} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.47} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.40} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.38} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.36} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.34} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.31} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsubsection.29} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.27} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.25} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.22} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.19} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.17} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.15} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.13} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.11} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.9} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.7} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.5} has been referenced but does not exist, 
-replaced by a fixed one
-
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw
-/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (3 pages, 106264 bytes).
+ 68i,8n,83p,425b,291s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
+rw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on final_report.pdf (3 pages, 100571 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
- 44 named destinations out of 1000 (max. 500000)
- 15645 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 121 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 15541 words of extra memory for PDF output out of 17280 (max. 10000000)
 
