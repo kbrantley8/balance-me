@@ -5,6 +5,8 @@ import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
 import Tabbar from './../components/tabbar';
 
+import moment from 'moment';
+
 import { Context as AppContext } from '../context/appContext';
 const taskService = require("../backend/services/taskService");
 const task = require("./../backend/model_data/Task");
@@ -84,7 +86,7 @@ class MyTasks extends Component {
   async callback() {
     this.setState({ loading_icon: true })
     await this.context.minuteUpdateDailyTasks(this.context.state.user.email);
-    this.setState({ daily_tasks: this.context.state.daily_tasks })
+    this.setState({ daily_tasks: this.context.state.daily_tasks, points: this.context.state.user.points })
     this.setState({ loading_icon: false })
   }
 
@@ -154,9 +156,9 @@ class MyTasks extends Component {
 }
 MyTasks.contextType = AppContext;
 
-const getTime = (time) => {
-  let d = new Date(time.toString());
-  return d.getHours();
+const getTime = (time) => { 
+  var newTime = moment(new Date(time * 1000)).format('hh:mm');
+  return newTime;
 }
 // functions about getting the date
 const getDay = () => {

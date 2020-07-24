@@ -4,38 +4,39 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import PrimaryButton from './../components/button';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
+import { Context as AppContext } from '../context/appContext';
 const task = require("./../backend/model_data/Task");
 
-const types = [ 
+const types = [
     { // overdue
-    backgroundColor: '#FEEDEA',
-    body:  "Your Task is overdue!",
-    color: '#F24822',
-    buttonText: 'Start Task'
+        backgroundColor: '#FEEDEA',
+        body: "Your Task is overdue!",
+        color: '#F24822',
+        buttonText: 'Start Task'
     },
     { // in progress
-    backgroundColor: '#ECF9FF',
-    body:  "Your Task is in progress",
-    color: '#1D76AA',
-    buttonText: 'Complete Task'
+        backgroundColor: '#ECF9FF',
+        body: "Your Task is in progress",
+        color: '#1D76AA',
+        buttonText: 'Complete Task'
     },
     { // complete
-    backgroundColor: '#FCF5DE',
-    body:  "Your Task is upcoming!",
-    color: '#F2CD5C',
-    buttonText: 'Start Task'
+        backgroundColor: '#FCF5DE',
+        body: "Your Task is upcoming!",
+        color: '#F2CD5C',
+        buttonText: 'Start Task'
     },
     { // missed
-    backgroundColor: '#F2F2F2',
-    body:  "You have missed your task.",
-    color: '#4F4F4F',
-    buttonText: 'Back to Tasks'
+        backgroundColor: '#F2F2F2',
+        body: "You have missed your task.",
+        color: '#4F4F4F',
+        buttonText: 'Back to Tasks'
     },
     { // completed
-    backgroundColor: '#DEEDD2',
-    body:  "Your Task has been completed. Great Job!",
-    color: '#55A61C',
-    buttonText: 'Back to Tasks'
+        backgroundColor: '#DEEDD2',
+        body: "Your Task has been completed. Great Job!",
+        color: '#55A61C',
+        buttonText: 'Back to Tasks'
     },
 ]
 
@@ -60,14 +61,15 @@ class TaskStatus extends Component {
 
     changeTask() {
         if (this.completed || this.status === 3) { // completed or missed
-            navigation.navigate("MyTasks");
+            navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
         } else if (this.status === 1) { // in progress
+            this.context.state.user.updatePoints(this.context.state.user.points + this.state.task.task.point_value);
             this.state.task.task.setComplete(true);
-            this.setState({modal: true});
+            this.setState({ modal: true });
         } else { // upcoming or overdue
             this.state.task.task.setStatus(1);
-            this.setState({status: 1})
-            navigation.navigate("MyTasks");
+            this.setState({ status: 1 })
+            navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] });
         }
         this.props.route.params['callback']()
     }
@@ -166,6 +168,7 @@ class TaskStatus extends Component {
     );
   }
 }
+TaskStatus.contextType = AppContext;
 export default TaskStatus;
 
 
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
         marginTop: 32,
         marginBottom: 24,
         fontWeight: 'bold'
-    }, 
+    },
     body: {
         fontSize: 18,
         marginTop: 24,
@@ -215,14 +218,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
-      },
-      contentTitle: {
+    },
+    contentTitle: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#333333',
         paddingVertical: 12
-      },
-      modalBody: {
+    },
+    modalBody: {
         fontSize: 18,
         color: '#333333',
         paddingBottom: 6
