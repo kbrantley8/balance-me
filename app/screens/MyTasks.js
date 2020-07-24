@@ -58,7 +58,6 @@ class MyTasks extends Component {
             {getDayOfWeek() + ", " + getMonthofYear() + " " + getDay()}
           </Text>
           <Text style={styles.progress}>Points Earned: {this.state.points}</Text>
-
           {(this.state.loading_icon) ? loading_icon : null}
           {this.state.daily_tasks ? this.addTasks(this.state.daily_tasks) : noTasks()}
         </ScrollView>
