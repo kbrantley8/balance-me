@@ -77,7 +77,7 @@ class TaskStatus extends Component {
         return (
             <SafeAreaView style={[styles.container, { backgroundColor: (this.completed ? types[4].backgroundColor : types[this.status].backgroundColor) }]}>
                 <View style={styles.icons}>
-                    <Icon name="arrow-back" size={30} onPress={() => { navigation.reset({ index: 0, routes: [{ name: "MyTasks" }] }) }} />
+                    <Icon name="arrow-back" size={30} onPress={() => { navigation.goBack() }} />
                     <Icon name="assignment" size={30} onPress={() => {
                         navigation.navigate("TaskDetail", {
                             task: this.state.task.task
