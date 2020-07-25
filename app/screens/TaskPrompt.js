@@ -211,8 +211,8 @@ class TaskPrompt extends Component {
             name: new_task.name,
             description: new_task.description,
             steps: new_task.steps,
-            time_estimate: new_task.estimated_time,
-            category: new_task.category_id,
+            estimated_time: new_task.estimated_time,
+            category_id: new_task.category_id,
             point_value: new_task.point_value
           },
           this.state.category
