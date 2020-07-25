@@ -13,7 +13,7 @@ import 'react-native-gesture-handler';
 class EditProfileScreen extends Component {
   constructor(props) {
     super(props);
-    navigation = this.props.navigation;
+    // navigation = this.props.navigation;
     this.state = {
       fname: "",
       lname: "",
@@ -25,7 +25,7 @@ class EditProfileScreen extends Component {
 
   UNSAFE_componentWillMount() {
     let { state } = this.context;
-    this.setState({ user: state.user })
+    this.setState({ user: state.user, fname: state.user.first_name, lname: state.user.last_name, userEmail: state.user.email })
   }
 
   handleFName = (text) => {
@@ -48,7 +48,7 @@ class EditProfileScreen extends Component {
     await this.context.state.user.updateEmail(this.state.userEmail, this.context.state.user.password);
     await this.context.fetchData(this.state.userEmail);
     this.props.route.params["callback"](this.context.state.user)
-    this.props.navigation.navigate("ProfileScreen");
+    this.props.navigation.goBack();
     this.setState({ loading_icon: false })
   }
 
@@ -107,6 +107,7 @@ class EditProfileScreen extends Component {
             marginLeft={35}
             marginRight={50}
             inputContainerStyle={{ borderBottomWidth: 0 }}
+            value={this.state.fname}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Last Name:</Text>
@@ -122,6 +123,7 @@ class EditProfileScreen extends Component {
             marginLeft={35}
             marginRight={50}
             inputContainerStyle={{ borderBottomWidth: 0 }}
+            value={this.state.lname}
           />
           <View style={styles.formText}>
             <Text style={styles.welcome}>Email:</Text>
@@ -137,6 +139,7 @@ class EditProfileScreen extends Component {
             marginLeft={35}
             marginRight={50}
             inputContainerStyle={{ borderBottomWidth: 0 }}
+            value={this.state.userEmail}
           />
         </View>
         <View style={styles.buttons}>

@@ -59,7 +59,6 @@ class CustomTask extends Component {
     if (this.props.route.params) {
       if (this.props.route.params.task) {
         var task = this.props.route.params.task.task;
-        console.log(task)
         this.state.task = task;
         this.state.name = task.name;
         this.state.description = task.description;
