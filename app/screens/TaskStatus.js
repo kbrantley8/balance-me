@@ -9,7 +9,7 @@ const task = require("./../backend/model_data/Task");
 
 const types = [
     { // overdue
-        backgroundColor: '#ffb3a7',
+        backgroundColor: '#ffb3a7', // original: backgroundColor: '#FEEDEA',
         body: "Your Task is overdue!",
         color: '#F24822',
         buttonText: 'Start Task'
