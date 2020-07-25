@@ -74,7 +74,7 @@ const taskType = function(status, completed) {
     } else { 
         if (status === 0) { //overdue
           return {
-            backgroundColor: '#FEEDEA',
+            backgroundColor: '#ffb3a7',
             borderLeftColor: '#F24822',
           }
         } else if (status == 1) { // in progress
