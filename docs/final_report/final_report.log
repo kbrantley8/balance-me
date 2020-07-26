@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  26 JUL 2020 01:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  26 JUL 2020 12:56
 entering extended mode
 **./final_report.tex
 (final_report.tex
@@ -1029,124 +1029,127 @@ Non-PDF special ignored!
 <special> papersize=8.5in,11in
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 <figures/user.png, id=100, 198.7425pt x 198.7425pt>
 File: figures/user.png Graphic file (type png)
 <use figures/user.png>
-Package pdftex.def Info: figures/user.png  used on input line 262.
+Package pdftex.def Info: figures/user.png  used on input line 283.
 (pdftex.def)             Requested size: 146.3909pt x 146.3939pt.
 <figures/task.png, id=102, 353.82187pt x 176.91093pt>
 File: figures/task.png Graphic file (type png)
 <use figures/task.png>
-Package pdftex.def Info: figures/task.png  used on input line 269.
+Package pdftex.def Info: figures/task.png  used on input line 290.
 (pdftex.def)             Requested size: 243.98238pt x 121.99307pt.
- [2 <./figures/user.png> <./figures/task.png>] [3]
-Underfull \vbox (badness 1831) has occurred while \output is active []
+ [2 <./figures/user.png> <./figures/task.png>]
+Underfull \vbox (badness 1688) has occurred while \output is active []
 
- [4]
-Underfull \hbox (badness 6268) in paragraph at lines 443--444
-[]\T1/ptm/m/n/12 (+20) [1] ``What is In-tel-lec-tual Dis-abil-ity?'', \T1/ptm/m
-/it/12 (+20) Spe-
+ [3]
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
+[]\T1/ptm/m/n/10 (+20) [1] ``What is In-tel-lec-tual Dis-abil-ity?'', \T1/ptm/m
+/it/10 (+20) Spe-
  []
 
 
-Underfull \hbox (badness 3088) in paragraph at lines 443--444
-\T1/ptm/m/n/12 (+20) disabilities/what-is-intellectual-disability. [Ac-
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
+\T1/ptm/m/it/10 (+20) cialOlympics.org\T1/ptm/m/n/10 (+20) , 2020. [On-line]. A
+vail-able:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 445--446
-[]\T1/ptm/m/n/12 (+20) [2] ``Fo-cus Keeper - Time Man-age-ment'',
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
+\T1/ptm/m/n/10 (+20) https://www.specialolympics.org/about/intellectual-
  []
 
 
-Underfull \hbox (badness 7576) in paragraph at lines 445--446
-\T1/ptm/m/it/12 (+20) App Store\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-ab
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
+\T1/ptm/m/n/10 (+20) disabilities/what-is-intellectual-disability. [Ac-cessed:
+ []
+
+
+Underfull \hbox (badness 2846) in paragraph at lines 473--474
+[]\T1/ptm/m/n/10 (+20) [4] ``Step-ping Stones - Daily Rou-tines | So-cial App
+ []
+
+
+Underfull \hbox (badness 4967) in paragraph at lines 473--474
+\T1/ptm/m/n/10 (+20) Hub'', \T1/ptm/m/it/10 (+20) So-cialap-phub.com\T1/ptm/m/n
+/10 (+20) , 2020. [On-line]. Avail-
+ []
+
+
+Underfull \hbox (badness 3250) in paragraph at lines 473--474
+\T1/ptm/m/n/10 (+20) able: https://www.socialapphub.com/app/stepping-stones-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
+[]\T1/ptm/m/n/10 (+20) [5] ``Can-Plan - a task man-ager app'',
+ []
+
+
+Underfull \hbox (badness 2503) in paragraph at lines 475--476
+\T1/ptm/m/it/10 (+20) https://www.canassist.ca\T1/ptm/m/n/10 (+20) , 2020. [On-
+line]. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
+\T1/ptm/m/n/10 (+20) https://www.canassist.ca/EN/main/programs/technologies-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+[]\T1/ptm/m/n/10 (+20) [6] ``A Task Timer for Spe-cial Ed-u-ca-tion'',
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+\T1/ptm/m/it/10 (+20) Resna.org\T1/ptm/m/n/10 (+20) , 2020. [On-line]. Avail-ab
 le:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 445--446
-\T1/ptm/m/n/12 (+20) https://apps.apple.com/us/app/focus-keeper-time-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
-[]\T1/ptm/m/n/12 (+20) [5] ``Can-Plan - a task man-ager app'',
- []
-
-
-Overfull \hbox (29.57861pt too wide) in paragraph at lines 452--453
-\T1/ptm/m/n/12 (-20) https://www.canassist.ca/EN/main/programs/technologies-
- []
-
-
-Underfull \hbox (badness 4752) in paragraph at lines 454--456
-[]\T1/ptm/m/n/12 (+20) [6] ``A Task Timer for Spe-cial Ed-u-ca-tion'',
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 454--456
-\T1/ptm/m/it/12 (+20) Resna.org\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-ab
-le:
- []
-
-
-Overfull \hbox (33.38853pt too wide) in paragraph at lines 454--456
-\T1/ptm/m/n/12 (-20) https://www.resna.org/sites/default/files/legacy/conferenc
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+\T1/ptm/m/n/10 (+20) https://www.resna.org/sites/default/files/legacy/conferenc
 e/
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 454--456
-\T1/ptm/m/n/12 (+20) pro-ceed-ings/2003/Papers/TSP/Oleson_TSP.htm.
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
+[]\T1/ptm/m/n/10 (+20) [7] ``Time Man-age-ment | mon-day.com'',
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 457--458
-[]\T1/ptm/m/n/12 (+20) [7] ``Time Man-age-ment | mon-day.com'',
- []
-
-
-Underfull \hbox (badness 5203) in paragraph at lines 457--458
-\T1/ptm/m/it/12 (+20) mon-day.com\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
+\T1/ptm/m/it/10 (+20) mon-day.com\T1/ptm/m/n/10 (+20) , 2020. [On-line]. Avail-
 able:
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 457--458
-\T1/ptm/m/n/12 (+20) https://monday.com/lp/aw/timemgmt/remote.
- []
-
-[5
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 459.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 459.
+[4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 482.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 482.
  (final_report.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 459.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 459.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 482.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 482.
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: B92724EC8B5ED630CF6BFFB7AEF2C15E;793.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 459.
+(rerunfilecheck)             Checksum: 1B7A29BE0B31894EF8316BF65CA84CD8;805.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 482.
  ) 
 Here is how much of TeX's memory you used:
- 20303 strings out of 480797
- 373676 string characters out of 2905362
- 644870 words of memory out of 3000000
- 35627 multiletter control sequences out of 15000+200000
- 594318 words of font info for 200 fonts, out of 3000000 for 9000
+ 20284 strings out of 480797
+ 373491 string characters out of 2905362
+ 645861 words of memory out of 3000000
+ 35625 multiletter control sequences out of 15000+200000
+ 593480 words of font info for 190 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,8n,83p,425b,344s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 68i,8n,83p,425b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
 KTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/
 utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (5 pages, 172478 bytes).
+Output written on final_report.pdf (4 pages, 174641 bytes).
 PDF statistics:
- 159 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 21735 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 155 PDF objects out of 1000 (max. 8388607)
+ 35 named destinations out of 1000 (max. 500000)
+ 19687 words of extra memory for PDF output out of 20736 (max. 10000000)
 
