@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  24 JUL 2020 17:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.6.8)  26 JUL 2020 01:19
 entering extended mode
 **./final_report.tex
 (final_report.tex
@@ -953,7 +953,7 @@ an be solved by adding a line like \setlength {\marginparwidth }{2cm} prior to
 loading the todonotes package. on input line 109.
 
 LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
- 134.
+ 141.
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/psnfss\ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
@@ -962,65 +962,65 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
- 134.
+ 141.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/psnfss\omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
- 134.
+ 141.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/psnfss\omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line
- 134.
+ 141.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/psnfss\omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Trying to load font information for U+txsya on input line 1
-34.
+41.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/txfonts\utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txsyb on input line 1
-34.
+41.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/txfonts\utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 13
-4.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 14
+1.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
-34.
+41.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Trying to load font information for U+txmia on input line 1
-34.
+41.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/txfonts\utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Trying to load font information for U+txsyc on input line 1
-34.
+41.
 
 (C:\Users\holly\AppData\Roaming\MiKTeX\2.9\tex/latex/txfonts\utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 134.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 134.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 134.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
 
 [1{C:/Users/holly/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
@@ -1029,116 +1029,124 @@ Non-PDF special ignored!
 <special> papersize=8.5in,11in
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 357--358
-[]\T1/ptm/m/n/10 (+20) [1] ``What is In-tel-lec-tual Dis-abil-ity?'', \T1/ptm/m
-/it/10 (+20) Spe-
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+<figures/user.png, id=100, 198.7425pt x 198.7425pt>
+File: figures/user.png Graphic file (type png)
+<use figures/user.png>
+Package pdftex.def Info: figures/user.png  used on input line 262.
+(pdftex.def)             Requested size: 146.3909pt x 146.3939pt.
+<figures/task.png, id=102, 353.82187pt x 176.91093pt>
+File: figures/task.png Graphic file (type png)
+<use figures/task.png>
+Package pdftex.def Info: figures/task.png  used on input line 269.
+(pdftex.def)             Requested size: 243.98238pt x 121.99307pt.
+ [2 <./figures/user.png> <./figures/task.png>] [3]
+Underfull \vbox (badness 1831) has occurred while \output is active []
+
+ [4]
+Underfull \hbox (badness 6268) in paragraph at lines 443--444
+[]\T1/ptm/m/n/12 (+20) [1] ``What is In-tel-lec-tual Dis-abil-ity?'', \T1/ptm/m
+/it/12 (+20) Spe-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 357--358
-\T1/ptm/m/it/10 (+20) cialOlympics.org\T1/ptm/m/n/10 (+20) , 2020. [On-line]. A
-vail-able:
+Underfull \hbox (badness 3088) in paragraph at lines 443--444
+\T1/ptm/m/n/12 (+20) disabilities/what-is-intellectual-disability. [Ac-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 357--358
-\T1/ptm/m/n/10 (+20) https://www.specialolympics.org/about/intellectual-
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
+[]\T1/ptm/m/n/12 (+20) [2] ``Fo-cus Keeper - Time Man-age-ment'',
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 357--358
-\T1/ptm/m/n/10 (+20) disabilities/what-is-intellectual-disability. [Ac-cessed:
- []
-
-[2]
-Underfull \hbox (badness 2846) in paragraph at lines 364--365
-[]\T1/ptm/m/n/10 (+20) [4] ``Step-ping Stones - Daily Rou-tines | So-cial App
- []
-
-
-Underfull \hbox (badness 4967) in paragraph at lines 364--365
-\T1/ptm/m/n/10 (+20) Hub'', \T1/ptm/m/it/10 (+20) So-cialap-phub.com\T1/ptm/m/n
-/10 (+20) , 2020. [On-line]. Avail-
- []
-
-
-Underfull \hbox (badness 3250) in paragraph at lines 364--365
-\T1/ptm/m/n/10 (+20) able: https://www.socialapphub.com/app/stepping-stones-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
-[]\T1/ptm/m/n/10 (+20) [5] ``Can-Plan - a task man-ager app'',
- []
-
-
-Underfull \hbox (badness 2503) in paragraph at lines 366--367
-\T1/ptm/m/it/10 (+20) https://www.canassist.ca\T1/ptm/m/n/10 (+20) , 2020. [On-
-line]. Avail-able:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 366--367
-\T1/ptm/m/n/10 (+20) https://www.canassist.ca/EN/main/programs/technologies-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 368--370
-[]\T1/ptm/m/n/10 (+20) [6] ``A Task Timer for Spe-cial Ed-u-ca-tion'',
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 368--370
-\T1/ptm/m/it/10 (+20) Resna.org\T1/ptm/m/n/10 (+20) , 2020. [On-line]. Avail-ab
+Underfull \hbox (badness 7576) in paragraph at lines 445--446
+\T1/ptm/m/it/12 (+20) App Store\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-ab
 le:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 368--370
-\T1/ptm/m/n/10 (+20) https://www.resna.org/sites/default/files/legacy/conferenc
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
+\T1/ptm/m/n/12 (+20) https://apps.apple.com/us/app/focus-keeper-time-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 452--453
+[]\T1/ptm/m/n/12 (+20) [5] ``Can-Plan - a task man-ager app'',
+ []
+
+
+Overfull \hbox (29.57861pt too wide) in paragraph at lines 452--453
+\T1/ptm/m/n/12 (-20) https://www.canassist.ca/EN/main/programs/technologies-
+ []
+
+
+Underfull \hbox (badness 4752) in paragraph at lines 454--456
+[]\T1/ptm/m/n/12 (+20) [6] ``A Task Timer for Spe-cial Ed-u-ca-tion'',
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 454--456
+\T1/ptm/m/it/12 (+20) Resna.org\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-ab
+le:
+ []
+
+
+Overfull \hbox (33.38853pt too wide) in paragraph at lines 454--456
+\T1/ptm/m/n/12 (-20) https://www.resna.org/sites/default/files/legacy/conferenc
 e/
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 371--372
-[]\T1/ptm/m/n/10 (+20) [7] ``Time Man-age-ment | mon-day.com'',
+Underfull \hbox (badness 10000) in paragraph at lines 454--456
+\T1/ptm/m/n/12 (+20) pro-ceed-ings/2003/Papers/TSP/Oleson_TSP.htm.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 371--372
-\T1/ptm/m/it/10 (+20) mon-day.com\T1/ptm/m/n/10 (+20) , 2020. [On-line]. Avail-
+Underfull \hbox (badness 10000) in paragraph at lines 457--458
+[]\T1/ptm/m/n/12 (+20) [7] ``Time Man-age-ment | mon-day.com'',
+ []
+
+
+Underfull \hbox (badness 5203) in paragraph at lines 457--458
+\T1/ptm/m/it/12 (+20) mon-day.com\T1/ptm/m/n/12 (+20) , 2020. [On-line]. Avail-
 able:
  []
 
-[3
+
+Underfull \hbox (badness 10000) in paragraph at lines 457--458
+\T1/ptm/m/n/12 (+20) https://monday.com/lp/aw/timemgmt/remote.
+ []
+
+[5
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 373.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 373.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 459.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 459.
  (final_report.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 373.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 373.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 459.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 459.
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: C3D515B79721E0853CCFC7DEF4097C2E;462.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 373.
+(rerunfilecheck)             Checksum: B92724EC8B5ED630CF6BFFB7AEF2C15E;793.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 459.
  ) 
 Here is how much of TeX's memory you used:
- 20220 strings out of 480797
- 372716 string characters out of 2905362
- 647658 words of memory out of 3000000
- 35601 multiletter control sequences out of 15000+200000
- 592935 words of font info for 176 fonts, out of 3000000 for 9000
+ 20303 strings out of 480797
+ 373676 string characters out of 2905362
+ 644870 words of memory out of 3000000
+ 35627 multiletter control sequences out of 15000+200000
+ 594318 words of font info for 200 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,8n,83p,425b,291s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 68i,8n,83p,425b,344s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
-rw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on final_report.pdf (3 pages, 100571 bytes).
+KTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/
+utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on final_report.pdf (5 pages, 172478 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
- 15541 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 159 PDF objects out of 1000 (max. 8388607)
+ 36 named destinations out of 1000 (max. 500000)
+ 21735 words of extra memory for PDF output out of 24883 (max. 10000000)
 
