@@ -53,7 +53,7 @@ Atlanta, GA 30332
 % re-using, if desired).  Use \emtpyauthor when submitting for review
 % so you remain anonymous.
 \def\plaintitle{Balance Me: Final Report}
-\def\plainauthor{Kory Brantley, Morgan Gomez, Rahul Patel,
+\def\plainauthor{Kory Brantley, Dylan Cripe, Morgan Gomez, Rahul Patel,
 and Alex Schwartz}
 \def\emptyauthor{}
 \def\plainkeywords{Authors' choice; of terms; separated; by
@@ -182,6 +182,13 @@ activities. Also, by balancing the amount of time spent on work versus
 self-improvement or leisure activities, the user may see a large reduction in
 stress and anxiety.
 
+\begin{figure*}
+\centering
+  \includegraphics[width=2\columnwidth]{figures/flow}
+  \caption{The flow of screens the user sees when creating a task in the
+	\textit{BalanceMe} mobile app. }~\label{fig:figure1}
+\end{figure*}
+
 
 \section{Related Work}
 
@@ -247,15 +254,6 @@ talks about the work that was accomplished this semester on all fronts.
 
 \subsection{Front-End Development}
 
-TODO: ADD FIGURE 1
-
-%\begin{figure}
-%\centering
-%  \includegraphics[width=1.0\columnwidth]{figures/flow}
-%  \caption{The flow of screens the the user sees when creating a task in the
-%	\textit{BalanceMe} mobile app. }~\label{fig:figure1}
-%\end{figure}
-
 With basic needs in mind, \textit{BalanceMe} achieves the requirements that one
 would expect from a task management app. To differentiate ourselves, we focused
 on providing functionalities that would allow the user to create, start and
@@ -303,15 +301,15 @@ individual user’s data, such as their first name and their email (see Figure 2
 	\textit{BalanceMe} database. }~\label{fig:figure2}
 \end{figure}
 
+In contrast to the simple user model, we created a task model that would be
+capable of dynamic updates and easy repetition (see Figure 3).
+
 \begin{figure}
 \centering
   \includegraphics[width=1.0\columnwidth]{figures/task}
   \caption{A description of the Task object type as it is stored in the
 	\textit{BalanceMe} database. }~\label{fig:figure3}
 \end{figure}
-
-In contrast to the simple user model, we created a task model that would be
-capable of dynamic updates and easy repetition (see Figure 3).
 
 Each task is referring to the user who created it and the user it is assigned
 to. This allows for the possibility of another ``parent'' account to create a
@@ -479,22 +477,31 @@ a comprehensive time management solution for teens everywhere.
 
 
 \section{References}
+
 [1] ``What is Intellectual Disability?'', \textit{SpecialOlympics.org}, 2020. [Online]. Available: https://www.specialolympics.org/about/intellectual-disabilities/what-is-intellectual-disability. [Accessed: 08- Jun- 2020].
 
 [2] M. Virtanen, J. Ferrie, A. Manoux, A. Shipley, J. Vahtera, M. Marmot and M. Kivimäki, ``Overtime work and incident coronary heart disease: the Whitehall II prospective cohort study,'' \textit{European Heart Journal}, vol. 31, no. 14, p. 1737–1744, May 2010.
 
-[2] ``Focus Keeper - Time Management'', \textit{App Store}, 2020. [Online]. Available: https://apps.apple.com/us/app/focus-keeper-time-management/id867374917. [Accessed: 08- Jun- 2020].
+[3] ``Focus Keeper - Time Management'', \textit{App Store}, 2020. [Online]. Available: https://apps.apple.com/us/app/focus-keeper-time-management/id867374917. [Accessed: 08- Jun- 2020].
 
-[3] ``Toggl - Features'', \textit{Toggl.com}, 2020. [Online]. Available: https://www.toggl.com/
+[4] "Productivity - Daily Tasks", \textit{App Store}, 2020. [Online]. Available: https://
+apps.apple.com/us/app/productivity-daily-tasks/id670870972. [Accessed: 08- Jun- 2020].
+
+[5] ``Toggl - Features'', \textit{Toggl.com}, 2020. [Online]. Available: https://www.toggl.com/
 features/. [Accessed: 08- Jun- 2020].
 
-[4] ``Stepping Stones - Daily Routines | Social App Hub'', \textit{Socialapphub.com}, 2020. [Online]. Available: https://www.socialapphub.com/app/stepping-stones-daily-routines. [Accessed: 08- Jun- 2020].
+[6] ``Stepping Stones - Daily Routines | Social App Hub'', \textit{Socialapphub.com}, 2020. [Online]. Available: https://www.socialapphub.com/app/stepping-stones-daily-routines. [Accessed: 08- Jun- 2020].
 
-[5] ``CanPlan - a task manager app'', \textit{https://www.canassist.ca}, 2020. [Online]. Available: https://www.canassist.ca/EN/main/programs/technologies-and-devices/at-home/canplan.html. [Accessed: 08- Jun- 2020].
+[7] ``CanPlan - a task manager app'', \textit{https://www.canassist.ca}, 2020. [Online]. Available: https://www.canassist.ca/EN/main/programs/technologies-and-devices/at-home/canplan.html. [Accessed: 08- Jun- 2020].
 
-[6] ``A Task Timer for Special Education'', \textit{Resna.org}, 2020. [Online]. Available: https://www.resna.org/sites/default/files/legacy/conference/
+[8] "What is TimeFlip?", \textit{Timeflip.io}, 2020. [Online]. Available: https://timeflip.io/
+en/device. [Accessed: 08- Jun- 2020].
+
+[9] "Tracker - the most effortless and accurate way to track your time", \textit{Timeular}, 2020. [Online]. Available: https://timeular.com/product/tracker/. [Accessed: 08- Jun- 2020].
+
+[10] ``A Task Timer for Special Education'', \textit{Resna.org}, 2020. [Online]. Available: https://www.resna.org/sites/default/files/legacy/conference/
 proceedings/2003/Papers/TSP/Oleson\_TSP.htm. [Accessed: 08- Jun- 2020].
 
-[7] ``Time Management | monday.com'', \textit{monday.com}, 2020. [Online]. Available: https://monday.com/lp/aw/timemgmt/remote. [Accessed: 08- Jun- 2020].
+[11] ``Time Management | monday.com'', \textit{monday.com}, 2020. [Online]. Available: https://monday.com/lp/aw/timemgmt/remote. [Accessed: 08- Jun- 2020].
 
 \end{document}
